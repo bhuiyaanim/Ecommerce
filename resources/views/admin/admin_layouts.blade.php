@@ -35,11 +35,16 @@
     <link href="{{ asset('public/backend/lib/Ionicons/css/ionicons.css') }}" rel="stylesheet">
     <link href="{{ asset('public/backend/lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
     <link href="{{ asset('public/backend/lib/rickshaw/rickshaw.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/backend/lib/highlightjs/github.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/backend/lib/datatables/jquery.dataTables.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/backend/lib/select2/css/select2.min.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('public/backend/css/starlight.css') }}">
+
+
   </head>
 
   <body>
@@ -63,7 +68,7 @@
             {{-- <label class="sidebar-label">Navigation</label> --}}
 
             <div class="sl-sideleft-menu">
-                <a href="index.html" class="sl-menu-link active">
+                <a href="{{ route('admin.home') }}" class="sl-menu-link active">
                     <div class="sl-menu-item">
                         <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
                         <span class="menu-item-label">Dashboard</span>
@@ -81,7 +86,7 @@
                 </a>
                 <!-- sl-menu-link -->
                 <ul class="sl-menu-sub nav flex-column">
-                    <li class="nav-item"><a href="chart-morris.html" class="nav-link">Category</a></li>
+                    <li class="nav-item"><a href="{{ route('categories') }}" class="nav-link">Category</a></li>
                     <li class="nav-item"><a href="chart-flot.html" class="nav-link">Sub Category</a></li>
                     <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Brand</a></li>
                 </ul>
@@ -413,7 +418,43 @@
     <script src="{{ asset('public/backend/lib/bootstrap/bootstrap.js') }}"></script>
     <script src="{{ asset('public/backend/lib/jquery-ui/jquery-ui.js') }}"></script>
     <script src="{{ asset('public/backend/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js') }}"></script>
-    <script src="{{ asset('public/backend/lib/jquery.sparkline.bower/jquery.sparkline.min.js') }}"></script>
+    
+
+    {{-- Data Table Start--}}
+    <script src="{{ asset('public/backend/lib/highlightjs/highlight.pack.js') }}"></script>
+    <script src="{{ asset('public/backend/lib/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/backend/lib/datatables-responsive/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('public/backend/lib/select2/js/select2.min.js') }}"></script>
+
+    <script src="{{ asset('public/backend/js/starlight.js') }}"></script>
+
+    <script>
+        $(function(){
+            'use strict';
+  
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+  
+            $('#datatable2').DataTable({
+                bLengthChange: false,
+                searching: false,
+                responsive: true
+            });
+  
+            // Select2
+            $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+  
+        });
+    </script>
+    {{-- Data Table Ends --}}
+
+
     <script src="{{ asset('public/backend/lib/d3/d3.js') }}"></script>
     <script src="{{ asset('public/backend/lib/rickshaw/rickshaw.min.js') }}"></script>
     <script src="{{ asset('public/backend/lib/chart.js/Chart.js') }}"></script>
@@ -422,7 +463,7 @@
     <script src="{{ asset('public/backend/lib/Flot/jquery.flot.resize.js') }}"></script>
     <script src="{{ asset('public/backend/lib/flot-spline/jquery.flot.spline.js') }}"></script>
 
-    <script src="{{ asset('public/backend/js/starlight.js') }}"></script>
+    {{-- <script src="{{ asset('public/backend/js/starlight.js') }}"></script> --}}
     <script src="{{ asset('public/backend/js/ResizeSensor.js') }}"></script>
     <script src="{{ asset('public/backend/js/dashboard.js') }}"></script>
 
