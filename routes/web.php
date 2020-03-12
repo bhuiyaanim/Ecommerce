@@ -25,9 +25,22 @@ Route::get('admin/logout', 'AdminController@logout')->name('admin.logout');
         
         // Admin Section...
 
-// Categories
-Route::get('admin/categories', 'Admin\Category\CategoryController@index')->name('categories');
-Route::post('admin/store/category', 'Admin\Category\CategoryController@storecategory')->name('store.category');
-Route::get('delete/category/{id}', 'Admin\Category\CategoryController@deletecategory')->name('delete.category');
-Route::get('edit/category/{id}', 'Admin\Category\CategoryController@editcategory')->name('edit.category');
-Route::post('update/category/{id}', 'Admin\Category\CategoryController@updatecategory')->name('update.category');
+// Categories.......
+Route::get('admin/categories', 'Admin\Category\CategoryController@category')->name('categories');
+Route::post('admin/store/category', 'Admin\Category\CategoryController@store_category')->name('store.category');
+Route::get('delete/category/{id}', 'Admin\Category\CategoryController@delete_category')->name('delete.category');
+Route::get('edit/category/{id}', 'Admin\Category\CategoryController@edit_category')->name('edit.category');
+Route::post('update/category/{id}', 'Admin\Category\CategoryController@update_category')->name('update.category');
+
+// Brands...........
+Route::get('admin/brands', 'Admin\Category\CategoryController@brand')->name('brands');
+Route::post('admin/store/brand', 'Admin\Category\CategoryController@store_brand')->name('store.brand');
+Route::get('delete/brand/{id}', 'Admin\Category\CategoryController@delete_brand')->name('delete.brand');
+Route::get('edit/brand/{id}', 'Admin\Category\CategoryController@edit_brand')->name('edit.brand');
+Route::post('update/brand/{id}', 'Admin\Category\CategoryController@update_brand')->name('update.brand');
+
+// Sub-Categories...
+Route::get('admin/sub_categories', 'Admin\Category\CategoryController@sub_category')->name('sub_categories');
+Route::post('admin/store/sub_category', 'Admin\Category\CategoryController@store_sub_category')->name('store.sub_category');
+Route::get('delete/sub_category/{id}', 'Admin\Category\CategoryController@delete_sub_category')->name('delete.sub_category');
+

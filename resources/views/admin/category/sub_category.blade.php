@@ -7,16 +7,16 @@
     <nav class="breadcrumb sl-breadcrumb">
         <a class="breadcrumb-item" href="{{ route('admin.home') }}">Dapple Park</a>
         <span class="breadcrumb-item active">Category</span>
-        <span class="breadcrumb-item active">Category List</span>
+        <span class="breadcrumb-item active">Sub-Category List</span>
     </nav>
 
     <div class="sl-pagebody">
         <div class="sl-page-title">
-            <h5>Category Table</h5>
+            <h5>Sub-Category Table</h5>
         </div><!-- sl-page-title -->
 
         <div class="card pd-20 pd-sm-40">
-            <h6 class="card-body-title mb-4">Category List
+            <h6 class="card-body-title mb-4">Sub-Category List
                 <a href="#" class="btn btn-sm btn-warning" style="float: right" data-toggle="modal"
                     data-target="#modaldemo3">Add New</a>
             </h6>
@@ -26,19 +26,21 @@
                     <thead>
                         <tr>
                             <th class="wd-15p">SL.</th>
+                            <th class="wd-15p">Sub-Category Name</th>
                             <th class="wd-15p">Category Name</th>
                             <th class="wd-20p">Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($category as $key => $row)
+                        @foreach ($sub_category as $key => $row)
                         <tr>
                             <td>{{ $key + 1 }}</td>
+                            <td>{{ $row->subcategory_name }}</td>
                             <td>{{ $row->category_name }}</td>
                             <td>
-                                <a href="{{ route('edit.category', $row->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                <a href="{{ route('delete.category', $row->id) }}" class="btn btn-sm btn-danger"
+                                <a href="#" class="btn btn-sm btn-info">Edit</a>
+                                <a href="{{ route('delete.sub_category', $row->id) }}" class="btn btn-sm btn-danger"
                                     id="delete">Delete</a>
                             </td>
                         </tr>
@@ -69,14 +71,23 @@
                 </ul>
             </div>
             @endif
-            <form method="POST" action="{{ route('store.category') }}">
+            <form method="POST" action="{{ route('store.sub_category') }}">
                 @csrf
                 <div class="modal-body pd-20">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Category Name</label>
+                        <label for="exampleInputEmail1">Sub-Category Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="category_name" placeholder="Add New Category..">
-                        <small id="emailHelp" class="form-text text-muted">You Can Add New Categories</small>
+                            name="subcategory_name" placeholder="Add New Sub-Category..">
+                        <small id="emailHelp" class="form-text text-muted">You Can Add New Sub-Categories</small>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="col-12">Category</label>
+                        <select class="from-control container ml-3 mr-3" name="category_id" style="border: 1px solid rgba(0, 0, 0, 0.15); padding: 0.65rem 0.75rem; color: #6e7377;">
+                            <option disabled selected>--Select Category--</option>
+                            @foreach ($category as $row)
+                                <option value="{{ $row->id }}">{{ $row->category_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div><!-- modal-body -->
                 <div class="modal-footer">

@@ -7,16 +7,16 @@
     <nav class="breadcrumb sl-breadcrumb">
         <a class="breadcrumb-item" href="{{ route('admin.home') }}">Dapple Park</a>
         <span class="breadcrumb-item active">Category</span>
-        <span class="breadcrumb-item active">Category List</span>
+        <span class="breadcrumb-item active">Brand List</span>
     </nav>
 
     <div class="sl-pagebody">
         <div class="sl-page-title">
-            <h5>Category Table</h5>
+            <h5>Brand Table</h5>
         </div><!-- sl-page-title -->
 
         <div class="card pd-20 pd-sm-40">
-            <h6 class="card-body-title mb-4">Category List
+            <h6 class="card-body-title mb-4">Brand List
                 <a href="#" class="btn btn-sm btn-warning" style="float: right" data-toggle="modal"
                     data-target="#modaldemo3">Add New</a>
             </h6>
@@ -25,20 +25,22 @@
                 <table id="datatable1" class="table display responsive nowrap">
                     <thead>
                         <tr>
-                            <th class="wd-15p">SL.</th>
-                            <th class="wd-15p">Category Name</th>
+                            <th class="wd-15p">ID</th>
+                            <th class="wd-15p">Brand Name</th>
+                            <th class="wd-15p">Brand Logo</th>
                             <th class="wd-20p">Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($category as $key => $row)
+                        @foreach ($brand as $key => $row)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $row->category_name }}</td>
+                            <td>{{ $row->brand_name }}</td>
+                            <td><img src="{{ URL::to($row->brand_logo) }}" height="60px;" width="80px;"></td>
                             <td>
-                                <a href="{{ route('edit.category', $row->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                <a href="{{ route('delete.category', $row->id) }}" class="btn btn-sm btn-danger"
+                                <a href="{{ route('edit.brand', $row->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                <a href="{{ route('delete.brand', $row->id) }}" class="btn btn-sm btn-danger"
                                     id="delete">Delete</a>
                             </td>
                         </tr>
@@ -55,7 +57,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content tx-size-sm">
             <div class="modal-header pd-x-20">
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Category</h6>
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Brand</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -69,14 +71,20 @@
                 </ul>
             </div>
             @endif
-            <form method="POST" action="{{ route('store.category') }}">
+            <form method="POST" action="{{ route('store.brand') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body pd-20">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Category Name</label>
+                        <label for="exampleInputEmail1">Brand Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="category_name" placeholder="Add New Category..">
-                        <small id="emailHelp" class="form-text text-muted">You Can Add New Categories</small>
+                            name="brand_name" placeholder="Add New Brand..">
+                        <small id="emailHelp" class="form-text text-muted">You Can Add New Brands</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Brand Logo</label>
+                        <input type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            name="brand_logo" placeholder="Add New Brand Logo..">
+                        <small id="emailHelp" class="form-text text-muted">You Can Add New Brand Logo</small>
                     </div>
                 </div><!-- modal-body -->
                 <div class="modal-footer">
