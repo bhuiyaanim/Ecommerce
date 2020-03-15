@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2020 at 01:21 PM
+-- Generation Time: Mar 15, 2020 at 12:39 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -61,6 +61,14 @@ CREATE TABLE `brands` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `brand_name`, `brand_logo`, `created_at`, `updated_at`) VALUES
+(1, 'Samsung', 'public/media/brand/120320_06_52_28.jpeg', '2020-03-11 22:30:05', '2020-03-12 00:28:52'),
+(2, 'Apple', 'public/media/brand/120320_04_57_33.png', '2020-03-11 22:33:57', '2020-03-11 22:33:57');
+
 -- --------------------------------------------------------
 
 --
@@ -79,8 +87,31 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `category_name`, `created_at`, `updated_at`) VALUES
-(1, 'Man', '2020-03-11 04:53:05', '2020-03-11 04:53:05'),
-(2, 'Woman', '2020-03-11 04:53:49', '2020-03-11 04:53:49');
+(1, 'Men', '2020-03-11 04:53:05', '2020-03-11 21:11:40'),
+(2, 'Woman', '2020-03-11 04:53:49', '2020-03-11 04:53:49'),
+(4, 'Children', '2020-03-11 06:25:55', '2020-03-11 06:25:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `coupon` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `discount` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `coupons`
+--
+
+INSERT INTO `coupons` (`id`, `coupon`, `discount`, `created_at`, `updated_at`) VALUES
+(1, 'test5', '5', '2020-03-15 01:27:10', '2020-03-15 01:27:10'),
+(3, 'test_again40', '50', '2020-03-15 01:48:10', '2020-03-15 01:56:05');
 
 -- --------------------------------------------------------
 
@@ -120,7 +151,30 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (4, '2019_10_05_052517_create_admins_table', 1),
 (5, '2020_03_10_080649_create_categories_table', 2),
 (6, '2020_03_10_080751_create_subcategories_table', 2),
-(7, '2020_03_10_080833_create_brands_table', 2);
+(7, '2020_03_10_080833_create_brands_table', 2),
+(8, '2020_03_15_062052_creat_coupons_table', 3),
+(10, '2020_03_15_093230_creat_newsletters_table', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `newsletters`
+--
+
+CREATE TABLE `newsletters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `newsletters`
+--
+
+INSERT INTO `newsletters` (`id`, `email`, `created_at`, `updated_at`) VALUES
+(1, 'sohidulislam@gmail.com', '2020-03-15 04:00:42', '2020-03-15 04:00:42'),
+(2, 'test@test.com', '2020-03-15 04:32:28', '2020-03-15 04:32:28');
 
 -- --------------------------------------------------------
 
@@ -147,6 +201,15 @@ CREATE TABLE `subcategories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `subcategories`
+--
+
+INSERT INTO `subcategories` (`id`, `category_id`, `subcategory_name`, `created_at`, `updated_at`) VALUES
+(1, 1, 'T-Shirt', '2020-03-12 01:20:47', '2020-03-12 01:20:47'),
+(2, 1, 'Pant', '2020-03-12 01:51:36', '2020-03-12 01:51:36'),
+(3, 2, 'Hijab & Scarf', '2020-03-12 01:53:15', '2020-03-15 00:09:11');
 
 -- --------------------------------------------------------
 
@@ -198,6 +261,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -207,6 +276,12 @@ ALTER TABLE `failed_jobs`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `newsletters`
+--
+ALTER TABLE `newsletters`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -242,13 +317,19 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -260,13 +341,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `newsletters`
+--
+ALTER TABLE `newsletters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

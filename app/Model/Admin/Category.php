@@ -9,4 +9,9 @@ class Category extends Model
     protected $fillable = [
         'category_name'
     ];
+
+    public function subcategories()
+    {
+        return $this->hasOne('App\Model\Admin\Subcategory');
+    }
 }

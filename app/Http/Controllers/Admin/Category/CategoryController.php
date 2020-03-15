@@ -140,7 +140,7 @@ class CategoryController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function editbrand($id)
+    public function edit_brand($id)
     {
         $brand = Brand::find($id);
 
@@ -188,10 +188,7 @@ class CategoryController extends Controller
     public function sub_category()
     {
         $category = Category::all();
-        $sub_category = DB::table('subcategories')
-                        ->join('categories', 'subcategories.category_id', 'categories.id')
-                        ->select('subcategories.*', 'categories.category_name')
-                        ->get();
+        $sub_category = Subcategory::all();
         // dd($sub_category);
 
         return view('admin.category.sub_category', compact('category', 'sub_category'));   
@@ -222,6 +219,31 @@ class CategoryController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
+    }
+
+    public function edit_sub_category($id)
+    {
+        $sub_category = Subcategory::find($id);
+        $category = Category::all();
+
+        return view('admin.category.edit_sub_category', compact('sub_category', 'category'));
+    }
+
+    public function update_sub_category(Request $request, $id)
+    {
+        $request->validate([
+            'subcategory_name' => 'required|max:55',
+            // 'category_id' => 'required',
+        ]);
+
+        Subcategory::find($request->id)->update(['subcategory_name' => $request->subcategory_name, 'category_id' => $request->category_id]);
+        
+        $notification = array(
+            'messege' => 'Sub-Category Update Successfull',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('sub_categories')->with($notification);
+        
     }
     
 }

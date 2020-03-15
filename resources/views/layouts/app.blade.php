@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/slick-1.8.0/slick.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/main_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 
 </head>
 
@@ -77,11 +78,21 @@
             </div>
 
             <!-- Header Main -->
-
             <div class="header_main">
                 <div class="container">
+                    <!-- Error messge section start's -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif
+                    <!-- Error messge section end's -->
                     <div class="row">
-
                         <!-- Logo -->
                         <div class="col-lg-2 col-sm-3 col-3 order-1">
                             <div class="logo_container">
@@ -281,6 +292,27 @@
     <script src="{{ asset('public/frontend/plugins/slick-1.8.0/slick.js') }}"></script>
     <script src="{{ asset('public/frontend/plugins/easing/easing.js') }}"></script>
     <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
+    <script>
+        @if(Session::has('messege'))
+            var type="{{Session::get('alert-type','info')}}"
+            switch(type){
+                case 'info':
+                    toastr.info("{{ Session::get('messege') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('messege') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('messege') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('messege') }}");
+                    break;
+            }
+        @endif
+    </script> 
 </body>
 
 </html>

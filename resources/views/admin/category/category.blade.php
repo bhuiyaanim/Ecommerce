@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Category Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="category_name" placeholder="Add New Category..">
+                            name="category_name" placeholder="Add New Category.." required>
                         <small id="emailHelp" class="form-text text-muted">You Can Add New Categories</small>
                     </div>
                 </div><!-- modal-body -->

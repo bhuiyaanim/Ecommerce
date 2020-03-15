@@ -43,4 +43,25 @@ Route::post('update/brand/{id}', 'Admin\Category\CategoryController@update_brand
 Route::get('admin/sub_categories', 'Admin\Category\CategoryController@sub_category')->name('sub_categories');
 Route::post('admin/store/sub_category', 'Admin\Category\CategoryController@store_sub_category')->name('store.sub_category');
 Route::get('delete/sub_category/{id}', 'Admin\Category\CategoryController@delete_sub_category')->name('delete.sub_category');
+Route::get('edit/sub_category/{id}', 'Admin\Category\CategoryController@edit_sub_category')->name('edit.sub_category');
+Route::post('update/sub_category/{id}', 'Admin\Category\CategoryController@update_sub_category')->name('update.sub_category');
 
+// Coupon...........
+Route::get('admin/coupon', 'Admin\CouponController@coupon')->name('admin.coupon');
+Route::post('admin/store/coupon', 'Admin\CouponController@store_coupon')->name('store.coupon');
+Route::get('admin/delete/coupon/{id}', 'Admin\CouponController@delete_coupon')->name('delete.coupon');
+Route::get('admin/edit/coupon/{id}', 'Admin\CouponController@edit_coupon')->name('edit.coupon');
+Route::post('admin/update/coupon/{id}', 'Admin\CouponController@update_coupon')->name('update.coupon');
+
+// newsletter.......
+Route::get('admin/newsletter', 'Admin\CouponController@newsletter')->name('admin.newsletter');
+Route::get('admin/delete/newsletter/{id}', 'Admin\CouponController@delete_newsletter')->name('delete.newsletter');
+
+
+
+
+
+
+        // Frontend Section...
+// newsletter.......
+Route::post('store/newsletter', 'FrontendController@store_newsletter')->name('store.newsletter');

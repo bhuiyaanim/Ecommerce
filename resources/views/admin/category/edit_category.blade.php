@@ -35,7 +35,7 @@
                             <input type="hidden" name="id" value="{{ $category->id }}">
                             <label for="exampleInputEmail1">Category Name</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                name="category_name" value="{{ $category->category_name }}">
+                                name="category_name" value="{{ $category->category_name }}" required>
                         </div>
                     </div><!-- modal-body -->
                     <div class="modal-footer">

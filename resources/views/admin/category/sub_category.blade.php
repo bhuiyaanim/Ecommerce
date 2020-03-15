@@ -37,9 +37,9 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $row->subcategory_name }}</td>
-                            <td>{{ $row->category_name }}</td>
+                            <td>{{ $row->category->category_name }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-info">Edit</a>
+                                <a href="{{ route('edit.sub_category', $row->id) }}" class="btn btn-sm btn-info">Edit</a>
                                 <a href="{{ route('delete.sub_category', $row->id) }}" class="btn btn-sm btn-danger"
                                     id="delete">Delete</a>
                             </td>
@@ -77,7 +77,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Sub-Category Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="subcategory_name" placeholder="Add New Sub-Category..">
+                            name="subcategory_name" placeholder="Add New Sub-Category.." required>
                         <small id="emailHelp" class="form-text text-muted">You Can Add New Sub-Categories</small>
                     </div>
                     <div class="form-group row">

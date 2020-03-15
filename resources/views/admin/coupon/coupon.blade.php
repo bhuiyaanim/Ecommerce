@@ -6,17 +6,17 @@
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
         <a class="breadcrumb-item" href="{{ route('admin.home') }}">Dapple Park</a>
-        <span class="breadcrumb-item active">Category</span>
-        <span class="breadcrumb-item active">Brand List</span>
+        <span class="breadcrumb-item active">Coupon</span>
+        <span class="breadcrumb-item active">Coupon List</span>
     </nav>
 
     <div class="sl-pagebody">
         <div class="sl-page-title">
-            <h5>Brand Table</h5>
+            <h5>Coupon Table</h5>
         </div><!-- sl-page-title -->
 
         <div class="card pd-20 pd-sm-40">
-            <h6 class="card-body-title mb-4">Brand List
+            <h6 class="card-body-title mb-4">Coupon List
                 <a href="#" class="btn btn-sm btn-warning" style="float: right" data-toggle="modal"
                     data-target="#modaldemo3">Add New</a>
             </h6>
@@ -25,22 +25,22 @@
                 <table id="datatable1" class="table display responsive nowrap">
                     <thead>
                         <tr>
-                            <th class="wd-15p">ID</th>
-                            <th class="wd-15p">Brand Name</th>
-                            <th class="wd-15p">Brand Logo</th>
-                            <th class="wd-20p">Action</th>
+                            <th class="wd-15p text-center">SL.</th>
+                            <th class="wd-15p text-center">Coupon Code</th>
+                            <th class="wd-15p text-center">Coupon Percentage</th>
+                            <th class="wd-20p text-center">Action</th>
                         </tr>
                     </thead>
 
-                    <tbody>
-                        @foreach ($brand as $key => $row)
+                    <tbody class="text-center">
+                        @foreach ($coupon as $key => $row)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $row->brand_name }}</td>
-                            <td><img src="{{ URL::to($row->brand_logo) }}" height="60px;" width="80px;"></td>
+                            <td>{{ $row->coupon }}</td>
+                            <td>{{ $row->discount }}</td>
                             <td>
-                                <a href="{{ route('edit.brand', $row->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                <a href="{{ route('delete.brand', $row->id) }}" class="btn btn-sm btn-danger"
+                                <a href="{{ route('edit.coupon', $row->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                <a href="{{ route('delete.coupon', $row->id) }}" class="btn btn-sm btn-danger"
                                     id="delete">Delete</a>
                             </td>
                         </tr>
@@ -57,7 +57,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content tx-size-sm">
             <div class="modal-header pd-x-20">
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Brand</h6>
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Coupon</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -71,20 +71,20 @@
                 </ul>
             </div>
             @endif
-            <form method="POST" action="{{ route('store.brand') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('store.coupon') }}">
                 @csrf
                 <div class="modal-body pd-20">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Brand Name</label>
+                        <label for="exampleInputEmail1">Coupon Code</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="brand_name" placeholder="Add New Brand.." required>
-                        <small id="emailHelp" class="form-text text-muted">You Can Add New Brands</small>
+                            name="coupon" placeholder="Add Coupon Code.." required>
+                        {{-- <small id="emailHelp" class="form-text text-muted">You Can Add New Coupon</small> --}}
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Brand Logo</label>
-                        <input type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="brand_logo" placeholder="Add New Brand Logo.." required>
-                        <small id="emailHelp" class="form-text text-muted">You Can Add New Brand Logo</small>
+                        <label for="exampleInputEmail1">Coupon Percentage (%)</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            name="discount" placeholder="Add Coupon Percentage.." required>
+                        {{-- <small id="emailHelp" class="form-text text-muted">You Can Add New Coupon Percentage</small> --}}
                     </div>
                 </div><!-- modal-body -->
                 <div class="modal-footer">
