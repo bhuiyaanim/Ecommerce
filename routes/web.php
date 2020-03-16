@@ -57,7 +57,12 @@ Route::post('admin/update/coupon/{id}', 'Admin\CouponController@update_coupon')-
 Route::get('admin/newsletter', 'Admin\CouponController@newsletter')->name('admin.newsletter');
 Route::get('admin/delete/newsletter/{id}', 'Admin\CouponController@delete_newsletter')->name('delete.newsletter');
 
-
+// products.........
+Route::get('admin/product/all', 'Admin\Product\ProductController@index')->name('all.product');
+Route::get('admin/product/add', 'Admin\Product\ProductController@create')->name('add.product');
+Route::post('admin/product/store', 'Admin\Product\ProductController@store')->name('store.product');
+        // sub-category...
+Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_sub_category');
 
 
 

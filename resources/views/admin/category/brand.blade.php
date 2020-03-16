@@ -83,7 +83,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Brand Logo</label>
                         <input type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="brand_logo" placeholder="Add New Brand Logo.." required>
+                            name="brand_logo" placeholder="Add New Brand Logo.." accept="image/*" required>
                         <small id="emailHelp" class="form-text text-muted">You Can Add New Brand Logo</small>
                     </div>
                 </div><!-- modal-body -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2020 at 12:39 PM
+-- Generation Time: Mar 16, 2020 at 12:41 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -67,7 +67,8 @@ CREATE TABLE `brands` (
 
 INSERT INTO `brands` (`id`, `brand_name`, `brand_logo`, `created_at`, `updated_at`) VALUES
 (1, 'Samsung', 'public/media/brand/120320_06_52_28.jpeg', '2020-03-11 22:30:05', '2020-03-12 00:28:52'),
-(2, 'Apple', 'public/media/brand/120320_04_57_33.png', '2020-03-11 22:33:57', '2020-03-11 22:33:57');
+(2, 'Apple', 'public/media/brand/120320_04_57_33.png', '2020-03-11 22:33:57', '2020-03-11 22:33:57'),
+(9, 'Rado', 'public/media/brand/160320_10_00_27.jpg', '2020-03-16 04:27:00', '2020-03-16 04:27:00');
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,8 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `category_name`, `created_at`, `updated_at`) VALUES
 (1, 'Men', '2020-03-11 04:53:05', '2020-03-11 21:11:40'),
 (2, 'Woman', '2020-03-11 04:53:49', '2020-03-11 04:53:49'),
-(4, 'Children', '2020-03-11 06:25:55', '2020-03-11 06:25:55');
+(4, 'Children', '2020-03-11 06:25:55', '2020-03-11 06:25:55'),
+(7, 'Watch', '2020-03-16 04:23:03', '2020-03-16 04:23:03');
 
 -- --------------------------------------------------------
 
@@ -153,7 +155,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2020_03_10_080751_create_subcategories_table', 2),
 (7, '2020_03_10_080833_create_brands_table', 2),
 (8, '2020_03_15_062052_creat_coupons_table', 3),
-(10, '2020_03_15_093230_creat_newsletters_table', 4);
+(10, '2020_03_15_093230_creat_newsletters_table', 4),
+(11, '2020_03_16_035420_creat_products_table', 5);
 
 -- --------------------------------------------------------
 
@@ -191,6 +194,47 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `sub_category_id` int(11) DEFAULT NULL,
+  `brand_id` int(11) DEFAULT NULL,
+  `product_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_quantity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_details` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_color` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_size` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `selling_price` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `discount_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `video_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `main_slider` int(11) DEFAULT NULL,
+  `hot_deal` int(11) DEFAULT NULL,
+  `best_rated` int(11) DEFAULT NULL,
+  `mid_slider` int(11) DEFAULT NULL,
+  `hot_new` int(11) DEFAULT NULL,
+  `trand` int(11) DEFAULT NULL,
+  `image_one` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_two` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_three` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `category_id`, `sub_category_id`, `brand_id`, `product_name`, `product_code`, `product_quantity`, `product_details`, `product_color`, `product_size`, `selling_price`, `discount_price`, `video_link`, `main_slider`, `hot_deal`, `best_rated`, `mid_slider`, `hot_new`, `trand`, `image_one`, `image_two`, `image_three`, `status`, `created_at`, `updated_at`) VALUES
+(1, 7, 7, 9, 'Men\'s Watches', 'w-22-rado', '40', '<p>Rado is a globally recognised Swiss watch brand, famous for \r\ninnovative design and its use of revolutionary materials to create some \r\nof the world’s most recognisable and durable watches. Ever since its \r\nbeginnings in Lengnau, Switzerland, Rado has had a pioneering spirit, \r\nwith the brand philosophy “if we can imagine it, we can make it” still \r\nholding true today.</p>\r\n<p>The recipient of numerous prestigious international design awards, \r\nand with one eye firmly focused on the future, Rado is regarded as the \r\nmost forward thinking design player in watchmaking today. Specialising \r\nin high-tech ceramic watches, Rado has gone from one breakthrough to the\r\n next and has a long and proud history of innovation, continually \r\nintroducing the unexpected into Swiss watchmaking.</p>', 'black,brown', 's,m', '4500', NULL, 'https://www.rado.com/', NULL, NULL, 1, NULL, 1, 1, 'public/media/product/1661316875667131.jpg', NULL, NULL, 1, '2020-03-16 04:40:35', '2020-03-16 04:40:35');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `subcategories`
 --
 
@@ -209,7 +253,10 @@ CREATE TABLE `subcategories` (
 INSERT INTO `subcategories` (`id`, `category_id`, `subcategory_name`, `created_at`, `updated_at`) VALUES
 (1, 1, 'T-Shirt', '2020-03-12 01:20:47', '2020-03-12 01:20:47'),
 (2, 1, 'Pant', '2020-03-12 01:51:36', '2020-03-12 01:51:36'),
-(3, 2, 'Hijab & Scarf', '2020-03-12 01:53:15', '2020-03-15 00:09:11');
+(3, 2, 'Hijab & Scarf', '2020-03-12 01:53:15', '2020-03-15 00:09:11'),
+(7, 7, 'Man\'s Watch', '2020-03-16 04:23:25', '2020-03-16 04:23:25'),
+(8, 7, 'Woman\'s Watch', '2020-03-16 04:23:46', '2020-03-16 04:23:46'),
+(9, 7, 'Child Watch', '2020-03-16 04:24:10', '2020-03-16 04:24:10');
 
 -- --------------------------------------------------------
 
@@ -291,6 +338,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `subcategories`
 --
 ALTER TABLE `subcategories`
@@ -317,13 +370,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -341,7 +394,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `newsletters`
@@ -350,10 +403,16 @@ ALTER TABLE `newsletters`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -26,7 +26,6 @@ class CouponRequest extends FormRequest
         return [
             'coupon' => 'required|unique:coupons|max:55',
             'discount' => 'required|max:55',
-            
         ];
     }
 }
