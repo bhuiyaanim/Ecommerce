@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2020 at 12:41 PM
+-- Generation Time: Mar 18, 2020 at 11:54 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -68,7 +68,9 @@ CREATE TABLE `brands` (
 INSERT INTO `brands` (`id`, `brand_name`, `brand_logo`, `created_at`, `updated_at`) VALUES
 (1, 'Samsung', 'public/media/brand/120320_06_52_28.jpeg', '2020-03-11 22:30:05', '2020-03-12 00:28:52'),
 (2, 'Apple', 'public/media/brand/120320_04_57_33.png', '2020-03-11 22:33:57', '2020-03-11 22:33:57'),
-(9, 'Rado', 'public/media/brand/160320_10_00_27.jpg', '2020-03-16 04:27:00', '2020-03-16 04:27:00');
+(9, 'Rado', 'public/media/brand/160320_10_00_27.jpg', '2020-03-16 04:27:00', '2020-03-16 04:27:00'),
+(10, 'Canon', 'public/media/brand/180320_04_17_58.jpg', '2020-03-17 22:58:17', '2020-03-17 22:58:17'),
+(11, 'Nikon', 'public/media/brand/180320_04_27_59.png', '2020-03-17 22:59:27', '2020-03-17 22:59:27');
 
 -- --------------------------------------------------------
 
@@ -91,7 +93,9 @@ INSERT INTO `categories` (`id`, `category_name`, `created_at`, `updated_at`) VAL
 (1, 'Men', '2020-03-11 04:53:05', '2020-03-11 21:11:40'),
 (2, 'Woman', '2020-03-11 04:53:49', '2020-03-11 04:53:49'),
 (4, 'Children', '2020-03-11 06:25:55', '2020-03-11 06:25:55'),
-(7, 'Watch', '2020-03-16 04:23:03', '2020-03-16 04:23:03');
+(7, 'Watch', '2020-03-16 04:23:03', '2020-03-16 04:23:03'),
+(8, 'Camera', '2020-03-17 22:56:15', '2020-03-17 22:56:15'),
+(9, 'T-Shirt', '2020-03-18 04:30:45', '2020-03-18 04:30:45');
 
 -- --------------------------------------------------------
 
@@ -199,15 +203,15 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `sub_category_id` int(11) DEFAULT NULL,
-  `brand_id` int(11) DEFAULT NULL,
+  `category_id` bigint(20) NOT NULL,
+  `sub_category_id` bigint(20) DEFAULT NULL,
+  `brand_id` bigint(20) DEFAULT NULL,
   `product_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_quantity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_details` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_color` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_size` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_size` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `selling_price` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `discount_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `video_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -216,7 +220,7 @@ CREATE TABLE `products` (
   `best_rated` int(11) DEFAULT NULL,
   `mid_slider` int(11) DEFAULT NULL,
   `hot_new` int(11) DEFAULT NULL,
-  `trand` int(11) DEFAULT NULL,
+  `trend` int(11) DEFAULT NULL,
   `image_one` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image_two` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image_three` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -229,8 +233,10 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `sub_category_id`, `brand_id`, `product_name`, `product_code`, `product_quantity`, `product_details`, `product_color`, `product_size`, `selling_price`, `discount_price`, `video_link`, `main_slider`, `hot_deal`, `best_rated`, `mid_slider`, `hot_new`, `trand`, `image_one`, `image_two`, `image_three`, `status`, `created_at`, `updated_at`) VALUES
-(1, 7, 7, 9, 'Men\'s Watches', 'w-22-rado', '40', '<p>Rado is a globally recognised Swiss watch brand, famous for \r\ninnovative design and its use of revolutionary materials to create some \r\nof the world’s most recognisable and durable watches. Ever since its \r\nbeginnings in Lengnau, Switzerland, Rado has had a pioneering spirit, \r\nwith the brand philosophy “if we can imagine it, we can make it” still \r\nholding true today.</p>\r\n<p>The recipient of numerous prestigious international design awards, \r\nand with one eye firmly focused on the future, Rado is regarded as the \r\nmost forward thinking design player in watchmaking today. Specialising \r\nin high-tech ceramic watches, Rado has gone from one breakthrough to the\r\n next and has a long and proud history of innovation, continually \r\nintroducing the unexpected into Swiss watchmaking.</p>', 'black,brown', 's,m', '4500', NULL, 'https://www.rado.com/', NULL, NULL, 1, NULL, 1, 1, 'public/media/product/1661316875667131.jpg', NULL, NULL, 1, '2020-03-16 04:40:35', '2020-03-16 04:40:35');
+INSERT INTO `products` (`id`, `category_id`, `sub_category_id`, `brand_id`, `product_name`, `product_code`, `product_quantity`, `product_details`, `product_color`, `product_size`, `selling_price`, `discount_price`, `video_link`, `main_slider`, `hot_deal`, `best_rated`, `mid_slider`, `hot_new`, `trend`, `image_one`, `image_two`, `image_three`, `status`, `created_at`, `updated_at`) VALUES
+(2, 8, 10, 10, 'Canon 6D', 'canon-6d-mark2', '40', '<ul><li>20.2MP full frame CMOS sensor</li><li>DIGIC 5+ image processor</li><li>ISO 100-25600 standard, 50-102800 expanded</li><li>4.5 fps continuous shooting</li><li>\'Silent\' shutter mode</li><li>1080p30 video recording, stereo sound via external mic</li><li>11 point AF system, center point cross-type and sensitive to -3 EV</li><li>63 zone iFCL metering system</li><li>97% viewfinder coverage; interchangeable screens (including Eg-D grid and Eg-S fine-focus)</li><li>1040k dot 3:2 3\" ClearView LCD (fixed)</li><li>Single SD card slot</li><li>Built-in Wi-Fi and GPS</li><li>Single-axis electronic level</li></ul>', 'black', NULL, '80300', NULL, NULL, 1, 1, NULL, NULL, NULL, 1, 'public/media/product/1661477440647546.jpg', 'public/media/product/1661477440757494.jpg', 'public/media/product/1661477440789705.jpg', 1, '2020-03-17 23:12:42', '2020-03-18 04:23:25'),
+(3, 7, 7, 9, 'Men\'s Brown Watches', 'w-22-rado', '40', 'Swiss watchmaker RADO is recognised the world over for the award winning\r\n materials it has pioneered since its founding in 1917. The HyperChrome \r\nautomatic is crafted from a single sleek piece of injected ceramic, \r\ndoing away with the stainless steel core that was needed for previous \r\nceramic designs. The result? An incredibly smooth and comfortable watch \r\nthat\'s tough too.', 'Brown', 'M,L', '4500', NULL, NULL, 1, 1, NULL, NULL, NULL, 1, 'public/media/product/1661481693811801.jpg', 'public/media/product/1661481693964298.jpg', 'public/media/product/1661481693985155.jpg', 1, '2020-03-18 00:20:18', '2020-03-18 00:20:18'),
+(5, 9, 12, NULL, 'T-Shirt', 'ts-oo2-ts', '100', '<div class=\"do-entry-list\">\r\n                    <dl class=\"do-entry-item\"><dt class=\"do-entry-item\">\r\n                    <span class=\"attr-name J-attr-name\" title=\"Technics\">Technics:</span>\r\n                </dt><dd class=\"do-entry-item-val\">\r\n                                            <div class=\"ellipsis\" title=\"Printed\">Printed</div>\r\n                                    </dd></dl>\r\n                    <dl class=\"do-entry-item\"><dt class=\"do-entry-item\">\r\n                    <span class=\"attr-name J-attr-name\" title=\"Printing Methods\">Printing Methods:</span>\r\n                </dt><dd class=\"do-entry-item-val\">\r\n                                            <div class=\"ellipsis\" title=\"Heat-transfer Printing\">Heat-transfer Printing</div></dd></dl></div>', 'Black,White', 'S,L,M,Xl', '180', NULL, NULL, 1, NULL, 1, 1, NULL, NULL, 'public/media/product/1661498203779105.jpg', 'public/media/product/1661498204198895.jpg', 'public/media/product/1661498204214344.jpg', 1, '2020-03-18 04:42:44', '2020-03-18 04:42:44');
 
 -- --------------------------------------------------------
 
@@ -240,7 +246,7 @@ INSERT INTO `products` (`id`, `category_id`, `sub_category_id`, `brand_id`, `pro
 
 CREATE TABLE `subcategories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `category_id` bigint(20) NOT NULL,
   `subcategory_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -256,7 +262,11 @@ INSERT INTO `subcategories` (`id`, `category_id`, `subcategory_name`, `created_a
 (3, 2, 'Hijab & Scarf', '2020-03-12 01:53:15', '2020-03-15 00:09:11'),
 (7, 7, 'Man\'s Watch', '2020-03-16 04:23:25', '2020-03-16 04:23:25'),
 (8, 7, 'Woman\'s Watch', '2020-03-16 04:23:46', '2020-03-16 04:23:46'),
-(9, 7, 'Child Watch', '2020-03-16 04:24:10', '2020-03-16 04:24:10');
+(9, 7, 'Child Watch', '2020-03-16 04:24:10', '2020-03-16 04:24:10'),
+(10, 8, 'DSLR', '2020-03-17 22:57:03', '2020-03-17 22:57:03'),
+(11, 8, 'SLR', '2020-03-17 22:57:12', '2020-03-17 22:57:12'),
+(12, 9, 'Man\'s T-Shirt', '2020-03-18 04:31:14', '2020-03-18 04:31:14'),
+(13, 9, 'Woman\'s T-Shirt', '2020-03-18 04:31:40', '2020-03-18 04:31:40');
 
 -- --------------------------------------------------------
 
@@ -370,13 +380,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -406,13 +416,13 @@ ALTER TABLE `newsletters`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
