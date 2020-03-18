@@ -14,4 +14,9 @@ class Category extends Model
     {
         return $this->hasOne('App\Model\Admin\Subcategory');
     }
+
+    public function products()
+    {
+        return $this->hasMany('App\Model\Admin\Product');
+    }
 }

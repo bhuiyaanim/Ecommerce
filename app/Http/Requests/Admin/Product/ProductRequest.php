@@ -25,13 +25,13 @@ class ProductRequest extends FormRequest
     {
         return [
             'product_name' => 'required|max:55|string',
-            'product_code' => 'required|unique:products|max:25|alpha_num',
-            'product_quantity' => 'required|numeric|min:1|max:4',
+            'product_code' => 'required|unique:products|max:25',
+            'product_quantity' => 'required|numeric|min:1|max:1000',
             'category_id' => 'required',
             'product_color' => 'required|max:55',
-            'selling_price' => 'required|numeric|min:2|max:5',
-            'product_details' => 'required|max:255',
-            'video_link' => 'url',
+            'selling_price' => 'required|numeric|min:1',
+            'product_details' => 'required|max:1000',
+            // 'video_link' => 'url',
             'image_one' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'image_two' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'image_three' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',

@@ -32,7 +32,7 @@ class CreatProductsTable extends Migration
             $table->integer('best_rated')->nullable();
             $table->integer('mid_slider')->nullable();
             $table->integer('hot_new')->nullable();
-            $table->integer('trand')->nullable();
+            $table->integer('trend')->nullable();
             $table->string('image_one')->nullable();
             $table->string('image_two')->nullable();
             $table->string('image_three')->nullable();

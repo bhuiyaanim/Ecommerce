@@ -12,6 +12,17 @@
     </nav>
     <div class="sl-pagebody">
         <div class="card pd-20 pd-sm-40">
+
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <h6 class="card-body-title">New Product Add <a href="#" class="btn btn-success btn-sm pull-right">All
                     Product</a></h6>
             <p class="mg-b-20 mg-sm-b-30">New product add form</p>
@@ -252,7 +263,7 @@
             reader.onload = function (e) {
                 $('#one')
                     .attr('src', e.target.result)
-                    .width(70)
+                    .width(60)
                     .height(60);
             };
             reader.readAsDataURL(input.files[0]);
@@ -267,7 +278,7 @@
             reader.onload = function (e) {
                 $('#two')
                     .attr('src', e.target.result)
-                    .width(70)
+                    .width(60)
                     .height(60);
             };
             reader.readAsDataURL(input.files[0]);
@@ -282,7 +293,7 @@
             reader.onload = function (e) {
                 $('#three')
                     .attr('src', e.target.result)
-                    .width(70)
+                    .width(60)
                     .height(60);
             };
             reader.readAsDataURL(input.files[0]);

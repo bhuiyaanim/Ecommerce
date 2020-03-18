@@ -61,6 +61,12 @@ Route::get('admin/delete/newsletter/{id}', 'Admin\CouponController@delete_newsle
 Route::get('admin/product/all', 'Admin\Product\ProductController@index')->name('all.product');
 Route::get('admin/product/add', 'Admin\Product\ProductController@create')->name('add.product');
 Route::post('admin/product/store', 'Admin\Product\ProductController@store')->name('store.product');
+Route::get('admin/product/inactive/{id}', 'Admin\Product\ProductController@inactive')->name('inactive.product');
+Route::get('admin/product/active/{id}', 'Admin\Product\ProductController@active')->name('active.product');
+Route::get('admin/product/delete/{id}', 'Admin\Product\ProductController@delete')->name('delete.product');
+Route::get('admin/product/view/{id}', 'Admin\Product\ProductController@view')->name('view.product');
+Route::get('admin/product/edit/{id}', 'Admin\Product\ProductController@edit')->name('edit.product');
+
         // sub-category...
 Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_sub_category');
 
