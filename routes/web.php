@@ -66,6 +66,7 @@ Route::get('admin/product/active/{id}', 'Admin\Product\ProductController@active'
 Route::get('admin/product/delete/{id}', 'Admin\Product\ProductController@delete')->name('delete.product');
 Route::get('admin/product/view/{id}', 'Admin\Product\ProductController@view')->name('view.product');
 Route::get('admin/product/edit/{id}', 'Admin\Product\ProductController@edit')->name('edit.product');
+Route::post('admin/product/update/without_photo/{id}', 'Admin\Product\ProductController@update_without_photo')->name('update.product.without_photo');
 
         // sub-category...
 Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_sub_category');

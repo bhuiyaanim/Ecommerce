@@ -25,7 +25,7 @@
                 <table id="datatable1" class="table display responsive nowrap">
                     <thead>
                         <tr>
-                            <th class="wd-15p">ID</th>
+                            <th class="wd-15p">SL.</th>
                             <th class="wd-15p">Brand Name</th>
                             <th class="wd-15p">Brand Logo</th>
                             <th class="wd-20p">Action</th>

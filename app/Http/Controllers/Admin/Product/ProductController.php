@@ -138,9 +138,181 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
+        $category = Category::all();
+        $sub_category = Subcategory::all();
+        $brand = Brand::all();
         
-        return view('admin.product.edit', compact('product'));
+        return view('admin.product.edit', compact('product', 'brand', 'category', 'sub_category'));
     }
+
+    public function update_without_photo(Request $request, $id)
+    {
+        $product = array();
+        $product['product_code'] = $request->product_code;
+        $product['product_name'] = $request->product_name;
+        $product['product_quantity'] = $request->product_quantity;
+        $product['discount_price'] = $request->discount_price;
+        $product['category_id'] = $request->category_id;
+        $product['sub_category_id'] = $request->sub_category_id;
+        $product['brand_id'] = $request->brand_id;
+        $product['product_size'] = $request->product_size;
+        $product['product_color'] = $request->product_color;
+        $product['selling_price'] = $request->selling_price;
+        $product['product_details'] = $request->product_details;
+        $product['video_link'] = $request->video_link;
+        $product['main_slider'] = $request->main_slider;
+        $product['hot_deal'] = $request->hot_deal;
+        $product['best_rated'] = $request->best_rated;
+        $product['trend'] = $request->trend;
+        $product['mid_slider'] = $request->mid_slider;
+        $product['hot_new'] = $request->hot_new;
+
+
+
+
+        $old_one = $request->old_image_one;
+        $old_two = $request->old_image_two;
+        $old_three = $request->old_image_three;
+
+        $image_one = $request->image_one;
+        $image_two = $request->image_two;
+        $image_three = $request->image_three;
+
+        // $product = array();
+
+        if($request->has('image_one') && $request->has('image_two') && $request->has('image_three'))
+        {
+            unlink($old_one);   
+            $image_name_one = hexdec(uniqid()).'.'.$image_one->getClientOriginalExtension();
+            Image::make($image_one)->resize(300, 300)->save('public/media/product/'.$image_name_one);
+            $product['image_one'] = 'public/media/product/'.$image_name_one;
+
+            unlink($old_two);
+            $image_name_two = hexdec(uniqid()).'.'.$image_two->getClientOriginalExtension();
+            Image::make($image_two)->resize(300, 300)->save('public/media/product/'.$image_name_two);
+            $product['image_two'] = 'public/media/product/'.$image_name_two;
+
+            unlink($old_three);
+            $image_name_three = hexdec(uniqid()).'.'.$image_three->getClientOriginalExtension();
+            Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
+            $product['image_three'] = 'public/media/product/'.$image_name_three;
+
+            Product::find($request->id)->update($product);
+            $notification = array(
+                'messege' => 'Update Successfull With All Images',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+        if($request->has('image_two') && $request->has('image_three'))
+        {
+            unlink($old_two);
+            $image_name_two = hexdec(uniqid()).'.'.$image_two->getClientOriginalExtension();
+            Image::make($image_two)->resize(300, 300)->save('public/media/product/'.$image_name_two);
+            $product['image_two'] = 'public/media/product/'.$image_name_two;
+
+            unlink($old_three);
+            $image_name_three = hexdec(uniqid()).'.'.$image_three->getClientOriginalExtension();
+            Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
+            $product['image_three'] = 'public/media/product/'.$image_name_three;
+
+            Product::find($request->id)->update($product);
+            $notification = array(
+                'messege' => 'Update Successfull With Image Two and Three',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.product')->with($notification);
+
+        }
+        if($request->has('image_one') && $request->has('image_three'))
+        {
+            unlink($old_one);   
+            $image_name_one = hexdec(uniqid()).'.'.$image_one->getClientOriginalExtension();
+            Image::make($image_one)->resize(300, 300)->save('public/media/product/'.$image_name_one);
+            $product['image_one'] = 'public/media/product/'.$image_name_one;
+
+            unlink($old_three);
+            $image_name_three = hexdec(uniqid()).'.'.$image_three->getClientOriginalExtension();
+            Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
+            $product['image_three'] = 'public/media/product/'.$image_name_three;
+
+            Product::find($request->id)->update($product);
+            $notification = array(
+                'messege' => 'Update Successfull With Image One and Three',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+        if($request->has('image_one') && $request->has('image_two'))
+        {
+            unlink($old_one);   
+            $image_name_one = hexdec(uniqid()).'.'.$image_one->getClientOriginalExtension();
+            Image::make($image_one)->resize(300, 300)->save('public/media/product/'.$image_name_one);
+            $product['image_one'] = 'public/media/product/'.$image_name_one;
+
+            unlink($old_two);
+            $image_name_two = hexdec(uniqid()).'.'.$image_two->getClientOriginalExtension();
+            Image::make($image_two)->resize(300, 300)->save('public/media/product/'.$image_name_two);
+            $product['image_two'] = 'public/media/product/'.$image_name_two;
+
+            Product::find($request->id)->update($product);
+            $notification = array(
+                'messege' => 'Update Successfull With Image One adn Two',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+        if($request->has('image_one'))
+        {
+            unlink($old_one);   
+            $image_name_one = hexdec(uniqid()).'.'.$image_one->getClientOriginalExtension();
+            Image::make($image_one)->resize(300, 300)->save('public/media/product/'.$image_name_one);
+            $product['image_one'] = 'public/media/product/'.$image_name_one;
+
+            Product::find($request->id)->update($product);
+            $notification = array(
+                'messege' => 'Update Successfull With Image One',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+        if($request->has('image_two'))
+        {
+            unlink($old_two);
+            $image_name_two = hexdec(uniqid()).'.'.$image_two->getClientOriginalExtension();
+            Image::make($image_two)->resize(300, 300)->save('public/media/product/'.$image_name_two);
+            $product['image_two'] = 'public/media/product/'.$image_name_two;
+
+            Product::find($request->id)->update($product);
+            $notification = array(
+                'messege' => 'Update Successfull With Image Two',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+        if($request->has('image_three'))
+        {
+            unlink($old_three);
+            $image_name_three = hexdec(uniqid()).'.'.$image_three->getClientOriginalExtension();
+            Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
+            $product['image_three'] = 'public/media/product/'.$image_name_three;
+
+            Product::find($request->id)->update($product);
+            $notification = array(
+                'messege' => 'Update Successfull With Image Three',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+        
+        $notification = array(
+            'messege' => 'Nothing to Updated',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('all.product')->with($notification);
+   
+    }
+
 
     // sub-category ajax request
     public function get_sub_category($category_id)
