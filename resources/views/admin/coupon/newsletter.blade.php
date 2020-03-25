@@ -49,7 +49,10 @@
             </div><!-- table-wrapper -->
         </div><!-- card -->
     </div><!-- sl-pagebody -->
-</div>
+    
+    @section('admin_footer')
+    @endsection
 
+</div><!-- sl-mainpanel -->
 
 @endsection

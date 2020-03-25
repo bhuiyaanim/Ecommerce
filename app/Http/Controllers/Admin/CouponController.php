@@ -63,7 +63,10 @@ class CouponController extends Controller
             'discount' => 'required|max:55',
         ]);
 
-        Coupon::find($request->id)->update(['coupon' => $request->coupon, 'discount' => $request->discount]);
+        $coupon = Coupon::find($request->id);
+        $coupon->coupon = $request->coupon; 
+        $coupon->discount = $request->discount;
+        $coupon->update();
         
         $notification = array(
             'messege' => 'Coupon Update Successfull',

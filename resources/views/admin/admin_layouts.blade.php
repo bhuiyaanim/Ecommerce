@@ -106,6 +106,21 @@
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
                         <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+                        <span class="menu-item-label">Blogs</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div>
+                    <!-- menu-item -->
+                </a>
+                <!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="#" class="nav-link">Category</a></li>
+                    <li class="nav-item"><a href="{{ route('add.blog_post') }}" class="nav-link">Add Post</a></li>
+                    <li class="nav-item"><a href="{{ route('all.blog_post') }}" class="nav-link">All Post</a></li>
+                </ul>
+
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
                         <span class="menu-item-label">Products</span>
                         <i class="menu-item-arrow fa fa-angle-down"></i>
                     </div>
@@ -116,6 +131,7 @@
                     <li class="nav-item"><a href="{{ route('add.product') }}" class="nav-link">Add Product</a></li>
                     <li class="nav-item"><a href="{{ route('all.product') }}" class="nav-link">All Product</a></li>
                 </ul>
+
                 <!-- sl-menu-link -->
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
@@ -367,6 +383,27 @@
         </nav>
     </div> --}}
 
+    @yield('admin_footer')
+        <div class="sl-mainpanel mt-0">
+            {{-- <div class="sl-pagebody"> --}}
+                <footer class="sl-footer"  style="margin-top: -5px;"><!-- Footer Starts -->
+                    <div class="footer-left">
+                        <div class="mg-b-2">Copyright &copy; 2020. Dapple-Park. All Rights Reserved.</div>
+                        <div>Made by AnimBhuiya.</div>
+                    </div>
+                    <div class="footer-right d-flex align-items-center">
+                        <span class="tx-uppercase mg-r-10">Share:</span>
+                        <a target="_blank" class="pd-x-5"
+                            href="https://www.facebook.com/anim.bhuiya"><i
+                                class="fa fa-facebook tx-20"></i></a>
+                        <a target="_blank" class="pd-x-5"
+                            href="https://github.com/bhuiyaanim"><i
+                                class="fa fa-github tx-24"></i></a>
+                    </div>
+                </footer><!-- Footer Ends -->
+            {{-- </div> --}}
+        </div>
+
     <script src="{{ asset('public/backend/lib/jquery/jquery.js') }}"></script>
     <script src="{{ asset('public/backend/lib/popper.js/popper.js') }}"></script>
     <script src="{{ asset('public/backend/lib/bootstrap/bootstrap.js') }}"></script>
@@ -397,6 +434,36 @@
         });
     </script>
     
+    <script>
+        $(function(){
+            'use strict';
+
+            // Inline editor
+            var editor = new MediumEditor('.editable');
+
+            // Summernote editor
+            $('#summernote1').summernote({
+            height: 150,
+            tooltip: false
+            })
+        });
+    </script>
+    
+    <script>
+        $(function(){
+            'use strict';
+
+            // Inline editor
+            var editor = new MediumEditor('.editable');
+
+            // Summernote editor
+            $('#summernote2').summernote({
+            height: 150,
+            tooltip: false
+            })
+        });
+    </script>
+
     <script>
         $(function(){
             'use strict';

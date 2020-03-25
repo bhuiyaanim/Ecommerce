@@ -43,18 +43,15 @@
                             <select class="from-control container ml-3 mr-3" name="category_id" style="border: 1px solid rgba(0, 0, 0, 0.15); padding: 0.65rem 0.75rem; color: #393f44;">
                                 {{-- <option disabled>--Select Category--</option> --}}
                                 @foreach ($category as $row)
-                                    <option value="{{ $row->id }}" @php
+                                    <option value="{{ $row->id }}" <?php
                                         if ( $row->id == $sub_category->category_id ) {
                                             echo "Selected";
                                         }
-                                    @endphp>{{ $row->category_name }}</option>
+                                    ?>>{{ $row->category_name }} </option>
                                 @endforeach
                             </select>
                         </div>
-
                     </div><!-- modal-body -->
-
-                    
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-info pd-x-20">Update</button>
@@ -63,7 +60,11 @@
             </div><!-- table-wrapper -->
         </div><!-- card -->
     </div><!-- sl-pagebody -->
-</div>
+    
+    @section('admin_footer')
+    @endsection
+
+</div><!-- sl-mainpanel -->
 
 
 @endsection

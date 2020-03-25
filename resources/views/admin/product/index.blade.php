@@ -6,7 +6,7 @@
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
         <a class="breadcrumb-item" href="{{ route('admin.home') }}">Dapple Park</a>
-        <span class="breadcrumb-item active">Product</span>
+        <span class="breadcrumb-item active">Products</span>
         <span class="breadcrumb-item active">Product List</span>
     </nav>
 
@@ -27,7 +27,7 @@
                             <th class="wd-15p">Product Name</th>
                             <th class="wd-15p">Image</th>
                             <th class="wd-15p">Category</th>
-                            {{-- <th class="wd-15p">Brand</th> --}}
+                            <th class="wd-15p">Brand</th>
                             <th class="wd-15p">Quantity</th>
                             <th class="wd-15p">Status</th>
                             <th class="wd-20p">Action</th>
@@ -42,7 +42,11 @@
                             <td>{{ $row->product_name }}</td>
                             <td><img src="{{ URL::to($row->image_one) }}" height="40px;" width="40px;"></td>
                             <td>{{ $row->category->category_name }}</td>
-                            {{-- <td>{{ $row->brand->brand_name }}</td> --}}
+                            @if($row->brand_id)
+                                <td>{{ $row->brand->brand_name }}</td>
+                            @else
+                                <td>No Brand</td>
+                            @endif
                             <td>{{ $row->product_quantity }}</td>
                             <td>
                                 @if($row->status == 1)
@@ -68,6 +72,10 @@
             </div><!-- table-wrapper -->
         </div><!-- card -->
     </div><!-- sl-pagebody -->
-</div>
+    
+    @section('admin_footer')
+    @endsection
+
+</div><!-- sl-mainpanel -->
 
 @endsection

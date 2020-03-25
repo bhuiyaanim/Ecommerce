@@ -66,23 +66,16 @@ class CategoryController extends Controller
         $request->validate([
             'category_name' => 'required|max:55',
         ]);
-
-        $update = Category::find($request->id)->update(['category_name' => $request->category_name]);
         
-        if($update){
-            $notification = array(
-                'messege' => 'Category Update Successfull',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('categories')->with($notification);
-        }
-        else{
-            $notification = array(
-                'messege' => 'Nothing To Update',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('categories')->with($notification);
-        }
+        $category = Category::find($request->id);
+        $category->category_name = $request->category_name;
+        $category->update();
+        
+        $notification = array(
+            'messege' => 'Category Update Successfull',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('categories')->with($notification);
     }
 
     public function brand()
@@ -147,7 +140,7 @@ class CategoryController extends Controller
         return view('admin.category.edit_brand', compact('brand'));
     }
 
-    public function update_brand(Request $request)
+    public function update_brand(Request $request, $id)
     {
         $request->validate([
             'brand_name' => 'required|max:55',
@@ -155,7 +148,7 @@ class CategoryController extends Controller
         ]);
 
         $old_logo = $request->old_logo;
-        $brand = new Brand();
+        $brand = Brand::find($id);
         $brand->brand_name = $request->brand_name; 
         $image = $request->file('brand_logo');
 
@@ -168,7 +161,7 @@ class CategoryController extends Controller
             $image_url = $upload_path.$image_full_name;
             $success = $image->move($upload_path,$image_full_name);
             $brand->brand_logo = $image_url;
-            Brand::find($request->id)->update(['brand_name' => $request->brand_name, 'brand_logo' => $brand->brand_logo]);
+            $brand->update();
             $notification=array(
                 'messege' => 'Brand Update Successfull',
                 'alert-type'=>'success'
@@ -176,7 +169,7 @@ class CategoryController extends Controller
             return Redirect()->route('brands')->with($notification);                      
         }
         else{
-            Brand::find($request->id)->update(['brand_name' => $brand->brand_name]);
+            $brand->update();
             $notification=array(
                 'messege' => 'Brand Update Done!',
                 'alert-type'=>'success'
@@ -235,8 +228,11 @@ class CategoryController extends Controller
             'subcategory_name' => 'required|max:55',
             // 'category_id' => 'required',
         ]);
-
-        Subcategory::find($request->id)->update(['subcategory_name' => $request->subcategory_name, 'category_id' => $request->category_id]);
+        
+        $sub_category = Subcategory::find($id);
+        $sub_category->subcategory_name = $request->subcategory_name;
+        $sub_category->category_id = $request->category_id;
+        $sub_category->update();
         
         $notification = array(
             'messege' => 'Sub-Category Update Successfull',

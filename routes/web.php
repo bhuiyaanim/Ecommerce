@@ -66,7 +66,18 @@ Route::get('admin/product/active/{id}', 'Admin\Product\ProductController@active'
 Route::get('admin/product/delete/{id}', 'Admin\Product\ProductController@delete')->name('delete.product');
 Route::get('admin/product/view/{id}', 'Admin\Product\ProductController@view')->name('view.product');
 Route::get('admin/product/edit/{id}', 'Admin\Product\ProductController@edit')->name('edit.product');
-Route::post('admin/product/update/without_photo/{id}', 'Admin\Product\ProductController@update_without_photo')->name('update.product.without_photo');
+Route::post('admin/product/update/{id}', 'Admin\Product\ProductController@update')->name('update.product');
+
+// blogs.........
+Route::get('admin/post/add', 'Admin\PostController@create')->name('add.blog_post');
+Route::post('admin/post/store', 'Admin\PostController@store')->name('store.post');
+Route::get('admin/post/all', 'Admin\PostController@index')->name('all.blog_post');
+Route::get('admin/post/delete/{id}', 'Admin\PostController@delete')->name('delete.post');
+Route::get('admin/post/edit/{id}', 'Admin\PostController@edit')->name('edit.post');
+Route::post('admin/post/update/{id}', 'Admin\PostController@update')->name('update.post');
+
+
+
 
         // sub-category...
 Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_sub_category');

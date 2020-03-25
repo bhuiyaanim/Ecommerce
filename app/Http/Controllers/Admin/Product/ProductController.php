@@ -44,7 +44,14 @@ class ProductController extends Controller
         $product->product_quantity = $request->product_quantity;
         $product->category_id = $request->category_id;
         $product->sub_category_id = $request->sub_category_id;
-        $product->brand_id = $request->brand_id;
+
+        if($request->brand_id) {
+            $product->brand_id = $request->brand_id;
+        }
+        else {
+            $product->brand_id = '';
+        }
+
         $product->product_size = $request->product_size;
         $product->product_color = $request->product_color;
         $product->selling_price = $request->selling_price;
@@ -79,10 +86,10 @@ class ProductController extends Controller
             $product->save();
 
             $notification = array(
-                'messege' => 'Successfully Product Inserted',
+                'messege' => 'Product Add Successfull',
                 'alert-type' => 'success'
             );
-            return Redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
         }
     }
 
@@ -145,30 +152,38 @@ class ProductController extends Controller
         return view('admin.product.edit', compact('product', 'brand', 'category', 'sub_category'));
     }
 
-    public function update_without_photo(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        $product = array();
-        $product['product_code'] = $request->product_code;
-        $product['product_name'] = $request->product_name;
-        $product['product_quantity'] = $request->product_quantity;
-        $product['discount_price'] = $request->discount_price;
-        $product['category_id'] = $request->category_id;
-        $product['sub_category_id'] = $request->sub_category_id;
-        $product['brand_id'] = $request->brand_id;
-        $product['product_size'] = $request->product_size;
-        $product['product_color'] = $request->product_color;
-        $product['selling_price'] = $request->selling_price;
-        $product['product_details'] = $request->product_details;
-        $product['video_link'] = $request->video_link;
-        $product['main_slider'] = $request->main_slider;
-        $product['hot_deal'] = $request->hot_deal;
-        $product['best_rated'] = $request->best_rated;
-        $product['trend'] = $request->trend;
-        $product['mid_slider'] = $request->mid_slider;
-        $product['hot_new'] = $request->hot_new;
 
+        $request->validate([
+            'product_name' => 'required|max:55|string',
+            'product_code' => 'required|max:25',
+            'product_quantity' => 'required|numeric|min:1|max:1000',
+            'category_id' => 'required',
+            'product_color' => 'required|max:100',
+            'selling_price' => 'required|numeric|min:1',
+            'product_details' => 'required|max:5000',
+        ]);
 
-
+        $product = Product::find($id);
+        $product->product_code = $request->product_code;
+        $product->product_name = $request->product_name;
+        $product->product_quantity = $request->product_quantity;
+        $product->discount_price = $request->discount_price;
+        $product->category_id = $request->category_id;
+        $product->sub_category_id = $request->sub_category_id;
+        $product->brand_id = $request->brand_id;
+        $product->product_size = $request->product_size;
+        $product->product_color = $request->product_color;
+        $product->selling_price = $request->selling_price;
+        $product->product_details = $request->product_details;
+        $product->video_link = $request->video_link;
+        $product->main_slider = $request->main_slider;
+        $product->hot_deal = $request->hot_deal;
+        $product->best_rated = $request->best_rated;
+        $product->trend = $request->trend;
+        $product->mid_slider = $request->mid_slider;
+        $product->hot_new = $request->hot_new;
 
         $old_one = $request->old_image_one;
         $old_two = $request->old_image_two;
@@ -177,8 +192,6 @@ class ProductController extends Controller
         $image_one = $request->image_one;
         $image_two = $request->image_two;
         $image_three = $request->image_three;
-
-        // $product = array();
 
         if($request->has('image_one') && $request->has('image_two') && $request->has('image_three'))
         {
@@ -197,9 +210,9 @@ class ProductController extends Controller
             Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
             $product['image_three'] = 'public/media/product/'.$image_name_three;
 
-            Product::find($request->id)->update($product);
+            $product->update();
             $notification = array(
-                'messege' => 'Update Successfull With All Images',
+                'messege' => 'Product Update Successfull',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.product')->with($notification);
@@ -216,9 +229,9 @@ class ProductController extends Controller
             Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
             $product['image_three'] = 'public/media/product/'.$image_name_three;
 
-            Product::find($request->id)->update($product);
+            $product->update();
             $notification = array(
-                'messege' => 'Update Successfull With Image Two and Three',
+                'messege' => 'Product Update Successfull',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.product')->with($notification);
@@ -236,9 +249,9 @@ class ProductController extends Controller
             Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
             $product['image_three'] = 'public/media/product/'.$image_name_three;
 
-            Product::find($request->id)->update($product);
+            $product->update();
             $notification = array(
-                'messege' => 'Update Successfull With Image One and Three',
+                'messege' => 'Product Update Successfull',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.product')->with($notification);
@@ -255,9 +268,9 @@ class ProductController extends Controller
             Image::make($image_two)->resize(300, 300)->save('public/media/product/'.$image_name_two);
             $product['image_two'] = 'public/media/product/'.$image_name_two;
 
-            Product::find($request->id)->update($product);
+            $product->update();
             $notification = array(
-                'messege' => 'Update Successfull With Image One adn Two',
+                'messege' => 'Product Update Successfull',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.product')->with($notification);
@@ -269,9 +282,9 @@ class ProductController extends Controller
             Image::make($image_one)->resize(300, 300)->save('public/media/product/'.$image_name_one);
             $product['image_one'] = 'public/media/product/'.$image_name_one;
 
-            Product::find($request->id)->update($product);
+            $product->update();
             $notification = array(
-                'messege' => 'Update Successfull With Image One',
+                'messege' => 'Product Update Successfull',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.product')->with($notification);
@@ -283,9 +296,9 @@ class ProductController extends Controller
             Image::make($image_two)->resize(300, 300)->save('public/media/product/'.$image_name_two);
             $product['image_two'] = 'public/media/product/'.$image_name_two;
 
-            Product::find($request->id)->update($product);
+            $product->update();
             $notification = array(
-                'messege' => 'Update Successfull With Image Two',
+                'messege' => 'Product Update Successfull',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.product')->with($notification);
@@ -297,16 +310,17 @@ class ProductController extends Controller
             Image::make($image_three)->resize(300, 300)->save('public/media/product/'.$image_name_three);
             $product['image_three'] = 'public/media/product/'.$image_name_three;
 
-            Product::find($request->id)->update($product);
+            $product->update();
             $notification = array(
-                'messege' => 'Update Successfull With Image Three',
+                'messege' => 'Product Update Successfull',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.product')->with($notification);
         }
         
+        $product->update();
         $notification = array(
-            'messege' => 'Nothing to Updated',
+            'messege' => 'Product Update Successfull',
             'alert-type' => 'success'
         );
         return redirect()->route('all.product')->with($notification);

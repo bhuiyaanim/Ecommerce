@@ -40,12 +40,20 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Brand Logo</label>
                             <input type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                name="brand_logo" required>
+                                name="brand_logo" onchange="readURL1(this);">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Old Logo</label>
-                            <img src="{{ URL::to($brand->brand_logo) }}" style="hight: 70px; width:90px; margin-left:10px">
-                            <input type="hidden" name="old_logo" value="{{ $brand->brand_logo }}">
+                            <div class="row">
+                                <div class="col-lg-5 col-sm-5 mt-2 ml-4 ">
+                                    <label for="exampleInputEmail1">Old Logo : </label>
+                                    <img src="{{ URL::to($brand->brand_logo) }}" style="hight:70px; width:70px;">
+                                    <input type="hidden" name="old_logo" value="{{ $brand->brand_logo }}">
+                                </div>
+                                <div class="col-lg-5 col-sm-5 mt-2 ml-4" style="visibility: hidden;" id="new_image">
+                                    <label for="exampleInputEmail1">New Logo : </label>
+                                    <img id="one">
+                                </div>
+                            </div>
                         </div>
                     </div><!-- modal-body -->
                     <div class="modal-footer">
@@ -55,6 +63,26 @@
             </div><!-- table-wrapper -->
         </div><!-- card -->
     </div><!-- sl-pagebody -->
-</div>
+
+    @section('admin_footer')
+    @endsection
+
+</div><!-- sl-mainpanel -->
+
+<script type="text/javascript">
+    function readURL1(input) {
+        document.getElementById('new_image').style.visibility = "visible";
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#one')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 
 @endsection
