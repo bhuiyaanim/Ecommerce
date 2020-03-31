@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Model\Admin\Category;
+
 class HomeController extends Controller
 {
     /**
@@ -23,11 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $category = Category::all();
+      return view('home', compact('category'));
     }
 
-    public function changePassword(){
-        return view('auth.changepassword');
+    public function changePassword()
+    {
+      return view('auth.changepassword');
     }
 
     public function updatePassword(Request $request)

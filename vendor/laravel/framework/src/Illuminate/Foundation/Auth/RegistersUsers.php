@@ -6,6 +6,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Model\Admin\Category;
+
 trait RegistersUsers
 {
     use RedirectsUsers;
@@ -17,7 +19,9 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        $category = Category::all();
+
+        return view('auth.register', compact('category'));
     }
 
     /**

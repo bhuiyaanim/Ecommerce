@@ -20,8 +20,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/responsive.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/contact_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/contact_responsive.css') }}">
-
 </head>
 
 <body>
@@ -68,22 +68,10 @@
                                     </ul>
                                 </div>
                                 <div class="top_bar_user">
-                                    <div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}"></div>
-                                        
-                                        @guest
-                                            @if(request()->is('/'))
-                                                <div><a href="{{ route ('register') }}">Register</a></div>
-                                                <div><a href="{{ route ('login') }}">Sign in</a></div>
-                                            @elseif(request()->is('register'))
-                                                <a href="{{ route ('login') }}">Sign in</a>
-                                            @elseif(request()->is('login'))
-                                                <a href="{{ route ('register') }}">Register</a>
-                                            @endif
-                                        @else
-                                            <a href="{{ route ('register') }}">Profile</a>
-                                        @endguest
-
-                                        
+                                    <div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}"
+                                            alt=""></div>
+                                    <div><a href="{{ route ('register') }}">Register</a></div>
+                                    <div><a href="{{ route ('login') }}">Sign in</a></div>
                                 </div>
                             </div>
                         </div>
@@ -95,10 +83,7 @@
             <div class="header_main">
                 <div class="container">
                     <!-- Error messge section start's -->
-                    
-                    
-                    
-                    {{-- @if ($errors->any())
+                    @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
                             @foreach ($errors->all() as $error)
                                 {{ $error }}
@@ -107,10 +92,7 @@
                                 </button>
                             @endforeach
                         </div>
-                    @endif --}}
-
-
-
+                    @endif
                     <!-- Error messge section end's -->
                     <div class="row">
                         <!-- Logo -->
@@ -134,9 +116,9 @@
                                                     <i class="fas fa-chevron-down"></i>
                                                     <ul class="custom_list clc">
                                                         <li><a class="clc" href="#">All Categories</a></li>
-                                                        @foreach ($category as $row)
+                                                        {{-- @foreach ($category as $row)
                                                             <li><a class="clc" href="#">{{ $row->category_name }}</a></li>
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -182,8 +164,6 @@
             </div>
 
             @yield('content')
-
-            <!-- Footer -->
 
             <footer class="footer">
                 <div class="container">

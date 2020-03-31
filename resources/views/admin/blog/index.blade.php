@@ -35,8 +35,7 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $row->post_title_en }}</td>
-                            <td>{{ $row->post_category_id}}</td>
-                            {{-- <td>{{ $row->postcategory->category_name_en }}</td> --}}
+                            <td>{{ $row->category->category_name_en }}</td>
                             @if($row->post_image)
                                 <td><img src="{{ URL::to($row->post_image) }}" height="40px;" width="40px;"></td>
                             @else

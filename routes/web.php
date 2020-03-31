@@ -2,9 +2,9 @@
 
 
 
-Route::get('/', function () {return view('pages.index');});
+Route::get('/', 'FrontendController@index');
 //auth & user
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
@@ -88,3 +88,6 @@ Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_s
         // Frontend Section...
 // newsletter.......
 Route::post('store/newsletter', 'FrontendController@store_newsletter')->name('store.newsletter');
+
+
+// customer porofile related routes...

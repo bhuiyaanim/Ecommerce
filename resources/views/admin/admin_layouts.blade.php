@@ -372,6 +372,9 @@
         </div>
         <!-- sl-sideright -->
         <!-- ########## END: RIGHT PANEL ########## --->
+        
+        
+
     @endguest
     
     @yield('admin_content')
@@ -383,27 +386,33 @@
         </nav>
     </div> --}}
 
+    
+    @guest
+    
+    @else
+    <!-- ########## START: FOOTER PANEL ########## --->
     @yield('admin_footer')
         <div class="sl-mainpanel mt-0">
-            {{-- <div class="sl-pagebody"> --}}
-                <footer class="sl-footer"  style="margin-top: -5px;"><!-- Footer Starts -->
-                    <div class="footer-left">
-                        <div class="mg-b-2">Copyright &copy; 2020. Dapple-Park. All Rights Reserved.</div>
-                        <div>Made by AnimBhuiya.</div>
-                    </div>
-                    <div class="footer-right d-flex align-items-center">
-                        <span class="tx-uppercase mg-r-10">Share:</span>
-                        <a target="_blank" class="pd-x-5"
-                            href="https://www.facebook.com/anim.bhuiya"><i
-                                class="fa fa-facebook tx-20"></i></a>
-                        <a target="_blank" class="pd-x-5"
-                            href="https://github.com/bhuiyaanim"><i
-                                class="fa fa-github tx-24"></i></a>
-                    </div>
-                </footer><!-- Footer Ends -->
-            {{-- </div> --}}
+            <footer class="sl-footer"  style="margin-top: -5px;"><!-- Footer Starts -->
+                <div class="footer-left">
+                    <div class="mg-b-2">Copyright &copy; 2020. Dapple-Park. All Rights Reserved.</div>
+                    <div>Made by AnimBhuiya.</div>
+                </div>
+                <div class="footer-right d-flex align-items-center">
+                    <span class="tx-uppercase mg-r-10">Share:</span>
+                    <a target="_blank" class="pd-x-5"
+                        href="https://www.facebook.com/anim.bhuiya"><i
+                            class="fa fa-facebook tx-20"></i></a>
+                    <a target="_blank" class="pd-x-5"
+                        href="https://github.com/bhuiyaanim"><i
+                            class="fa fa-github tx-24"></i></a>
+                </div>
+            </footer>
         </div>
-
+    <!-- ########## END: FOOTER PANEL ########## --->
+    @endguest
+    
+    
     <script src="{{ asset('public/backend/lib/jquery/jquery.js') }}"></script>
     <script src="{{ asset('public/backend/lib/popper.js/popper.js') }}"></script>
     <script src="{{ asset('public/backend/lib/bootstrap/bootstrap.js') }}"></script>
