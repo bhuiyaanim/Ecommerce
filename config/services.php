@@ -30,4 +30,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => '667546396035-372flap1bl13nlitm4bkbmibaln0emmo.apps.googleusercontent.com',
+        'client_secret' => 'Xz12lprloCuSMcbuuHIXSJe8',
+        'redirect' => 'http://localhost/Ecommerce_DP/callback/google',
+    ],
+
+    'facebook' => [
+        'client_id' => '667546396035-372flap1bl13nlitm4bkbmibaln0emmo.apps.googleusercontent.com',
+        'client_secret' => 'Xz12lprloCuSMcbuuHIXSJe8',
+        'redirect' => 'http://localhost/Ecommerce_DP/callback/facebook',
+    ],
+
 ];

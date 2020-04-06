@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Model\Admin\Category;
+use Illuminate\Support\Facades\Hash;
+use App\User;
+use App\Model\Frontend\Wishlist;
 
 class HomeController extends Controller
 {
@@ -25,13 +28,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+      $wishlist = Wishlist::where('user_id', Auth::id())->get();
       $category = Category::all();
-      return view('home', compact('category'));
+      
+      return view('home', compact('category', 'wishlist'));
     }
 
     public function changePassword()
     {
-      return view('auth.changepassword');
+      $category = Category::all();
+      return view('auth.changepassword', compact('category'));
     }
 
     public function updatePassword(Request $request)
@@ -71,13 +77,11 @@ class HomeController extends Controller
     public function Logout()
     {
         // $logout= Auth::logout();
-            Auth::logout();
-            $notification=array(
-                'messege'=>'Successfully Logout',
-                'alert-type'=>'success'
-                 );
-             return Redirect()->route('login')->with($notification);
-       
-
+      Auth::logout();
+      $notification=array(
+          'messege'=>'Successfully Logout',
+          'alert-type'=>'success'
+            );
+        return Redirect()->route('login')->with($notification);
     }
 }

@@ -115,11 +115,20 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Product Details <span
                                             class="tx-danger">*</span></label>
-                                    <textarea class="form-control" id="summernote" name="product_details" required>
+                                    <textarea class="form-control" id="summernote1" name="product_details" required>
                                         {{ old('product_details') }}
                                     </textarea>
                                 </div>
                             </div>
+                            <div class="col-lg-12 mt-1">
+                                <div class="form-group">
+                                    <label class="form-control-label">Product Short Description</label>
+                                    <textarea class="form-control" id="summernote2" name="product_details_sm">
+                                        {{ old('product_details_sm') }}
+                                    </textarea>
+                                </div>
+                            </div>
+
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Video Link</label>
@@ -194,12 +203,12 @@
                                 </label>
                             </div>
 
-                            {{-- <div class="col-lg-4">
+                            <div class="col-lg-4">
                                 <label class="ckbox">
                                     <input type="checkbox" name="buyone_getone" value="1">
                                     <span>Buy One Get One</span>
                                 </label>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-info pd-x-20">Submit</button>

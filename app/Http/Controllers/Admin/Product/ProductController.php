@@ -56,6 +56,14 @@ class ProductController extends Controller
         $product->product_color = $request->product_color;
         $product->selling_price = $request->selling_price;
         $product->product_details = $request->product_details;
+
+        if($request->product_details_sm) {
+            $product->product_details_sm = $request->product_details_sm;
+        }
+        else {
+            $product->product_details_sm = '';
+        }
+
         $product->video_link = $request->video_link;
         $product->main_slider = $request->main_slider;
         $product->hot_deal = $request->hot_deal;
@@ -63,6 +71,7 @@ class ProductController extends Controller
         $product->trend = $request->trend;
         $product->mid_slider = $request->mid_slider;
         $product->hot_new = $request->hot_new;
+        $product->buy_one_get_one = $request->buyone_getone;
         $product->status = 1;
         
         $image_one = $request->image_one;
@@ -177,6 +186,7 @@ class ProductController extends Controller
         $product->product_color = $request->product_color;
         $product->selling_price = $request->selling_price;
         $product->product_details = $request->product_details;
+        $product->product_details_sm = $request->product_details_sm;
         $product->video_link = $request->video_link;
         $product->main_slider = $request->main_slider;
         $product->hot_deal = $request->hot_deal;
@@ -184,6 +194,7 @@ class ProductController extends Controller
         $product->trend = $request->trend;
         $product->mid_slider = $request->mid_slider;
         $product->hot_new = $request->hot_new;
+        $product->buy_one_get_one = $request->buyone_getone;
 
         $old_one = $request->old_image_one;
         $old_two = $request->old_image_two;

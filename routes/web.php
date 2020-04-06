@@ -6,8 +6,8 @@ Route::get('/', 'FrontendController@index');
 //auth & user
 Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
-Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
+Route::get('/password/change', 'HomeController@changePassword')->name('password.change');
+Route::post('/password/update', 'HomeController@updatePassword')->name('password.update');
 Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');
 
 //admin=======
@@ -76,11 +76,10 @@ Route::get('admin/post/delete/{id}', 'Admin\PostController@delete')->name('delet
 Route::get('admin/post/edit/{id}', 'Admin\PostController@edit')->name('edit.post');
 Route::post('admin/post/update/{id}', 'Admin\PostController@update')->name('update.post');
 
-
-
-
         // sub-category...
 Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_sub_category');
+
+
 
 
 
@@ -89,5 +88,19 @@ Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_s
 // newsletter.......
 Route::post('store/newsletter', 'FrontendController@store_newsletter')->name('store.newsletter');
 
+// wishlist.........
+Route::get('add/wishlist/{id}', 'WishlistController@addwishlist')->name('wishlist');
+
+// add to cart......
+Route::get('addtocart/{id}', 'AddCartController@addcart')->name('addtocart');
+Route::get('check', 'AddCartController@check')->name('check');
+
+// socialite........
+Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
+Route::get('/callback/{provider}', 'SocialController@callback');
+
+// product..........
+Route::get('/product/details/{id}/{product_name}', 'ProductController@details')->name('product.details');
+Route::post('/product/addtocart/{id}', 'ProductController@addcart')->name('product.addtocart');
 
 // customer porofile related routes...

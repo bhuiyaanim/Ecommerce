@@ -144,11 +144,20 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Product Details <span
                                             class="tx-danger">*</span></label>
-                                    <textarea class="form-control" id="summernote" name="product_details" required>
+                                    <textarea class="form-control" id="summernote1" name="product_details" required>
                                         {{ $product->product_details }}
                                     </textarea>
                                 </div>
                             </div>
+                            <div class="col-lg-12 mt-1">
+                                <div class="form-group">
+                                    <label class="form-control-label">Product Short Description</label>
+                                    <textarea class="form-control" id="summernote2" name="product_details_sm">
+                                        {{ $product->product_details_sm }}
+                                    </textarea>
+                                </div>
+                            </div>
+
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Video Link</label>
@@ -283,6 +292,16 @@
                                             }
                                         ?>>
                                     <span>Hot New</span>
+                                </label>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="ckbox">
+                                    <input type="checkbox" name="buyone_getone" value="1" <?php if($product->buy_one_get_one == 1)
+                                            {
+                                                echo "checked";
+                                            }
+                                        ?>>
+                                    <span>Buy One Get One</span>
                                 </label>
                             </div>
                         </div>

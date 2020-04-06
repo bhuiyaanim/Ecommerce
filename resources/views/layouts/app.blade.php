@@ -3,6 +3,7 @@
 
 <head>
     <title>Ecommerce_DP</title>
+    <meta name="csrf" value="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="OneTech shop project">
@@ -22,6 +23,14 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/contact_responsive.css') }}">
 
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+    <!-- Product Details -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_responsive.css') }}">
+    
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/d8afe38de3.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -57,14 +66,14 @@
                                                 <li><a href="#">Japanese</a></li>
                                             </ul>
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
                                             <ul>
                                                 <li><a href="#">EUR Euro</a></li>
                                                 <li><a href="#">GBP British Pound</a></li>
                                                 <li><a href="#">JPY Japanese Yen</a></li>
                                             </ul>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                                 <div class="top_bar_user">
@@ -80,7 +89,16 @@
                                                 <a href="{{ route ('register') }}">Register</a>
                                             @endif
                                         @else
-                                            <a href="{{ route ('register') }}">Profile</a>
+                                            <ul class="standard_dropdown top_bar_dropdown top_bar_menu"> 
+                                                <li>
+                                                    <a href="{{ route ('register') }}">Profile</a>
+                                                    <ul>
+                                                        <li><a href="#">Wishlist</a></li>
+                                                        <li><a href="#">Checkout</a></li>
+                                                        <li><a href="#">Extra</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
                                         @endguest
 
                                         
@@ -153,21 +171,25 @@
                         <!-- Wishlist -->
                         <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
                             <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
-                                <div class="wishlist d-flex flex-row align-items-center justify-content-end">
-                                    <div class="wishlist_icon"><img
-                                            src="{{ asset('public/frontend/images/heart.png') }}" alt=""></div>
-                                    <div class="wishlist_content">
-                                        <div class="wishlist_text"><a href="#">Wishlist</a></div>
-                                        <div class="wishlist_count">115</div>
+                                @guest
+                                @else
+                                    <div class="wishlist d-flex flex-row align-items-center justify-content-end">
+                                        <div class="wishlist_icon"><img
+                                                src="{{ asset('public/frontend/images/heart.png') }}" alt=""></div>
+                                        <div class="wishlist_content">
+                                            <div class="wishlist_text"><a href="#">Wishlist</a></div>
+                                            <div class="wishlist_count">{{ count($wishlist) }}</div>
+                                        </div>
                                     </div>
-                                </div>
+                                
+                                @endguest
 
                                 <!-- Cart -->
                                 <div class="cart">
                                     <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                         <div class="cart_icon">
                                             <img src="{{ asset('public/frontend/images/cart.png') }}" alt="">
-                                            <div class="cart_count"><span>10</span></div>
+                                            <div class="cart_count"><span>{{Cart::count()}}</span></div>
                                         </div>
                                         <div class="cart_content">
                                             <div class="cart_text"><a href="#">Cart</a></div>
@@ -180,7 +202,7 @@
                     </div>
                 </div>
             </div>
-
+        </header>
             @yield('content')
 
             <!-- Footer -->
@@ -310,7 +332,13 @@
     <script src="{{ asset('public/frontend/plugins/slick-1.8.0/slick.js') }}"></script>
     <script src="{{ asset('public/frontend/plugins/easing/easing.js') }}"></script>
     <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+
+    <script src="{{ asset('public/frontend/js/product_custom.js') }}"></script>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
     <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
     <script>
         @if(Session::has('messege'))

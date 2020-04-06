@@ -42,10 +42,13 @@
                     <div class="row pt-4 pb-4">
                         
                         <div class="col-lg-10 offset-lg-1">
-                            {{-- <a href="{{ route('password.request') }}">Forgot Password ?</a> --}}
                             <h3 class="text-center mt-1" style="color:grey;">or</h3>
-                            <button type="submit" class="button contact_submit_button bg-primary btn-block">Continue With FaceBook</button>
-                            <button type="submit" class="button contact_submit_button bg-danger btn-block">Continue With Google</button>
+                            <button class="button contact_submit_button bg-primary btn-block">
+                                <a href="{{ url('/auth/redirect/facebook') }}">Continue With FaceBook</a>
+                            </button>
+                            <button class="button contact_submit_button bg-danger btn-block">
+                                <a  href="{{ url('/auth/redirect/google') }}">Continue With Google</a>
+                            </button>
                         </div>
                     </div>
                 </div>

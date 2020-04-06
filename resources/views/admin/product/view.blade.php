@@ -85,6 +85,13 @@
                                 <p>{!! $product->product_details !!}</p>
                             </div>
                         </div>
+                        <div class="col-lg-12 mt-1">
+                            <div class="form-group" style="text-align:justify; color:#3f454a; border:1px solid grey; padding:10px;">
+                                <label class="form-control-label">Product Short Description:</label>
+                                <p>{!! $product->product_details_sm !!}</p>
+                            </div>
+                        </div>
+
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label class="form-control-label">Video Link</label>
@@ -170,7 +177,25 @@
                                 <span>Hot New</span>
                             </label>
                         </div>
+                        <div class="col-lg-4">
+                            <label class="ckbox">
+                                @if($product->buy_one_get_one == 1)
+                                    <input type="checkbox" name="buyone_getone" checked onclick="return false;">
+                                @else
+                                    <input type="checkbox" name="buyone_getone"  onclick="return false;">
+                                @endif
+                                <span>Buy One Get One</span>
+                            </label>
+                        </div>
                     </div>
+
+
+                    {{-- <div class="col-lg-4">
+                        <label class="ckbox">
+                            <input type="checkbox" name="buyone_getone" value="1">
+                            <span>Buy One Get One</span>
+                        </label>
+                    </div> --}}
 
                 </div><!-- card -->
             </div>

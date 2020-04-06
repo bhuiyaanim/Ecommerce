@@ -44,7 +44,9 @@
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('public/backend/css/starlight.css') }}">
     <link href="{{ asset('public/backend/lib/summernote/summernote-bs4.css') }}" rel="stylesheet">
-
+    
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/d8afe38de3.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -436,36 +438,11 @@
             var editor = new MediumEditor('.editable');
 
             // Summernote editor
-            $('#summernote').summernote({
-            height: 150,
-            tooltip: false
-            })
-        });
-    </script>
-    
-    <script>
-        $(function(){
-            'use strict';
-
-            // Inline editor
-            var editor = new MediumEditor('.editable');
-
-            // Summernote editor
             $('#summernote1').summernote({
-            height: 150,
+            height: 250,
             tooltip: false
             })
-        });
-    </script>
-    
-    <script>
-        $(function(){
-            'use strict';
 
-            // Inline editor
-            var editor = new MediumEditor('.editable');
-
-            // Summernote editor
             $('#summernote2').summernote({
             height: 150,
             tooltip: false
