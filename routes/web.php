@@ -90,10 +90,31 @@ Route::post('store/newsletter', 'FrontendController@store_newsletter')->name('st
 
 // wishlist.........
 Route::get('add/wishlist/{id}', 'WishlistController@addwishlist')->name('wishlist');
+Route::get('user/wishlist', 'WishlistController@show')->name('wishlist');
+
 
 // add to cart......
 Route::get('addtocart/{id}', 'AddCartController@addcart')->name('addtocart');
 Route::get('check', 'AddCartController@check')->name('check');
+Route::get('product/cart', 'AddCartController@show')->name('show.cart');
+Route::get('remove/cart/{rowId}', 'AddCartController@remove')->name('remove.cart');
+Route::post('update/cart', 'AddCartController@update')->name('update.cart');
+Route::post('insert/cart', 'AddCartController@insertCart')->name('insert.cart');
+Route::get('product/checkout', 'AddCartController@checkout')->name('checkout');
+Route::post('update/checkout/cart', 'AddCartController@update_checkout')->name('update.checkout.cart');
+Route::post('apply/coupon', 'AddCartController@apply_coupon')->name('apply.coupon');
+Route::get('remove/coupon', 'AddCartController@remove_coupon')->name('remove.coupon');
+
+// payment
+Route::get('product/payment', 'PaymentController@show')->name('payment');
+Route::post('product/payment/process', 'PaymentController@payment')->name('payment.process');
+
+// blog.............
+Route::get('blog/post', 'BlogController@blog')->name('blog.post');
+
+Route::get('language/english', 'BlogController@english')->name('language.english');
+Route::get('language/bangla', 'BlogController@bangla')->name('language.bangla');
+
 
 // socialite........
 Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
@@ -102,5 +123,6 @@ Route::get('/callback/{provider}', 'SocialController@callback');
 // product..........
 Route::get('/product/details/{id}/{product_name}', 'ProductController@details')->name('product.details');
 Route::post('/product/addtocart/{id}', 'ProductController@addcart')->name('product.addtocart');
+Route::get('cart/product/view/{id}', 'ProductController@viewProduct');
 
 // customer porofile related routes...

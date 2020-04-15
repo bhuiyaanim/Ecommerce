@@ -29,6 +29,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_responsive.css') }}">
     
+    <!-- Show Cart -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/cart_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/cart_responsive.css') }}">
+    
+    <!-- Blog -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_responsive.css') }}">
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/d8afe38de3.js" crossorigin="anonymous"></script>
 </head>
@@ -57,14 +65,13 @@
                             </div>
                             <div class="top_bar_content ml-auto">
                                 <div class="top_bar_menu">
-                                    <ul class="standard_dropdown top_bar_dropdown">
+                                    <ul class="standard_dropdown">
                                         <li>
-                                            <a href="#">English<i class="fas fa-chevron-down"></i></a>
-                                            <ul>
-                                                <li><a href="#">Italian</a></li>
-                                                <li><a href="#">Spanish</a></li>
-                                                <li><a href="#">Japanese</a></li>
-                                            </ul>
+                                            @if (session()->get('lang') == 'bangla')
+                                                <a href="{{ route('language.english') }}">English<i class="fas fa-chevron-down"></i></a>
+                                            @else
+                                                <a href="{{ route('language.bangla') }}">Bangla<i class="fas fa-chevron-down"></i></a>                                                
+                                            @endif
                                         </li>
                                         {{-- <li>
                                             <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
@@ -81,21 +88,44 @@
                                         
                                         @guest
                                             @if(request()->is('/'))
-                                                <div><a href="{{ route ('register') }}">Register</a></div>
-                                                <div><a href="{{ route ('login') }}">Sign in</a></div>
+                                                @if(session()->get('lang') == 'bangla')
+                                                    <div><a href="{{ route ('register') }}">রেজিস্টার</a></div>
+                                                    <div><a href="{{ route ('login') }}">সিগণ ইন</a></div>
+                                                @else
+                                                    <div><a href="{{ route ('register') }}">Register</a></div>
+                                                    <div><a href="{{ route ('login') }}">Sign in</a></div>
+                                                @endif
                                             @elseif(request()->is('register'))
-                                                <a href="{{ route ('login') }}">Sign in</a>
+                                                @if(session()->get('lang') == 'bangla')
+                                                    <a href="{{ route ('login') }}">সিগণ ইন</a>
+                                                @else
+                                                    <a href="{{ route ('login') }}">Sign in</a>
+                                                @endif
                                             @elseif(request()->is('login'))
-                                                <a href="{{ route ('register') }}">Register</a>
+                                                @if(session()->get('lang') == 'bangla')
+                                                    <a href="{{ route ('register') }}">রেজিস্টার</a>
+                                                @else
+                                                    <a href="{{ route ('register') }}">Register</a>
+                                                @endif
                                             @endif
                                         @else
                                             <ul class="standard_dropdown top_bar_dropdown top_bar_menu"> 
                                                 <li>
-                                                    <a href="{{ route ('register') }}">Profile</a>
+                                                    @if(session()->get('lang') == 'bangla')
+                                                        <a href="{{ route ('register') }}">প্রোফাইল</a>
+                                                    @else
+                                                        <a href="{{ route ('register') }}">Profile</a>
+                                                    @endif
                                                     <ul>
-                                                        <li><a href="#">Wishlist</a></li>
-                                                        <li><a href="#">Checkout</a></li>
-                                                        <li><a href="#">Extra</a></li>
+                                                        @if(session()->get('lang') == 'bangla')
+                                                            <li><a href="{{ route('wishlist') }}">ইচ্ছেতালিকা</a></li>
+                                                            <li><a href="{{ route('checkout') }}">চেকআউট</a></li>
+                                                            <li><a href="#">অতিরিক্ত</a></li>
+                                                        @else
+                                                            <li><a href="{{ route('wishlist') }}">Wishlist</a></li>
+                                                            <li><a href="{{ route('checkout') }}">Checkout</a></li>
+                                                            <li><a href="#">Extra</a></li>
+                                                        @endif
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -134,7 +164,11 @@
                         <!-- Logo -->
                         <div class="col-lg-2 col-sm-3 col-3 order-1">
                             <div class="logo_container">
-                            <div class="logo"><a href="{{ url('/') }}">Dapple Park</a></div>
+                            @if(session()->get('lang') == 'bangla')
+                                <div class="logo"><a href="{{ url('/') }}">ড্যাপল পার্ক</a></div>
+                            @else
+                                <div class="logo"><a href="{{ url('/') }}">Dapple Park</a></div>
+                            @endif
                             </div>
                         </div>
 
@@ -177,8 +211,12 @@
                                         <div class="wishlist_icon"><img
                                                 src="{{ asset('public/frontend/images/heart.png') }}" alt=""></div>
                                         <div class="wishlist_content">
-                                            <div class="wishlist_text"><a href="#">Wishlist</a></div>
-                                            <div class="wishlist_count">{{ count($wishlist) }}</div>
+                                            @if(session()->get('lang') == 'bangla')
+                                                <div class="wishlist_text"><a href="{{ route('wishlist') }}">ইচ্ছেতালিকা</a></div>
+                                            @else
+                                                <div class="wishlist_text"><a href="{{ route('wishlist') }}">Wishlist</a></div>
+                                            @endif
+                                            <div class="wishlist_count test">{{ count($wishlist) }}</div>
                                         </div>
                                     </div>
                                 
@@ -192,8 +230,12 @@
                                             <div class="cart_count"><span>{{Cart::count()}}</span></div>
                                         </div>
                                         <div class="cart_content">
-                                            <div class="cart_text"><a href="#">Cart</a></div>
-                                            <div class="cart_price">$85</div>
+                                            @if(session()->get('lang') == 'bangla')
+                                                <div class="cart_text"><a href="{{ route('show.cart') }}">কোর্ট</a></div>
+                                            @else
+                                                <div class="cart_text"><a href="{{ route('show.cart') }}">Cart</a></div>
+                                            @endif
+                                            <div class="cart_price">Tk {{Cart::subtotal()}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -334,6 +376,8 @@
     <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
 
     <script src="{{ asset('public/frontend/js/product_custom.js') }}"></script>
+
+    <script src="{{ asset('public/frontend/js/cart_custom.js') }}"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use Cart;
+use Response;
 use App\Model\Admin\Product;
 use App\Model\Admin\Category;
 use App\Model\Admin\Subcategory;
@@ -72,4 +73,30 @@ class ProductController extends Controller
             return Redirect()->to('/')->with($notification);
         }
     }
+
+    public function viewProduct($id)
+    {
+        $product = Product::join('categories','products.category_id','categories.id')
+                            ->join('subcategories','products.sub_category_id','subcategories.id')
+                            ->join('brands','products.brand_id','brands.id')
+                            ->select('products.*','categories.category_name','subcategories.subcategory_name','brands.brand_name')
+                            ->where('products.id',$id)->first();
+
+        $color = $product->product_color;
+        $product_color = explode(',', $color);
+        // return response()->json($color);
+        
+        $size = $product->product_size;
+        $product_size = explode(',', $size);
+        
+        // return response()->json($product_color);
+        return response::json(
+            array(
+                'product' => $product,
+                'color' => $product_color,
+                'size' => $product_size,
+            )
+        );
+    }
+
 }

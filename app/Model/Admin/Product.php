@@ -29,4 +29,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Model\Admin\Subcategory');
     }
+
+    public function wishlists()
+    {
+        return $this->hasMany('App\Model\Frontend\Wishlist');
+    }
 }

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
+@include('layouts.menubar')
+
 <div class="single_product pt-3 pb-5">
     <div class="container">
         <div class="row">
@@ -32,7 +34,7 @@
                     <div class="rating_r rating_r_4 product_rating">
                         <i></i><i></i><i></i><i></i><i></i>
                     </div>
-                    <div class="product_text mt-4">
+                    <div class="product_text mt-4" style="text-align:justify;">
                         <p>{!! $product->product_details_sm !!}</p>
                     </div>
                     <div class="order_info d-flex flex-row mt-4">

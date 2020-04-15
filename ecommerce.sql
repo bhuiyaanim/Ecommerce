@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2020 at 03:30 PM
+-- Generation Time: Apr 15, 2020 at 01:40 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -183,7 +183,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2020_03_16_035420_creat_products_table', 5),
 (17, '2020_03_22_042707_create_posts_table', 6),
 (18, '2020_03_22_042511_create_post_category_table', 7),
-(19, '2020_04_02_065238_create_wishlists_table', 8);
+(19, '2020_04_02_065238_create_wishlists_table', 8),
+(20, '2020_04_12_101232_create_settings_table', 9),
+(21, '2016_06_01_000001_create_oauth_auth_codes_table', 10),
+(22, '2016_06_01_000002_create_oauth_access_tokens_table', 10),
+(23, '2016_06_01_000003_create_oauth_refresh_tokens_table', 10),
+(24, '2016_06_01_000004_create_oauth_clients_table', 10),
+(25, '2016_06_01_000005_create_oauth_personal_access_clients_table', 10);
 
 -- --------------------------------------------------------
 
@@ -205,6 +211,99 @@ CREATE TABLE `newsletters` (
 INSERT INTO `newsletters` (`id`, `email`, `created_at`, `updated_at`) VALUES
 (1, 'sohidulislam@gmail.com', '2020-03-15 04:00:42', '2020-03-15 04:00:42'),
 (2, 'test@test.com', '2020-03-15 04:32:28', '2020-03-15 04:32:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+CREATE TABLE `oauth_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_clients`
+--
+
+INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Laravel Personal Access Client', 'DvayCwiYKzS3hTwiA8DzyARo2VjB7MvUCtZhNXNw', 'http://localhost', 1, 0, 0, '2020-04-15 03:39:41', '2020-04-15 03:39:41'),
+(2, NULL, 'Laravel Password Grant Client', 'GTtr9CJYZmrbyScLiQs1yCwYzTlBCPmpsJBowNKD', 'http://localhost', 0, 1, 0, '2020-04-15 03:39:41', '2020-04-15 03:39:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_personal_access_clients`
+--
+
+INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
+(1, 1, '2020-04-15 03:39:41', '2020-04-15 03:39:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -331,6 +430,32 @@ INSERT INTO `products` (`id`, `category_id`, `sub_category_id`, `brand_id`, `pro
 (22, 7, 7, 2, 'Yellow Smart Watch', 'w-1111', '65', '<div class=\"product-attributes-item\">\r\n                                <ul><li>\r\n                                            <label>Brand </label>\r\n                                            <span class=\"info-deta\">FITUP</span>\r\n                                        </li><li>\r\n                                            <label>Product origin </label>\r\n                                            <span class=\"info-deta\">Shenzhen</span>\r\n                                        </li><li>\r\n                                            <label>Delivery time </label>\r\n                                            <span class=\"info-deta\">3-10day</span>\r\n                                        </li><li>\r\n                                            <label>Supply capacity </label>\r\n                                            <span class=\"info-deta\">100000 pcs/month</span>\r\n                                        </li></ul>\r\n                            </div>\r\n                            <div class=\"product-overview\"><p>Product features:\r\n<br> 1.  Osram high-end biosensor.\r\n<br> 2.  Blood pressure monitoring; Intelligent sleep monitoring.\r\n<br> 3.  0.95 inches OLED screen, milanese strap.\r\n<br> 4.  OEM ODM smart bracelet manufacturer.</p></div>', '1.  Osram high-end biosensor.\r\n<br> 2.  Blood pressure monitoring; Intelligent sleep monitoring.\r\n<br> 3.  0.95 inches OLED screen, milanese strap.\r\n<br> 4.  OEM ODM smart bracelet manufacturer.', 'Yellow,Black,Red', NULL, '17500', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'public/media/product/1662119322520326.jpg', 'public/media/product/1662119322559973.jpg', 'public/media/product/1662119322591054.jpg', 1, '2020-03-25 01:15:08', '2020-04-06 04:34:11'),
 (23, 9, 10, 10, 'Canon 6D', 'C-7813', '25', '<h3>Canon EOS 6D key specifications</h3>\r\n<ul><li>20.2MP full frame CMOS sensor</li><li>DIGIC 5+ image processor</li><li>ISO 100-25600 standard, 50-102800 expanded</li><li>4.5 fps continuous shooting</li><li>\'Silent\' shutter mode</li><li>1080p30 video recording, stereo sound via external mic</li><li>11 point AF system, center point cross-type and sensitive to -3 EV</li><li>63 zone iFCL metering system</li><li>97% viewfinder coverage; interchangeable screens (including Eg-D grid and Eg-S fine-focus)</li><li>1040k dot 3:2 3\" ClearView LCD (fixed)</li><li>Single SD card slot</li><li>Built-in Wi-Fi and GPS</li><li>Single-axis electronic level</li></ul>', NULL, 'Black ,Blue', NULL, '75000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'public/media/product/1662119517694583.jpg', 'public/media/product/1662119517983216.jpg', 'public/media/product/1662119518038723.jpg', 1, '2020-03-25 01:18:15', '2020-03-25 01:18:15'),
 (24, 9, 26, 27, 'JBl Speaker', 'Jbl-101', '40', '<p>                                        \r\n                                    </p><table class=\"table table-bordered\"><tbody><tr><td><table cellspacing=\"1\" cellpadding=\"1\" border=\"1\"><tbody><tr><td style=\"width:132px;\">Item Name&nbsp;</td><td style=\"width:569px;\">Waterproof Portable Outdoor Bluetooth Speaker Wireless Loudspeaker For JBL Support TF/USB/AUX/FM Radio</td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Bluetooth</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">4.2+EDR</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">MOQ</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">50PCS&nbsp;</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Material</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">ABS&nbsp;</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Color</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">Black,Blue.Red,Green,Grey,Camouflage</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Weight</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">500g</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Power</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">5W*2</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Frequency</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">100Hz-20KHZ</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Battery</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">1200mAh</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Playback formats</span></td><td style=\"width:569px;\">MP3,APE,WMA,FLC,WAV</td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Signal-to-Noise</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">≥75dB</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Distortion</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">≤0.5%</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Playing Time&nbsp;</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">6-8 hours</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">TF Card</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">MAX 32GB</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Speaker Size&nbsp;</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">25.0 cm * 15.0 cm * 10.0 cm</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Function</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">FM Radio,Bluetooth audio input, Bluetooth hands-free calling, TF card etc&nbsp;</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Audio interface</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">3.5mm</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">&nbsp;Voltage&nbsp;</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">3.7V</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Application for&nbsp;</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\"><strong>Camping/Climbing/Adventure/Picnic/Riding Outdoor Sports Activities</strong></span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">OEM&nbsp;</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">Supported&nbsp;</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">LOGO Customized&nbsp;</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">Welcome&nbsp;</span></td></tr><tr><td style=\"width:132px;\"><span style=\"font-size:16px;\">Package Included</span></td><td style=\"width:569px;\"><span style=\"font-size:16px;\">1* E3 Bluetooth Speaker&nbsp;<br>1* USB&nbsp;Charging&nbsp;Cable&nbsp;&nbsp;&nbsp;<br>1* AUX&nbsp;Cable&nbsp;&nbsp;&nbsp;<br>1* User Manual&nbsp;&nbsp;</span></td></tr></tbody></table></td></tr></tbody></table><p><br></p>', NULL, 'Black,White', NULL, '27000', NULL, 'https://www.youtube.com/watch?v=c8K7lDYhyfM', NULL, NULL, NULL, NULL, NULL, 1, NULL, 'public/media/product/1662120069822873.jpg', 'public/media/product/1662120069879343.jpg', 'public/media/product/1662120069926891.jpg', 1, '2020-03-25 01:27:01', '2020-04-05 00:13:52');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `vat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shapping_charge` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `vat`, `shapping_charge`, `shop_name`, `email`, `phone`, `address`, `logo`, `created_at`, `updated_at`) VALUES
+(1, '3', '60', 'Echovel', 'echovel@gmail.com', '0171626886', 'Khilkhat Dhaka', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -475,6 +600,39 @@ ALTER TABLE `newsletters`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `oauth_access_tokens`
+--
+ALTER TABLE `oauth_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_auth_codes`
+--
+ALTER TABLE `oauth_auth_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_auth_codes_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_refresh_tokens`
+--
+ALTER TABLE `oauth_refresh_tokens`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -496,6 +654,12 @@ ALTER TABLE `post_categories`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -555,13 +719,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `newsletters`
 --
 ALTER TABLE `newsletters`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -580,6 +756,12 @@ ALTER TABLE `post_categories`
 --
 ALTER TABLE `products`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subcategories`

@@ -3,9 +3,34 @@
 
 @include('layouts.menubar')
 
+<!-- Banner -->
+
+<div class="banner">
+    <div class="banner_background"
+        style="background-image:url({{ asset('public/frontend/images/banner_background.jpg') }}"></div>
+    <div class="container fill_height">
+        <div class="row fill_height">
+            <div class="banner_product_image"><img src="{{ asset($slider->image_one) }}" alt=""></div>
+            <div class="col-lg-5 offset-lg-4 fill_height">
+                <div class="banner_content">
+                    <h1 class="banner_text">{{ $slider->product_name }}</h1>
+                    <div class="banner_price">
+                        @if($slider->discount_price == null)
+                        <h2>Tk {{ $slider->selling_price }}</h2>
+                        @else
+                        <span>Tk {{ $slider->selling_price }}</span>Tk {{ $slider->discount_price }}</div>
+                    @endif
+                    <div class="banner_product_name">{{ $slider->brand->brand_name }}</div>
+                    <div class="button banner_button"><a href="#">Shop Now</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Characteristics -->
 
-<div class="characteristics">
+<div class="characteristics pb-3">
     <div class="container">
         <div class="row">
 
@@ -62,7 +87,7 @@
 
 <!-- Deals of the week -->
 
-<div class="deals_featured">
+<div class="deals_featured mt-3">
     <div class="container">
         <div class="row">
             <div class="col d-flex flex-lg-row flex-column align-items-center justify-content-start">
@@ -74,61 +99,64 @@
                         <div class="owl-carousel owl-theme deals_slider">
                             <!-- Deals Item -->
                             @foreach ($hot as $hot)
-                                <div class="owl-item deals_item">
-                                    <div class="deals_image">
-                                        <img src="{{ asset($hot->image_one) }}" class="rounded mx-auto" style="width:150px">
+                            <div class="owl-item deals_item">
+                                <div class="deals_image">
+                                    <img src="{{ asset($hot->image_one) }}" class="rounded mx-auto" style="width:150px">
+                                </div>
+                                <div class="deals_content">
+                                    <div class="deals_info_line d-flex flex-row justify-content-start">
+                                        <div class="deals_item_category"><a
+                                                href="#">{{ $hot->category->category_name }}</a></div>
+                                        @if ($hot->discount_price == null)
+                                        <div class="deals_item_price ml-auto">Tk {{ $hot->selling_price }}</div>
+                                        @else
+                                        <div class="deals_item_price_a ml-auto">Tk {{ $hot->selling_price }}</div>
+                                        @endif
                                     </div>
-                                    <div class="deals_content">
-                                        <div class="deals_info_line d-flex flex-row justify-content-start">
-                                            <div class="deals_item_category"><a href="#">{{ $hot->category->category_name }}</a></div>
-                                            @if ($hot->discount_price == null)
-                                                <div class="deals_item_price ml-auto">Tk {{ $hot->selling_price }}</div>
-                                            @else
-                                                <div class="deals_item_price_a ml-auto">Tk {{ $hot->selling_price }}</div>
-                                            @endif
+                                    <div class="deals_info_line d-flex flex-row justify-content-start">
+                                        <div class="deals_item_name">
+                                            <a href="{{ route('product.details', ['id' => $hot->id, 'product_name' => $hot->product_name]) }}"
+                                                style="color:black;">
+                                                {{ $hot->product_name }}
+                                            </a>
                                         </div>
-                                        <div class="deals_info_line d-flex flex-row justify-content-start">
-                                            <div class="deals_item_name">
-                                                <a href="{{ route('product.details', ['id' => $hot->id, 'product_name' => $hot->product_name]) }}" style="color:black;">
-                                                    {{ $hot->product_name }}
-                                                </a>
-                                            </div>
-                                            @if ($hot->discount_price == null)
-                                            @else
-                                                <div class="deals_item_price ml-auto">Tk {{ $hot->discount_price }}</div>
-                                            @endif
+                                        @if ($hot->discount_price == null)
+                                        @else
+                                        <div class="deals_item_price ml-auto">Tk {{ $hot->discount_price }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="available">
+                                        <div class="available_line d-flex flex-row justify-content-start">
+                                            <div class="available_title">Available:
+                                                <span>{{ $hot->product_quantity }}</span></div>
+                                            <div class="sold_title ml-auto">Already sold: <span>28</span></div>
                                         </div>
-                                        <div class="available">
-                                            <div class="available_line d-flex flex-row justify-content-start">
-                                                <div class="available_title">Available: <span>{{ $hot->product_quantity }}</span></div>
-                                                <div class="sold_title ml-auto">Already sold: <span>28</span></div>
-                                            </div>
-                                            <div class="available_bar"><span style="width:17%"></span></div>
+                                        <div class="available_bar"><span style="width:17%"></span></div>
+                                    </div>
+                                    <div class="deals_timer d-flex flex-row align-items-center justify-content-start">
+                                        <div class="deals_timer_title_container">
+                                            <div class="deals_timer_title">Hurry Up</div>
+                                            <div class="deals_timer_subtitle">Offer ends in:</div>
                                         </div>
-                                        <div class="deals_timer d-flex flex-row align-items-center justify-content-start">
-                                            <div class="deals_timer_title_container">
-                                                <div class="deals_timer_title">Hurry Up</div>
-                                                <div class="deals_timer_subtitle">Offer ends in:</div>
-                                            </div>
-                                            <div class="deals_timer_content ml-auto">
-                                                <div class="deals_timer_box clearfix" data-target-time="">
-                                                    <div class="deals_timer_unit">
-                                                        <div id="deals_timer1_hr" class="deals_timer_hr"></div>
-                                                        <span>hours</span>
-                                                    </div>
-                                                    <div class="deals_timer_unit">
-                                                        <div id="deals_timer1_min" class="deals_timer_min"></div>
-                                                        <span>mins</span>
-                                                    </div>
-                                                    <div class="deals_timer_unit">
-                                                        <div id="deals_timer1_sec" class="deals_timer_sec"></div>
-                                                        <span>secs</span>
-                                                    </div>
+                                        <div class="deals_timer_content ml-auto">
+                                            <div class="deals_timer_box clearfix" data-target-time="">
+                                                <div class="deals_timer_unit">
+                                                    <div id="deals_timer1_hr" class="deals_timer_hr"></div>
+                                                    <span>hours</span>
+                                                </div>
+                                                <div class="deals_timer_unit">
+                                                    <div id="deals_timer1_min" class="deals_timer_min"></div>
+                                                    <span>mins</span>
+                                                </div>
+                                                <div class="deals_timer_unit">
+                                                    <div id="deals_timer1_sec" class="deals_timer_sec"></div>
+                                                    <span>secs</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             @endforeach
                         </div>
                     </div>
@@ -154,50 +182,62 @@
                             <div class="featured_slider slider">
                                 <!-- Slider Item -->
                                 @foreach ($featured as $featured)
-                                    <div class="featured_slider_item">
-                                        <div class="border_active"></div>
-                                        <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                            <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                <a href="{{ route('product.details', ['id' => $featured->id, 'product_name' => $featured->product_name]) }}">
-                                                    <img src="{{ asset($featured->image_one) }}" style="width:115px; hight:115px;">
-                                                </a>
-                                            </div>
-                                            <div class="product_content">
-                                                <div class="product_price discount">
-                                                    @if ($featured->discount_price == null)
-                                                        Tk {{ $featured->selling_price }}
-                                                    @else
-                                                        Tk {{ $featured->discount_price }} <span>Tk {{ $featured->selling_price }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="product_name">
-                                                    <div><a href="{{ route('product.details', ['id' => $featured->id, 'product_name' => $featured->product_name]) }}">{{ $featured->product_name }}</a></div>
-                                                </div>
-                                                <div class="product_extras">
-                                                    <button class="product_cart_button addcart" data-id="{{ $featured->id }}">Add to Cart</button>
-                                                </div>
-                                            </div>
-                                            <a class="addwishlist" data-id="{{ $featured->id }}">
-                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                <div class="featured_slider_item">
+                                    <div class="border_active"></div>
+                                    <div
+                                        class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
+                                        <div
+                                            class="product_image d-flex flex-column align-items-center justify-content-center">
+                                            <a href="{{ route('product.details', ['id' => $featured->id, 'product_name' => $featured->product_name]) }}">
+                                                <img src="{{ asset($featured->image_one) }}"
+                                                    style="width:115px; hight:115px;">
                                             </a>
-                                            <ul class="product_marks">
-                                                @if ($featured->discount_price == null)
-                                                    <li class="product_mark product_discount" style="background: green">NEW</li>
-                                                @else
-                                                    <li class="product_mark product_discount">
-                                                        @php
-                                                            $discount = (1 - ($featured->discount_price / $featured->selling_price)) * 100;
-                                                        @endphp
-                                                        {{ intval($discount) }}%
-                                                    </li>
-                                                @endif
-                                            </ul>
                                         </div>
+                                        <div class="product_content">
+                                            <div class="product_price discount mt-4">
+                                                @if ($featured->discount_price == null)
+                                                Tk {{ $featured->selling_price }}
+                                                @else
+                                                Tk {{ $featured->discount_price }} <span>Tk
+                                                    {{ $featured->selling_price }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="product_name mt-1">
+                                                <div>
+                                                    <a href="{{ route('product.details', ['id' => $featured->id, 'product_name' => $featured->product_name]) }}">
+                                                        {{ $featured->product_name }}
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        <div class="product_extras">
+                                            <button class="product_cart_button addcart" id="{{ $featured->id }}" data-toggle="modal"
+                                                data-target="#cartModal" onclick="productView(this.id)">Add to Cart</button>
+                                        </div>
+
+
                                     </div>
-                                @endforeach
+                                    <a class="addwishlist" data-id="{{ $featured->id }}">
+                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                    </a>
+                                    <ul class="product_marks">
+                                        @if ($featured->discount_price == null)
+                                        <li class="product_mark product_discount" style="background: green">NEW</li>
+                                        @else
+                                        <li class="product_mark product_discount">
+                                            @php
+                                            $discount = (1 - ($featured->discount_price / $featured->selling_price)) *
+                                            100;
+                                            @endphp
+                                            {{ intval($discount) }}%
+                                        </li>
+                                        @endif
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="featured_slider_dots_cover"></div>
+                            @endforeach
                         </div>
+                        <div class="featured_slider_dots_cover"></div>
                     </div>
                 </div>
             </div>
@@ -230,13 +270,13 @@
                     <div class="owl-carousel owl-theme popular_categories_slider">
                         <!-- Popular Categories Item -->
                         @foreach ($category as $categorys)
-                            <div class="owl-item">
-                                <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                    <div class="popular_category_image"><img
-                                            src="{{ asset('public/frontend/images/popular_1.png') }}" alt=""></div>
-                                    <div class="popular_category_text">{{ $categorys->category_name }}</div>
-                                </div>
-                            </div>    
+                        <div class="owl-item">
+                            <div class="popular_category d-flex flex-column align-items-center justify-content-center">
+                                <div class="popular_category_image"><img
+                                        src="{{ asset('public/frontend/images/popular_1.png') }}" alt=""></div>
+                                <div class="popular_category_text">{{ $categorys->category_name }}</div>
+                            </div>
+                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -258,41 +298,42 @@
 
             <!-- Banner 2 Slider Item -->
             @foreach ($mid as $mid)
-                <div class="owl-item">
-                    <div class="banner_2_item">
-                        <div class="container fill_height">
-                            <div class="row fill_height">
-                                <div class="col-lg-4 col-md-6 fill_height">
-                                    <div class="banner_2_content">
-                                        <div class="banner_2_category">{{ $mid->category->category_name }}</div>
-                                        <div class="banner_2_title">{{ $mid->product_name }}</div>
-                                        <div class="banner_2_text">{{ $mid->brand->brand_name }}</div>
-                                        <div class="banner_2_text">{{ $mid->product_code }}</div>
-                                        <div class="rating_r rating_r_4 banner_2_rating"><i></i><i></i><i></i><i></i><i></i>
-                                        </div>
-                                        <div class="button banner_2_button">
-                                            <a href="{{ route('product.details', ['id' => $mid->id, 'product_name' => $mid->product_name]) }}">
-                                                Explore
-                                            </a>
-                                        </div>
+            <div class="owl-item">
+                <div class="banner_2_item">
+                    <div class="container fill_height">
+                        <div class="row fill_height">
+                            <div class="col-lg-4 col-md-6 fill_height">
+                                <div class="banner_2_content">
+                                    <div class="banner_2_category">{{ $mid->category->category_name }}</div>
+                                    <div class="banner_2_title">{{ $mid->product_name }}</div>
+                                    <div class="banner_2_text">{{ $mid->brand->brand_name }}</div>
+                                    <div class="banner_2_text">{{ $mid->product_code }}</div>
+                                    <div class="rating_r rating_r_4 banner_2_rating"><i></i><i></i><i></i><i></i><i></i>
                                     </div>
-
+                                    <div class="button banner_2_button">
+                                        <a
+                                            href="{{ route('product.details', ['id' => $mid->id, 'product_name' => $mid->product_name]) }}">
+                                            Explore
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="col-lg-8 col-md-6 fill_height">
-                                    <div class="banner_2_image_container">
-                                        <div class="banner_2_image"><img
-                                                src="{{ asset($mid->image_one) }}" class="rounded mx-auto" style="width:500px; hight:500px;">
-                                        </div>
+
+                            </div>
+                            <div class="col-lg-8 col-md-6 fill_height">
+                                <div class="banner_2_image_container">
+                                    <div class="banner_2_image"><img src="{{ asset($mid->image_one) }}"
+                                            class="rounded mx-auto" style="width:500px; hight:500px;">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             @endforeach
-            
 
-            
+
+
 
         </div>
     </div>
@@ -300,7 +341,7 @@
 
 <!-- Category Wise Product Show  -->
 @foreach ($category_show as $row)
-<div class="new_arrivals pb-5 pt-5">
+<div class="new_arrivals">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -317,61 +358,68 @@
                             <!-- Product Panel -->
                             <div class="product_panel panel active">
                                 <div class="arrivals_slider slider">
-                                    
+
                                     @foreach ($product as $item)
-                                    
-                                        @if ($row->id == $item->category_id)
-                                            <!-- Slider Item -->
-                                            <div class="arrivals_slider_item">
-                                                <div class="border_active"></div>
-                                                <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                                    <div class="product_image d-flex flex-column align-items-center justify-content-center">
+
+                                    @if ($row->id == $item->category_id)
+                                    <!-- Slider Item -->
+                                    <div class="arrivals_slider_item">
+                                        <div class="border_active"></div>
+                                        <div
+                                            class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                            <div
+                                                class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                <a
+                                                    href="{{ route('product.details', ['id' => $item->id, 'product_name' => $item->product_name]) }}">
+                                                    <img src="{{ asset($item->image_one) }}"
+                                                        style="width:115px; hight:115px;">
+                                                </a>
+                                            </div>
+                                            <div class="product_content">
+                                                <div class="product_price mt-4">
+                                                    @if ($item->discount_price == null)
+                                                    Tk {{ $item->selling_price }}
+                                                    @else
+                                                    Tk {{ $item->discount_price }} <span>Tk
+                                                        {{ $item->selling_price }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="product_name mt-1">
+                                                    <div>
                                                         <a href="{{ route('product.details', ['id' => $item->id, 'product_name' => $item->product_name]) }}">
-                                                            <img src="{{ asset($item->image_one) }}" style="width:115px; hight:115px;">
+                                                            {{ $item->product_name }}
                                                         </a>
                                                     </div>
-                                                    <div class="product_content">
-                                                        <div class="product_price">
-                                                            @if ($item->discount_price == null)
-                                                                Tk {{ $item->selling_price }}
-                                                            @else
-                                                                Tk {{ $item->discount_price }} <span>Tk {{ $item->selling_price }}</span>
-                                                            @endif
-                                                        </div>
-                                                        <div class="product_name">
-                                                            <div>
-                                                                <a href="{{ route('product.details', ['id' => $item->id, 'product_name' => $item->product_name]) }}">
-                                                                    {{ $item->product_name }}
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product_extras">
-                                                            <button class="product_cart_button addcart" data-id="{{ $item->id }}">Add to Cart</button>
-                                                        </div>
-                                                    </div>
-
-                                                    <a class="addwishlist" data-id="{{ $item->id }}">
-                                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                    </a>
-                                                    <ul class="product_marks">
-                                                        @if ($item->discount_price == null)
-                                                            <li class="product_mark product_new">NEW</li>
-                                                        @else
-                                                            <li class="product_mark product_new" style="background: red">
-                                                                @php
-                                                                    $discount = (1 - ($item->discount_price / $item->selling_price)) * 100;
-                                                                @endphp
-                                                                {{ intval($discount) }}%
-                                                            </li>
-                                                        @endif
-                                                    </ul>
+                                                </div>
+                                                <div class="product_extras">
+                                                    <button class="product_cart_button addcart" id="{{ $item->id }}" data-toggle="modal"
+                                                        data-target="#cartModal" onclick="productView(this.id)">Add to Cart</button>
                                                 </div>
                                             </div>
-                                        @else
 
-                                        @endif
+                                            <a class="addwishlist" data-id="{{ $item->id }}">
+                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                            </a>
+                                            <ul class="product_marks">
+                                                @if ($item->discount_price == null)
+                                                <li class="product_mark product_new">NEW</li>
+                                                @else
+                                                <li class="product_mark product_new" style="background: red">
+                                                    @php
+                                                    $discount = (1 - ($item->discount_price / $item->selling_price)) *
+                                                    100;
+                                                    @endphp
+                                                    {{ intval($discount) }}%
+                                                </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    @else
+
+                                    @endif
                                     @endforeach
-                                    
+
                                 </div>
                                 {{-- <div class="arrivals_slider_dots_cover"></div> --}}
                             </div>
@@ -383,9 +431,6 @@
     </div>
 </div>
 @endforeach
-
-
-
 
 <!-- Adverts -->
 
@@ -476,57 +521,61 @@
                     <!-- Trends Slider -->
 
                     <div class="owl-carousel owl-theme trends_slider">
-                        
+
                         <!-- Trends Slider Item -->
                         @foreach ($bye_get as $bye_get)
-                            <div class="owl-item">
-                                <div class="trends_item is_new">
-                                    <div class="trends_image d-flex flex-column align-items-center justify-content-center">
-                                        <a href="{{ route('product.details', ['id' => $bye_get->id, 'product_name' => $bye_get->product_name]) }}">
-                                            <img src="{{ asset($bye_get->image_one) }}" style="width:180px; hight:180px;">
-                                        </a>
-                                    </div>
-                                    <div class="trends_content" style="height: 80px;">
-                                        <div class="trends_category"><a href="#">{{ $bye_get->category->category_name }}</a></div>
-                                        <div class="trends_info clearfix">
-                                            <div class="trends_name">
-                                                <a href="{{ route('product.details', ['id' => $bye_get->id, 'product_name' => $bye_get->product_name]) }}">
-                                                    {{ $bye_get->product_name }}
-                                                </a>
-                                            </div>
-                                            <br>
-                                            <div class="trends_price pt-4">
-                                                {{-- <div class="product_price"> --}}
-                                                    @if ($bye_get->discount_price == null)
-                                                        Tk {{ $bye_get->selling_price }}
-                                                    @else
-                                                        Tk {{ $bye_get->discount_price }}
-                                                    @endif
-                                                {{-- </div> --}}
-                                            </div>
-                                            <br>
-                                            <a class="btn btn-danger btn-sm addcart" data-id="{{ $bye_get->id }}">Add to Cart</a>
-                                        </div>
-                                    </div>
-                                    <ul class="trends_marks">
-                                        @if ($bye_get->discount_price == null)
-                                            <li class="trends_mark trends_new">Extra One</li>
-                                        @else
-                                            <li class="trends_mark trends_new" style="background: red">
-                                                @php
-                                                    $discount = (1 - ($bye_get->discount_price / $bye_get->selling_price)) * 100;
-                                                @endphp
-                                                {{ intval($discount) }}%
-                                            </li>
-                                        @endif
-                                    </ul>
-                                    <a class="addwishlist" data-id="{{ $item->id }}">
-                                        <div class="trends_fav"><i class="fas fa-heart"></i></div>
+                        <div class="owl-item">
+                            <div class="trends_item is_new">
+                                <div class="trends_image d-flex flex-column align-items-center justify-content-center">
+                                    <a
+                                        href="{{ route('product.details', ['id' => $bye_get->id, 'product_name' => $bye_get->product_name]) }}">
+                                        <img src="{{ asset($bye_get->image_one) }}" style="width:180px; hight:180px;">
                                     </a>
                                 </div>
-                            </div>    
+                                <div class="trends_content" style="height: 80px;">
+                                    <div class="trends_category"><a href="#">{{ $bye_get->category->category_name }}</a>
+                                    </div>
+                                    <div class="trends_info clearfix">
+                                        <div class="trends_name">
+                                            <a
+                                                href="{{ route('product.details', ['id' => $bye_get->id, 'product_name' => $bye_get->product_name]) }}">
+                                                {{ $bye_get->product_name }}
+                                            </a>
+                                        </div>
+                                        <br>
+                                        <div class="trends_price pt-4">
+                                            {{-- <div class="product_price"> --}}
+                                            @if ($bye_get->discount_price == null)
+                                            Tk {{ $bye_get->selling_price }}
+                                            @else
+                                            Tk {{ $bye_get->discount_price }}
+                                            @endif
+                                            {{-- </div> --}}
+                                        </div>
+                                        <br>
+                                        <a class="btn btn-danger btn-sm addcart" id="{{ $bye_get->id }}" data-toggle="modal"
+                                            data-target="#cartModal" onclick="productView(this.id)">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <ul class="trends_marks">
+                                    @if ($bye_get->discount_price == null)
+                                    <li class="trends_mark trends_new">Extra One</li>
+                                    @else
+                                    <li class="trends_mark trends_new" style="background: red">
+                                        @php
+                                        $discount = (1 - ($bye_get->discount_price / $bye_get->selling_price)) * 100;
+                                        @endphp
+                                        {{ intval($discount) }}%
+                                    </li>
+                                    @endif
+                                </ul>
+                                <a class="addwishlist" data-id="{{ $item->id }}">
+                                    <div class="trends_fav"><i class="fas fa-heart"></i></div>
+                                </a>
+                            </div>
+                        </div>
                         @endforeach
-                        
+
 
                     </div>
                 </div>
@@ -910,87 +959,194 @@
 </div>
 
 
+<!-- Cart Add Modal -->
+<div class="modal fade " id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Product Short Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card" style="width: 16rem;">
+                            <img src="" class="card-img-top" id="pimage" style="height: 240px;">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ml-auto">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h5 class="card-title" id="pname"></h5></span>
+                            </li>
+                            <li class="list-group-item">Product code: <span id="pcode"> </span></li>
+                            <li class="list-group-item">Category: <span id="pcat"> </span></li>
+                            <li class="list-group-item">SubCategory: <span id="psubcat"> </span></li>
+                            <li class="list-group-item">Brand: <span id="pbrand"> </span></li>
+                            <li class="list-group-item">Stock: <span class="badge "
+                                    style="background: green; color:white;">Available</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 ">
+                        <form action="{{ route('insert.cart') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="product_id" id="product_id">
+                            <div class="form-group mr-4" id="colordiv">
+                                <label for="">Color</label>
+                                <select name="color" class="form-control pr-2">
+                                </select>
+                            </div>
+                            <div class="form-group mr-4" id="sizediv">
+                                <label for="exampleInputEmail1">Size</label>
+                                <select name="size" class="form-control" id="size">
+                                </select>
+                            </div>
+                            <div class="form-group mr-3">
+                                <label for="exampleInputPassword1">Quantity</label>
+                                <input type="number" class="form-control" value="1" name="qty" pattern="[0-9]*" min="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add To Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-          $('.addwishlist').on('click', function(){  
+    $(document).ready(function () {
+        $('.addwishlist').on('click', function () {
             var id = $(this).data('id');
             // var z = $('.test').text();
             // console.log(z);
-            if(id) {
-               $.ajax({
-                   url: "{{  url('/add/wishlist/') }}/"+id,
-                   type:"GET",
-                   dataType:"json",
-                   success:function(data) {
-                     const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                      })
+            if (id) {
+                $.ajax({
+                    url: "{{  url('/add/wishlist/') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
 
-                     if($.isEmptyObject(data.error)){
-                          Toast.fire({
-                            type: 'success',
-                            title: data.success
-                          })
-                     }else{
-                           Toast.fire({
-                              type: 'error',
-                              title: data.error
-                          })
-                     }
+                        if ($.isEmptyObject(data.error)) {
+                            Toast.fire({
+                                type: 'success',
+                                title: data.success,
+                            })
+                        } else {
+                            Toast.fire({
+                                type: 'error',
+                                title: data.error
+                            })
+                        }
 
-                   },
-                  
-               });
-           } else {
-               alert('danger');
-           }
+                    },
+
+                });
+            } else {
+                alert('danger');
+            }
             e.preventDefault();
-       });
-   });
+        });
+    });
+
 </script>
 
 <script type="text/javascript">
+    function productView(id){
+        $.ajax({
+            url: "{{  url('/cart/product/view/') }}/"+id,
+            type:"GET",
+            dataType:"json",
+            success:function(data) {
+                // alert('Done');
+                $('#pname').text(data.product.product_name);
+                $('#pimage').attr('src',data.product.image_one);
+                $('#pcat').text(data.product.category_name);
+                $('#psubcat').text(data.product.subcategory_name);
+                $('#pbrand').text(data.product.brand_name);
+                $('#pcode').text(data.product.product_code);
+                $('#product_id').val(data.product.id);
+
+                var d = $('select[name="size"]').empty();
+                $.each(data.size, function(key, value){
+                    $('select[name="size"]').append('<option value="'+ value +'">' + value + '</option>');
+                    // if (data.size == "") {
+                    //     $('#sizediv').hide();   
+                    // }
+                    // else{
+                    //     $('#sizediv').show();
+                    // } 
+                 });
+
+                var d =$('select[name="color"]').empty();
+                $.each(data.color, function(key, value){
+                    $('select[name="color"]').append('<option value="'+ value +'">' + value + '</option>');
+                    // if (data.color == "") {
+                    //     $('#colordiv').hide();
+                    // }
+                    // else{
+                    //     $('#colordiv').show();
+                    // }
+                });
+            }
+
+        })
+        
+    }
+</script>
+
+{{-- <script type="text/javascript">
     $(document).ready(function() {
           $('.addcart').on('click', function(){  
             var id = $(this).data('id');
             if(id) {
                $.ajax({
                    url: "{{  url('/addtocart/') }}/"+id,
-                   type:"GET",
-                   dataType:"json",
-                   success:function(data) {
-                     const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                      })
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data) {
+                    const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                    })
 
-                     if($.isEmptyObject(data.error)){
-                          Toast.fire({
-                            type: 'success',
-                            title: data.success
-                          })
-                     }else{
-                           Toast.fire({
-                              type: 'error',
-                              title: data.error
-                          })
-                     }
+                    if($.isEmptyObject(data.error)){
+                    Toast.fire({
+                    type: 'success',
+                    title: data.success
+                    })
+                    }else{
+                    Toast.fire({
+                    type: 'error',
+                    title: data.error
+                    })
+                    }
 
-                   },
-                  
-               });
-            } else {
-               alert('danger');
-            }
-            e.preventDefault();
-       });
-   });
-</script>
+                    },
+
+                    });
+                    } else {
+                    alert('danger');
+                    }
+                    e.preventDefault();
+                    });
+                    });
+</script> --}}
 @endsection
