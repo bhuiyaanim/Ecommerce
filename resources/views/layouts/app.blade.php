@@ -37,6 +37,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_responsive.css') }}">
 
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/d8afe38de3.js" crossorigin="anonymous"></script>
 </head>
@@ -87,15 +90,7 @@
                                     <div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}"></div>
                                         
                                         @guest
-                                            @if(request()->is('/'))
-                                                @if(session()->get('lang') == 'bangla')
-                                                    <div><a href="{{ route ('register') }}">রেজিস্টার</a></div>
-                                                    <div><a href="{{ route ('login') }}">সিগণ ইন</a></div>
-                                                @else
-                                                    <div><a href="{{ route ('register') }}">Register</a></div>
-                                                    <div><a href="{{ route ('login') }}">Sign in</a></div>
-                                                @endif
-                                            @elseif(request()->is('register'))
+                                            @if(request()->is('register'))
                                                 @if(session()->get('lang') == 'bangla')
                                                     <a href="{{ route ('login') }}">সিগণ ইন</a>
                                                 @else
@@ -106,6 +101,14 @@
                                                     <a href="{{ route ('register') }}">রেজিস্টার</a>
                                                 @else
                                                     <a href="{{ route ('register') }}">Register</a>
+                                                @endif
+                                            @else
+                                                @if(session()->get('lang') == 'bangla')
+                                                    <div><a href="{{ route ('register') }}">রেজিস্টার</a></div>
+                                                    <div><a href="{{ route ('login') }}">সিগণ ইন</a></div>
+                                                @else
+                                                    <div><a href="{{ route ('register') }}">Register</a></div>
+                                                    <div><a href="{{ route ('login') }}">Sign in</a></div>
                                                 @endif
                                             @endif
                                         @else
@@ -374,7 +377,10 @@
     <script src="{{ asset('public/frontend/plugins/slick-1.8.0/slick.js') }}"></script>
     <script src="{{ asset('public/frontend/plugins/easing/easing.js') }}"></script>
     <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+    
+    <!-- Show All Product -->
 
+    
     <script src="{{ asset('public/frontend/js/product_custom.js') }}"></script>
 
     <script src="{{ asset('public/frontend/js/cart_custom.js') }}"></script>

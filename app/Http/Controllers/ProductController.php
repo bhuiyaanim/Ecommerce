@@ -18,6 +18,7 @@ class ProductController extends Controller
         $category = Category::all();
         $sub_category = Subcategory::all();
         $wishlist = Wishlist::where('user_id', Auth::id())->get();
+        $cart = Cart::content();
 
         $product = Product::where('id', $id)->first();
 
@@ -27,7 +28,7 @@ class ProductController extends Controller
     	$size=$product->product_size;
     	$product_size = explode(',', $size);
         
-        return view('pages.product_details', compact('product', 'product_color', 'product_size', 'category', 'sub_category', 'wishlist'));
+        return view('pages.product_details', compact('product', 'product_color', 'product_size', 'category', 'sub_category', 'wishlist', 'cart'));
     }
 
     public function addcart(Request $request, $id)
@@ -76,6 +77,7 @@ class ProductController extends Controller
 
     public function viewProduct($id)
     {
+        // dd($id);
         $product = Product::join('categories','products.category_id','categories.id')
                             ->join('subcategories','products.sub_category_id','subcategories.id')
                             ->join('brands','products.brand_id','brands.id')
@@ -84,12 +86,10 @@ class ProductController extends Controller
 
         $color = $product->product_color;
         $product_color = explode(',', $color);
-        // return response()->json($color);
         
         $size = $product->product_size;
         $product_size = explode(',', $size);
         
-        // return response()->json($product_color);
         return response::json(
             array(
                 'product' => $product,
@@ -97,6 +97,27 @@ class ProductController extends Controller
                 'size' => $product_size,
             )
         );
+    }
+
+    public function show($id, $cat_id)
+    {
+        // dd($cat_id);
+        $category = Category::all();
+        $sub_category = Subcategory::all();
+        $wishlist = Wishlist::where('user_id', Auth::id())->get();
+        $cart = Cart::content();
+
+        $product = Product::where('sub_category_id', $id)->paginate(30);
+        $sub_cat = Subcategory::where('category_id', $cat_id)->get();
+        
+        // $cat_id = $product[0]->category_id;
+        $count = $product->count();
+        // dd($count);
+        $brand = Product::where('sub_category_id', $id)->select('brand_id')->groupBy('brand_id')->get();
+        // return response()->json($brand);
+        return view('pages.all_product', compact('product', 'count', 'sub_cat', 'brand', 'category', 'sub_category', 'wishlist', 'cart'));
+        
+        
     }
 
 }

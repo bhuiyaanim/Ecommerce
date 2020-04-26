@@ -67,6 +67,23 @@ class AddCartController extends Controller
     public function remove($rowId)
     {
         Cart::remove($rowId);
+        
+        if (Session::has('coupon'))
+        {
+            $coupon_name = Session::get('coupon')['name'];
+            $coupon_discount = Session::get('coupon')['discount_pr'];
+            
+            $Subtotal = \Cart::Subtotal(2,'.','');
+            $discount = $coupon_discount / 100;
+            
+            Session::put('coupon', [
+                'name' => $coupon_name,
+                'discount_pr' => $coupon_discount,
+                'discount_am' => $Subtotal * $discount,
+                'balance' => $Subtotal - ($Subtotal * $discount),
+            ]);
+        }
+
         return redirect()->back();
     }
 
@@ -82,11 +99,9 @@ class AddCartController extends Controller
     public function insertCart(Request $request)
     {
         $id = $request->product_id;
-        
         $product = Product::where('id', $id)->first();
-
-        $data=array();
         
+        $data=array();
         if ($product->discount_price == NULL) {
             $data['id'] = $product->id;
             $data['name'] = $product->product_name;
@@ -102,7 +117,7 @@ class AddCartController extends Controller
                 'messege'=>'Successfully Added To Cart',
                 'alert-type'=>'success'
             );
-            return redirect()->back()->with($notification);
+            // return redirect()->back()->with($notification);
         }
         else{
             $data['id'] = $product->id;
@@ -119,8 +134,27 @@ class AddCartController extends Controller
                 'messege'=>'Successfully Added To Cart',
                 'alert-type'=>'success'
             );
-            return redirect()->back()->with($notification);
+            // return redirect()->back()->with($notification);
         }
+
+        if (Session::has('coupon'))
+        {
+            $coupon_name = Session::get('coupon')['name'];
+            $coupon_discount = Session::get('coupon')['discount_pr'];
+            
+            $Subtotal = \Cart::Subtotal(2,'.','');
+            $discount = $coupon_discount / 100;
+            
+            Session::put('coupon', [
+                'name' => $coupon_name,
+                'discount_pr' => $coupon_discount,
+                'discount_am' => $Subtotal * $discount,
+                'balance' => $Subtotal - ($Subtotal * $discount),
+            ]);
+        }
+        
+        return redirect()->back()->with($notification);
+
 
     }
 
@@ -176,10 +210,10 @@ class AddCartController extends Controller
         $coupon = $request->coupon;
         $check = coupon::where('coupon', $coupon)->first();
 
-        $Subtotal = \Cart::Subtotal(2,'.','');
-        $discount = $check->discount / 100;
-
         if ($check) {
+            $Subtotal = \Cart::Subtotal(2,'.','');
+            $discount = $check->discount / 100;
+            
             Session::put('coupon', [
                 'name' => $request->coupon,
                 'discount_pr' => $check->discount,

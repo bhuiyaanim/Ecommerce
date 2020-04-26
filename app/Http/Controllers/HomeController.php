@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Cart;
 use App\Model\Admin\Category;
+use App\Model\Admin\Subcategory;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Model\Frontend\Wishlist;
@@ -30,14 +32,19 @@ class HomeController extends Controller
     {
       $wishlist = Wishlist::where('user_id', Auth::id())->get();
       $category = Category::all();
+      $sub_category = Subcategory::all();
       
-      return view('home', compact('category', 'wishlist'));
+      return view('home', compact('category', 'sub_category', 'wishlist'));
     }
 
     public function changePassword()
     {
       $category = Category::all();
-      return view('auth.changepassword', compact('category'));
+      $wishlist = Wishlist::where('user_id', Auth::id())->get();
+      $sub_category = Subcategory::all();
+      $cart = Cart::content();
+
+      return view('auth.changepassword', compact('category', 'sub_category', 'wishlist', 'cart'));
     }
 
     public function updatePassword(Request $request)

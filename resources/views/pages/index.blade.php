@@ -198,8 +198,8 @@
                                                 @if ($featured->discount_price == null)
                                                 Tk {{ $featured->selling_price }}
                                                 @else
-                                                Tk {{ $featured->discount_price }} <span>Tk
-                                                    {{ $featured->selling_price }}</span>
+                                                Tk {{ $featured->discount_price }} 
+                                                <span>Tk {{ $featured->selling_price }}</span>
                                                 @endif
                                             </div>
                                             <div class="product_name mt-1">
@@ -1085,23 +1085,23 @@
                 var d = $('select[name="size"]').empty();
                 $.each(data.size, function(key, value){
                     $('select[name="size"]').append('<option value="'+ value +'">' + value + '</option>');
-                    // if (data.size == "") {
-                    //     $('#sizediv').hide();   
-                    // }
-                    // else{
-                    //     $('#sizediv').show();
-                    // } 
+                    if (data.size == "") {
+                        $('#sizediv').hide();   
+                    }
+                    else{
+                        $('#sizediv').show();
+                    } 
                  });
 
                 var d =$('select[name="color"]').empty();
                 $.each(data.color, function(key, value){
                     $('select[name="color"]').append('<option value="'+ value +'">' + value + '</option>');
-                    // if (data.color == "") {
-                    //     $('#colordiv').hide();
-                    // }
-                    // else{
-                    //     $('#colordiv').show();
-                    // }
+                    if (data.color == "") {
+                        $('#colordiv').hide();
+                    }
+                    else{
+                        $('#colordiv').show();
+                    }
                 });
             }
 

@@ -21,7 +21,7 @@
                                     <ul>
                                         @foreach ($sub_category as $item)
                                             @if ($row->id == $item->category_id)
-                                                <li><a href="#">{{ $item->subcategory_name }}<i class="fas fa-chevron-right"></i></a></li>
+                                                <li><a href="{{ route('product',['id' => $item->id, 'cat_id' => $row->id]) }}">{{ $item->subcategory_name }}<i class="fas fa-chevron-right"></i></a></li>
                                             @else
 
                                             @endif

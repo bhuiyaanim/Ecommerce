@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2020 at 01:40 PM
+-- Generation Time: Apr 26, 2020 at 02:02 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -189,7 +189,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2016_06_01_000002_create_oauth_access_tokens_table', 10),
 (23, '2016_06_01_000003_create_oauth_refresh_tokens_table', 10),
 (24, '2016_06_01_000004_create_oauth_clients_table', 10),
-(25, '2016_06_01_000005_create_oauth_personal_access_clients_table', 10);
+(25, '2016_06_01_000005_create_oauth_personal_access_clients_table', 10),
+(26, '2020_04_22_060349_create_orders_table', 11),
+(27, '2020_04_22_060730_create_order_details_table', 11),
+(28, '2020_04_22_060821_create_shippings_table', 11);
 
 -- --------------------------------------------------------
 
@@ -308,6 +311,69 @@ CREATE TABLE `oauth_refresh_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_type` varchar(240) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paying_amount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `blnc_transection` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stripe_order_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subtotal` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `month` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `year` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `payment_type`, `payment_id`, `paying_amount`, `blnc_transection`, `stripe_order_id`, `subtotal`, `shipping`, `vat`, `total`, `status`, `month`, `date`, `year`, `created_at`, `updated_at`) VALUES
+(7, '10', 'stripe', 'card_1Gc3JGBAl3FWN3XBgmnLnL0m', '120000', 'txn_1Gc3JIBAl3FWN3XB3Yn1Qx3k', '5ea520099cd28', '1,140.00', '60', '0', '1200', '0', 'Apri', '26-04-20', '2020', '2020-04-25 23:45:46', '2020-04-25 23:45:46'),
+(8, '10', 'stripe', 'card_1Gc8fCBAl3FWN3XB8Jn1UBsf', '14060', 'txn_1Gc8fFBAl3FWN3XBb8ZiozTs', '5ea5706d6aac9', '14000', '60', '0', '14060', '0', 'April', '26-04-20', '2020', '2020-04-26 05:28:50', '2020-04-26 05:28:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `size` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `quantity` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `unitPrice` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `totalPrice` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `product_name`, `color`, `size`, `quantity`, `unitPrice`, `totalPrice`, `created_at`, `updated_at`) VALUES
+(3, 7, '2', 'Mens Wood Watch', 'black', NULL, '1', '900', '900', '2020-04-25 23:45:46', '2020-04-25 23:45:46'),
+(4, 7, '13', 'Simple T-shirt', 'Black', 'XL', '3', '80', '240', '2020-04-25 23:45:46', '2020-04-25 23:45:46'),
+(5, 8, '22', 'Yellow Smart Watch', 'Yellow', NULL, '1', '17500', '17500', '2020-04-26 05:28:51', '2020-04-26 05:28:51');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
@@ -410,9 +476,9 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `category_id`, `sub_category_id`, `brand_id`, `product_name`, `product_code`, `product_quantity`, `product_details`, `product_details_sm`, `product_color`, `product_size`, `selling_price`, `discount_price`, `video_link`, `main_slider`, `hot_deal`, `best_rated`, `mid_slider`, `hot_new`, `buy_one_get_one`, `trend`, `image_one`, `image_two`, `image_three`, `status`, `created_at`, `updated_at`) VALUES
 (2, 7, 7, 9, 'Mens Wood Watch', 'w-782311', '80', '<ul class=\"a-unordered-list a-vertical a-spacing-none\"><li><span class=\"a-list-item\"> \r\n							Imported\r\n							\r\n						</span></li><li><span class=\"a-list-item\"> \r\n							Fashion Elements--The UWOOD MOST wooden strap Series minimalist \r\nunisex couple watches is an retro classical sophisticated design;Walnut \r\nwood grain round case pairing with a slim sliver hands,sliver Arabic \r\nnumerals scale and Hardlex glass;special designed for allergies and \r\nsensitive skin,hypo-allergenic,giving you a maximum comfortable natural \r\nexperience and real feelings\r\n							\r\n						</span></li><li><span class=\"a-list-item\"> \r\n							Hand-Made Wooden Watches--features 100% natural unique vintage \r\nlightweight eco-friendly walnut wood,hand sanded and polished to a \r\nsmooth,protected with Tung oil (Splash-Proof);premium hardwoods do not \r\ndeteriorate or become brittle due to every day wear,durable finish;wood \r\ncolors are naturally derived and no stains,dyes or harsh chemicals\r\n							\r\n						</span></li><li><span class=\"a-list-item\"> \r\n							Imported Japanese Quartz Movement: Quartz movement operates on a \r\nbattery power source, which offers long-lasting use for up to about 2 \r\nyears. Japanese 2035 Miyota quartz movement, energy saving, ultra-quiet,\r\n which guarantee\'s accurate readings every time.\r\n							\r\n						</span></li><li><span class=\"a-list-item\"> \r\n							Adjustable Band &amp; Folding Clasp--packing with 1 links \r\nremoving tools,can easier to change the watch band size to fit your \r\nwrist anywhere,stainless steel clasp very convenient to take on and \r\noff,with pressing buckle secures the adjustable wood and metal bracelet \r\n(removable metal pins secure links together)\r\n							\r\n						</span></li><li><span class=\"a-list-item\"> \r\n							Perfect Gift Ideas&amp;High Quality Service--our wooden watch are\r\n packed with gift watch boxes,carefully prepared &amp; packaged,it is a \r\nbest gift choice to your loved ones for Xmas,thanksgiving \r\nday,Halloween,birthday,wedding,anniversary,graduation,retirement;100% \r\nMONEY BACK GUARANTEE\r\n							\r\n						</span></li></ul>', NULL, 'white,black,blue,red', NULL, '2000', '900', 'https://www.youtube.com/watch?v=a83hBt2hs1w', 1, NULL, NULL, NULL, 1, NULL, 1, 'public/media/product/1662038598631226.jpg', 'public/media/product/1662038599688728.jpg', 'public/media/product/1662038599740049.jpg', 1, '2020-03-17 23:12:42', '2020-04-02 01:41:32'),
 (3, 7, 7, 9, 'Men\'s Brown Watches', 'w-22-rado', '40', 'Swiss watchmaker RADO is recognised the world over for the award winning\r\n materials it has pioneered since its founding in 1917. The HyperChrome \r\nautomatic is crafted from a single sleek piece of injected ceramic, \r\ndoing away with the stainless steel core that was needed for previous \r\nceramic designs. The result? An incredibly smooth and comfortable watch \r\nthat\'s tough too.', NULL, 'Brown,Blue,Gold', 'L,XL', '4500', '4100', 'https://www.youtube.com/watch?v=Cm842nSGxio', 1, 1, NULL, NULL, NULL, NULL, 1, 'public/media/product/1661591001529366.jpg', 'public/media/product/1661943963941071.jpg', 'public/media/product/1661591001612181.jpg', 1, '2020-03-18 00:20:18', '2020-04-05 01:20:35'),
-(5, 9, 19, 1, 'Samsung Galaxy S9', 'samsung-101', '40', 'Samsung Galaxy S9 Price in Bangladesh and Full Specifications. Samsung Galaxy S9 is a Smartphone of Samsung. This <strong>Samsung Galaxy S9</strong>\r\n have 4 GB RAM RAM. 64 GB, 128 GB, 256 GB Internal Memory (ROM). \r\nmicroSD, up to 400 GB (uses SIM 2 slot) - dual SIM model only External \r\nMemory Card.\r\n\r\nSamsung Galaxy S9\r\nComes with\r\n\r\n5.8 inches, 84.8 cm2 (~83.6% screen-to-body ratio),\r\n\r\nSuper AMOLED capacitive touchscreen, 16M Colors.\r\n\r\n\r\nDisplay with a Resolution of\r\n1440 x 2960 pixels, 18.5:9 ratio.\r\n\r\nAt a pixel density of \r\n570 ppi density (ppi). \r\n\r\n\r\n<strong>Samsung Galaxy S9</strong> measures\r\n\r\n\r\n147.7 x 68.7 x 8.5 mm (5.81 x 2.70 x 0.33 in) (height x width x thickness)\r\n\r\n\r\nand weighs\r\n163 g (5.75 oz) (grams).\r\n\r\nIt\'s performing \r\nOcta-core (4x2.7 GHz Mongoose M3 &amp; 4x1.8 GHz Cortex-A55).\r\n\r\nOperating System\r\nAndroid 8.0,\r\n\r\nVersion\r\nOreo.\r\n\r\nConnectivity options on the Samsung Galaxy S9 include \r\n\r\nWifi:\r\nWi-Fi 802.11 a/b/g/n/ac, dual-band, Wi-Fi Direct, Hotspot,\r\n\r\n\r\nBluetooth:\r\n5.0, A2DP, LE, aptX,\r\n\r\nGPS:\r\nYes, with A-GPS, GLONASS, BDS, GALILEO.\r\n\r\n It\'s Official Price is 90,990.00 Taka (Bangladeshi).', NULL, 'Midnight Black, Coral Blue, Titanium Gray, Lilac Purple, Burgundy Red, Sunrise Gold, Ice Blue', NULL, '80000', '5000', 'https://www.youtube.com/watch?v=Gzy_nCkn88U', NULL, NULL, 1, NULL, NULL, NULL, NULL, 'public/media/product/1662039472368179.jpg', 'public/media/product/1662039472404485.jpg', 'public/media/product/1662039472431180.jpg', 1, '2020-03-18 04:42:44', '2020-03-24 04:05:57'),
+(5, 9, 19, 1, 'Samsung Galaxy S9', 'samsung-101', '40', 'Samsung Galaxy S9 Price in Bangladesh and Full Specifications. Samsung Galaxy S9 is a Smartphone of Samsung. This <strong>Samsung Galaxy S9</strong>\r\n have 4 GB RAM RAM. 64 GB, 128 GB, 256 GB Internal Memory (ROM). \r\nmicroSD, up to 400 GB (uses SIM 2 slot) - dual SIM model only External \r\nMemory Card.\r\n\r\nSamsung Galaxy S9\r\nComes with\r\n\r\n5.8 inches, 84.8 cm2 (~83.6% screen-to-body ratio),\r\n\r\nSuper AMOLED capacitive touchscreen, 16M Colors.\r\n\r\n\r\nDisplay with a Resolution of\r\n1440 x 2960 pixels, 18.5:9 ratio.\r\n\r\nAt a pixel density of \r\n570 ppi density (ppi). \r\n\r\n\r\n<strong>Samsung Galaxy S9</strong> measures\r\n\r\n\r\n147.7 x 68.7 x 8.5 mm (5.81 x 2.70 x 0.33 in) (height x width x thickness)\r\n\r\n\r\nand weighs\r\n163 g (5.75 oz) (grams).\r\n\r\nIt\'s performing \r\nOcta-core (4x2.7 GHz Mongoose M3 &amp; 4x1.8 GHz Cortex-A55).\r\n\r\nOperating System\r\nAndroid 8.0,\r\n\r\nVersion\r\nOreo.\r\n\r\nConnectivity options on the Samsung Galaxy S9 include \r\n\r\nWifi:\r\nWi-Fi 802.11 a/b/g/n/ac, dual-band, Wi-Fi Direct, Hotspot,\r\n\r\n\r\nBluetooth:\r\n5.0, A2DP, LE, aptX,\r\n\r\nGPS:\r\nYes, with A-GPS, GLONASS, BDS, GALILEO.\r\n\r\n It\'s Official Price is 90,990.00 Taka (Bangladeshi).', 'This&nbsp;<span style=\"font-weight: bolder;\">Samsung Galaxy S9</span>&nbsp;have 4 GB RAM RAM. 64 GB, 128 GB, 256 GB Internal Memory (ROM). microSD, up to 400 GB (uses SIM 2 slot) - dual SIM model only External Memory Card.Samsung Galaxy S9 Comes with 5.8 inches, Super AMOLED capacitive touchscreen.&nbsp;<span style=\"font-weight: bolder;\">Samsung Galaxy S9</span>&nbsp;measures 147.7 x 68.7 x 8.5 mm and weighs 163 g. It\'s performing Octa-core and Operating System Android 8.0, Version Oreo.', 'Midnight Black, Coral Blue, Titanium Gray, Lilac Purple, Burgundy Red, Sunrise Gold, Ice Blue', NULL, '80000', '70000', 'https://www.youtube.com/watch?v=Gzy_nCkn88U', NULL, NULL, 1, NULL, NULL, NULL, NULL, 'public/media/product/1662039472368179.jpg', 'public/media/product/1662039472404485.jpg', 'public/media/product/1662039472431180.jpg', 1, '2020-03-18 04:42:44', '2020-04-16 00:04:58'),
 (6, 9, 19, 1, 'Samsung Galaxy S10', 'samsung-102', '40', 'Samsung Galaxy S10 Price in Bangladesh and Full Specifications. Samsung Galaxy S10 is a Smartphone of Samsung. This <strong>Samsung Galaxy S10</strong>\r\n have 8 GB RAM. 128 GB, 512 GB Internal Memory (ROM). microSD, up to 512\r\n GB (uses SIM 2 slot) - Dual SIM model only External Memory Card.\r\n\r\nSamsung Galaxy S10\r\nComes with\r\n\r\n6.1 inches, 93.2 cm2 (~88.3% screen-to-body ratio),\r\n\r\nDynamic AMOLED capacitive touchscreen, 16M Colors.\r\n\r\n\r\nDisplay with a Resolution of\r\n1440 x 3040 pixels, 19:9 ratio.\r\n\r\nAt a pixel density of \r\n550 ppi density (ppi). \r\n\r\n\r\n<strong>Samsung Galaxy S10</strong> measures\r\n\r\n\r\n149.9 x 70.4 x 7.8 mm (5.90 x 2.77 x 0.31 in) (height x width x thickness)\r\n\r\n\r\nand weighs\r\n157 g (5.54 oz) (grams).\r\n\r\nIt\'s performing \r\nOcta-core (2x2.7 GHz Mongoose M4 &amp; 2x2.3 GHz Cortex-A75 &amp; 4x1.9 GHz Cortex-A55)<br>Octa-core (1x2.8 GHz Kryo 485 &amp; 3x2.4 GHz Kryo 485 &amp; 4x1.7 GHz Kryo 485).\r\n\r\nOperating System\r\nAndroid,\r\n\r\nVersion\r\n9.0 (Pie).\r\n\r\nConnectivity options on the Samsung Galaxy S10 include \r\n\r\nWifi:\r\nWi-Fi 802.11 a/b/g/n/ac/ax, dual-band, Wi-Fi Direct, Hotspot,\r\n\r\n\r\nBluetooth:\r\n5.0, A2DP, LE, aptX,\r\n\r\nGPS:\r\nYes, with A-GPS, GLONASS, BDS, GALILEO.\r\n\r\n It\'s Official Price is 89,990.00 Taka (Bangladeshi).', NULL, 'Prism White, Prism Black, Prism Green, Prism Blue,Prism Red', NULL, '89900', NULL, 'https://www.youtube.com/watch?v=QjBgQYHW5pE', NULL, NULL, NULL, NULL, 1, NULL, NULL, 'public/media/product/1662041616590145.jpg', 'public/media/product/1662041616660177.jpg', 'public/media/product/1662041616692819.jpg', 1, '2020-03-24 04:40:02', '2020-03-24 04:40:02'),
-(7, 7, 7, 9, 'Men\'s Leather Watch', 'w-31234', '100', '<p>                                        \r\n                                    </p><div class=\"attribute\">\r\n                <span class=\"label\">Case Size:</span> <span class=\"value\">46 mm</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Movement:</span> <span class=\"value\">Chronograph</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Platform:</span> <span class=\"value\">FORRESTER CHRONO</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Strap Material:</span> <span class=\"value\">Leather</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Water Resistance:</span> <span class=\"value\">5 ATM</span>\r\n            </div><p>\r\n        \r\n    \r\n\r\n    \r\n\r\n	\r\n\r\n\r\n\r\n\r\n       	\r\n    \r\n\r\n    \r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Case Color:</span> <span class=\"value\">Silver</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Dial Colour:</span> <span class=\"value\">Cream</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Strap Fashion Colour:</span> <span class=\"value\">Brown</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Interchangeable Compatibility:</span> <span class=\"value\">24 mm</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Strap Width:</span> <span class=\"value\">24 mm</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Closure:</span> <span class=\"value\">Single Prong Strap Buckle</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Strap Inner Circumference:</span> <span class=\"value\">200 +/- 5 mm</span>\r\n            </div><p><br></p>', NULL, 'Black,Brown', 'Medium,Big', '3499', NULL, 'https://www.youtube.com/watch?v=pddbaGV0dZI', 1, NULL, NULL, NULL, NULL, 1, NULL, 'public/media/product/1662042017730984.jpg', 'public/media/product/1662121375123980.jpg', 'public/media/product/1662042017790632.jpg', 1, '2020-03-24 04:46:25', '2020-04-05 00:12:40'),
+(7, 7, 7, 9, 'Men\'s Leather Watch', 'w-31234', '100', '<p>                                        \r\n                                    </p><div class=\"attribute\">\r\n                <span class=\"label\">Case Size:</span> <span class=\"value\">46 mm</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Movement:</span> <span class=\"value\">Chronograph</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Platform:</span> <span class=\"value\">FORRESTER CHRONO</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Strap Material:</span> <span class=\"value\">Leather</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute\">\r\n                <span class=\"label\">Water Resistance:</span> <span class=\"value\">5 ATM</span>\r\n            </div><p>\r\n        \r\n    \r\n\r\n    \r\n\r\n	\r\n\r\n\r\n\r\n\r\n       	\r\n    \r\n\r\n    \r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Case Color:</span> <span class=\"value\">Silver</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Dial Colour:</span> <span class=\"value\">Cream</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Strap Fashion Colour:</span> <span class=\"value\">Brown</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Interchangeable Compatibility:</span> <span class=\"value\">24 mm</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Strap Width:</span> <span class=\"value\">24 mm</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Closure:</span> <span class=\"value\">Single Prong Strap Buckle</span>\r\n            </div><p>\r\n        \r\n            </p><div class=\"attribute view-more-attribute show\">\r\n                <span class=\"label\">Strap Inner Circumference:</span> <span class=\"value\">200 +/- 5 mm</span>\r\n            </div><p><br></p>', NULL, 'Black,Brown', NULL, '3499', NULL, 'https://www.youtube.com/watch?v=pddbaGV0dZI', 1, NULL, NULL, NULL, NULL, 1, NULL, 'public/media/product/1662042017730984.jpg', 'public/media/product/1662121375123980.jpg', 'public/media/product/1662042017790632.jpg', 1, '2020-03-24 04:46:25', '2020-04-21 00:26:38'),
 (8, 9, 19, 2, 'iPhone Xr', 'Iphone-111', '38', '<p>Apple iPhone XR smartphone was launched in September 2018. The phone \r\ncomes with a 6.10-inch touchscreen display with a resolution of  \r\n828x1792 pixels at a pixel density of 326 pixels per inch (ppi) and an \r\naspect ratio of 19.5:9.</p><p> Apple iPhone XR is powered by  a hexa-core Apple A12 Bionic processor. It comes with 3GB of RAM.</p><p>The\r\n Apple iPhone XR runs iOS 12 and  is powered by a 2942mAh non-removable \r\nbattery.  The Apple iPhone XR supports wireless charging, as well as \r\nproprietary fast charging.</p><p> As far as the cameras are concerned, \r\nthe Apple iPhone XR on the rear packs a 12-megapixel camera  with an \r\nf/1.8 aperture. The rear camera setup has autofocus. It sports a \r\n7-megapixel camera on the front for selfies, with an f/2.2 aperture.</p><p>Apple\r\n iPhone XR based on iOS 12 and packs 64GB of inbuilt storage. The Apple \r\niPhone XR is a dual-SIM (GSM and GSM) smartphone that accepts Nano-SIM \r\nand eSIM cards.</p><p> Connectivity options on the Apple iPhone XR \r\ninclude Wi-Fi  802.11 a/b/g/n/ac, GPS, Bluetooth v5.00, NFC, Lightning, \r\n3G, and  4G (with support for Band 40 used by some LTE networks in \r\nIndia) with active 4G on both SIM cards. Sensors on the  phone include  \r\naccelerometer,  ambient light sensor,  barometer,  gyroscope,  proximity\r\n sensor, and  compass/ magnetometer. The Apple iPhone XR supports     \r\nface unlock with 3D face recognition.</p><p>The Apple iPhone XR measures\r\n 150.90 x 75.70 x 8.30mm (height x width x thickness)  and weighs 194.00\r\n grams. It was launched in Black, Blue, Coral, Red, White, and  Yellow \r\ncolours. It features an IP67 rating for dust and water protection.</p><p><br></p>', NULL, 'Red,Black,Orange,White', NULL, '85000', '78000', 'https://www.youtube.com/watch?v=xsiV_-o5488', 1, NULL, 1, 1, NULL, NULL, NULL, 'public/media/product/1662042285117392.png', 'public/media/product/1662042285228901.png', 'public/media/product/1662042285285850.png', 1, '2020-03-24 04:50:40', '2020-03-29 04:27:58'),
 (9, 9, 19, 2, 'iPhone 11', 'iphone-113', '25', '<span class=\"dtls summary\" style=\"max-height: 334px;\"><span class=\"summary_content\"><p>The\r\n iPhone 11 dimensions are 150.9mm x 75.7mm x 8.3mm (H x W x D). It \r\nweighs about 194 grams (6.84 ounces).It &nbsp;features a 6.1-inch all-screen \r\nLCD display and is powered by Apple’s new A13 bionic chip with \r\nThird-Generation Neural Engine. The display is the company’s proprietary\r\n Liquid Retina HD display having Multi-Touch capability with IPS \r\ntechnology. The resolution is 1792x828 pixel one at 326 ppi with 1400:1 \r\ncontrast ratio (typical). Other special features of the display are True\r\n Tone, Wide colour (P3) and Haptic touch. It comes coated with a \r\nfingerprint resistant oleophobic coating. Coming to the camera segment, \r\nthe iPhone 11 comes equipped with a dual rear camera of a 12 MP \r\nsix-element Wide lens and an Ultra-Wide five element lens. The Ultra \r\nWide lens comes with ƒ/2.4 aperture and 120° field of view while the \r\nWide camera has got a ƒ/1.8 aperture. The iPhone 11, along with the \r\nother two models, has a Night mode for clicking better images in \r\nlow-light conditions. Some of the other rear camera features are 2x \r\noptical zoom out; digital zoom up to 5x, Portrait mode with advanced \r\nbokeh and Depth Control, Portrait Lighting with six effects, Optical \r\nimage stabilisation (Wide).</p>\r\n\r\n\r\n\r\n<p>Apple has upgraded the selfie camera in all three iPhones models from\r\n 7MP True Depth camera to a 12MP TrueDepth sensor with ƒ/2.2 aperture. \r\nSome of the other features of the front camera are Portrait mode with \r\nadvanced bokeh and depth control, Portrait Lighting with six effects, 4K\r\n video recording at 24 fps, 30 fps or 60 fps, 1080p HD video recording \r\nat 30 fps or 60 fps etc.</p></span></span>', NULL, 'Black,White,Blue', NULL, '94000', NULL, 'https://www.youtube.com/watch?v=OoY7zp8GkLI', NULL, 1, NULL, NULL, 1, NULL, NULL, 'public/media/product/1662042626311394.jpg', 'public/media/product/1662042626354893.jpg', 'public/media/product/1662042626403697.jpg', 1, '2020-03-24 04:56:05', '2020-03-25 01:37:22'),
 (10, 9, 19, 23, 'Xiaomi Redmi Note 7S', 'xiaomi-111', '35', '<div class=\"_inrcntr\" style=\"\"> <p>The Redmi Note 7S is a budget smartphone from Xiaomi that sits between its <a href=\"https://gadgets.ndtv.com/redmi-note-7-price-in-india-8948\">Redmi Note 7</a>\r\n and Redmi Note 7 Pro. Xiaomi has kept the design identical, hence it is\r\n hard to distinguish between these three smartphones. The Redmi Note 7S \r\nhas a 6.3-inch full-HD+ display with&nbsp;Corning Gorilla Glass 5 for \r\nprotection. We liked that the display had good viewing angles and was \r\nbright enough to be legible when outdoors.</p> <p><a href=\"https://gadgets.ndtv.com/mobiles/xiaomi-phones\">Xiaomi</a>\r\n has opted for a Qualcomm Snapdragon 660 SoC to power the Redmi Note 7S \r\nand it does deliver a lag-free experience. Our unit had 4GB of RAM and \r\n64GB of storage, a lower variant with 3GB of RAM and 32GB of storage is \r\nalso available at a lower price.</p> <p>Just like other Xiaomi \r\nsmartphones, this too runs on MIUI. Our unit was running MIUI 10.3 on \r\ntop of Android 9.0. There are a few customisations that are useful but \r\nwe also encountered spammy notifications. The camera setup is \r\ndifferent&nbsp;compared to the Redmi Note 7 as it gets a 48-megapixel primary\r\n sensor and a 5-megapixel depth sensor.&nbsp; At the front, it has a \r\n13-megapixel selfie shooter. Overall, the Redmi Note 7S offers good \r\ncamera performance.</p> <p>Xiaomi has managed to pack in a 4,000mAh \r\nbattery in the Redmi Note 7S which offers good battery life. The Redmi \r\nNote 7S is a good smartphone but you can consider the Redmi Note 7 and \r\nthe Asus ZenFone Max Pro M2 as direct alternatives. If you don\'t mind \r\nspending a little extra, you can consider the Redmi Note 7 Pro.</p> </div>', NULL, 'Red,Black,White', NULL, '27000', NULL, 'https://www.youtube.com/watch?v=HKuc6z50xL4', NULL, NULL, NULL, NULL, NULL, NULL, 1, 'public/media/product/1662043218072593.jpg', 'public/media/product/1662043218144532.jpg', 'public/media/product/1662043218174556.jpg', 1, '2020-03-24 05:05:30', '2020-03-24 05:05:30'),
@@ -456,6 +522,32 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `vat`, `shapping_charge`, `shop_name`, `email`, `phone`, `address`, `logo`, `created_at`, `updated_at`) VALUES
 (1, '3', '60', 'Echovel', 'echovel@gmail.com', '0171626886', 'Khilkhat Dhaka', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shippings`
+--
+
+CREATE TABLE `shippings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ship_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ship_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ship_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ship_address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ship_city` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `shippings`
+--
+
+INSERT INTO `shippings` (`id`, `order_id`, `ship_name`, `ship_phone`, `ship_email`, `ship_address`, `ship_city`, `created_at`, `updated_at`) VALUES
+(6, '7', 'Anim Bhuiya', '01734779901', 'bhuiyaanim@gmail.com', 'Nikunja-2, Khilkhet', 'Dhaka', '2020-04-25 23:45:46', '2020-04-25 23:45:46'),
+(7, '8', 'Anim Bhuiya', '01734779901', 'bhuiyaanim@gmail.com', 'Nikunja-2, Khilkhet', 'Dhaka', '2020-04-26 05:28:51', '2020-04-26 05:28:51');
 
 -- --------------------------------------------------------
 
@@ -633,6 +725,18 @@ ALTER TABLE `oauth_refresh_tokens`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -660,6 +764,12 @@ ALTER TABLE `products`
 -- Indexes for table `settings`
 --
 ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `shippings`
+--
+ALTER TABLE `shippings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -719,7 +829,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `newsletters`
@@ -738,6 +848,18 @@ ALTER TABLE `oauth_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -762,6 +884,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `settings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `shippings`
+--
+ALTER TABLE `shippings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `subcategories`

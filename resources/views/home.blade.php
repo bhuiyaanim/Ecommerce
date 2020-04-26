@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+
+@include('layouts.menubar')
 {{-- @php 
   $order=DB::table('orders')->where('user_id',Auth::id())->orderBy('id','DESC')->limit(10)->get();
 @endphp --}}

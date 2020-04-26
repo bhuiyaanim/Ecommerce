@@ -20,14 +20,14 @@
                                     <li class="cart_item clearfix pr-1">
                                         
                                         <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between ml-4">
-                                            <div class="cart_item_name cart_info_col">
+                                            <div class="cart_item_name cart_info_col pr-2">
                                                 <div class="cart_item_title">Name</div>
                                                 <div class="cart_item_text mt-4">{{ $cart->name }}</div>
                                             </div>
     
                                             @if ($cart->options->color == NULL)
                                             @else
-                                                <div class="cart_item_color cart_info_col">
+                                                <div class="cart_item_color cart_info_col pr-3">
                                                     <div class="cart_item_title">Color</div>
                                                     <div class="cart_item_text mt-4">
                                                         {{ $cart->options->color }}
@@ -37,7 +37,7 @@
     
                                             @if ($cart->options->size == NULL)    
                                             @else
-                                                <div class="cart_item_color cart_info_col">
+                                                <div class="cart_item_color cart_info_col pr-3">
                                                     <div class="cart_item_title">Size</div>
                                                     <div class="cart_item_text mt-4">
                                                         {{ $cart->options->size }}
@@ -46,15 +46,15 @@
                                             @endif
                                             
                                             
-                                            <div class="cart_item_quantity cart_info_col">
+                                            <div class="cart_item_quantity cart_info_col pr-3">
                                                 <div class="cart_item_title">Quantity</div>
                                                 <div class="cart_item_text mt-4">{{ $cart->qty }}</div>
                                             </div>
-                                            <div class="cart_item_price cart_info_col">
+                                            <div class="cart_item_price cart_info_col pr-3">
                                                 <div class="cart_item_title">Price(Tk)</div>
                                                 <div class="cart_item_text mt-4">{{ $cart->price }}</div>
                                             </div>
-                                            <div class="cart_item_total cart_info_col">
+                                            <div class="cart_item_total cart_info_col pr-3">
                                                 <div class="cart_item_title">Total(Tk)</div>
                                                 <div class="cart_item_text mt-4">{{ $cart->price * $cart->qty }}</div>
                                             </div>
@@ -77,7 +77,7 @@
                                     </span>
                                 </li>
                                 <li class="list-group-item">Coupon : ({{ Session::get('coupon')['name'] }}) 
-                                    <a href="{{ route('remove.coupon') }}" class="btn btn-danger btn-sm">x</a>
+                                    {{-- <a href="{{ route('remove.coupon') }}" class="btn btn-danger btn-sm">x</a> --}}
                                     <span style="float: right;">
                                         {{ Session::get('coupon')['discount_pr'] }} %
                                     </span>
@@ -157,14 +157,14 @@
                         </div>
                        <div class="form-group">
                             <ul class="logos_list text-center" >
-                                <li><input type="radio" name="payment" value="stripe"> <img src="{{ asset('public/frontend/images/mastercard.png') }}" style="width: 100px; height: 60px;"></li>
-                                <li><input type="radio" name="payment" value="paypal"> <img src="{{ asset('public/frontend/images/paypal.png') }}" style="width: 100px;"></li>
-                                <li><input type="radio" name="payment" value="ideal"> <img src="{{ asset('public/frontend/images/mollie.png') }}" style="width: 100px; height: 80px;"></li>
+                                <li><input type="radio" name="payment" value="stripe"> <img src="{{ asset('public/frontend/images/mastercard.png') }}" style="width: 100px; height: 80px;"></li>
+                                <li><input type="radio" name="payment" value="paypal"> <img src="{{ asset('public/frontend/images/paypal.png') }}" style="width: 100px; height: 50px;"></li>
+                                <li><input type="radio" name="payment" value="ideal"> <img src="{{ asset('public/frontend/images/mollie.png') }}" style="width: 100px; height: 100px;"></li>
                              </ul>
                         </div>
                         <div class="pt-2">
-                            <div class="contact_form_button">
-                                <button type="submit" class="btn btn-info">Pay Now</button>
+                            <div class="contact_form_button text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Pay Now</button>
                             </div>
                         </div>
                         

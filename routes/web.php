@@ -76,6 +76,11 @@ Route::get('admin/post/delete/{id}', 'Admin\PostController@delete')->name('delet
 Route::get('admin/post/edit/{id}', 'Admin\PostController@edit')->name('edit.post');
 Route::post('admin/post/update/{id}', 'Admin\PostController@update')->name('update.post');
 
+// order........
+Route::get('admin/pending/order', 'Admin\OrderController@newOrder')->name('new.order');
+Route::get('admin/view/order/{id}', 'Admin\OrderController@viewOrder')->name('view.order');
+
+
         // sub-category...
 Route::get('admin/get/sub_category/{id}', 'Admin\Product\ProductController@get_sub_category');
 
@@ -108,6 +113,7 @@ Route::get('remove/coupon', 'AddCartController@remove_coupon')->name('remove.cou
 // payment
 Route::get('product/payment', 'PaymentController@show')->name('payment');
 Route::post('product/payment/process', 'PaymentController@payment')->name('payment.process');
+Route::post('product/payment/stripe', 'PaymentController@stripeCharge')->name('stripe.charge');
 
 // blog.............
 Route::get('blog/post', 'BlogController@blog')->name('blog.post');
@@ -124,5 +130,6 @@ Route::get('/callback/{provider}', 'SocialController@callback');
 Route::get('/product/details/{id}/{product_name}', 'ProductController@details')->name('product.details');
 Route::post('/product/addtocart/{id}', 'ProductController@addcart')->name('product.addtocart');
 Route::get('cart/product/view/{id}', 'ProductController@viewProduct');
+Route::get('/product/show/{id}/{cat_id}', 'ProductController@show')->name('product');
 
 // customer porofile related routes...
