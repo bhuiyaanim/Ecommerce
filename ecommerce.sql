@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2020 at 02:02 PM
+-- Generation Time: Apr 27, 2020 at 01:17 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -339,8 +339,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `payment_type`, `payment_id`, `paying_amount`, `blnc_transection`, `stripe_order_id`, `subtotal`, `shipping`, `vat`, `total`, `status`, `month`, `date`, `year`, `created_at`, `updated_at`) VALUES
-(7, '10', 'stripe', 'card_1Gc3JGBAl3FWN3XBgmnLnL0m', '120000', 'txn_1Gc3JIBAl3FWN3XB3Yn1Qx3k', '5ea520099cd28', '1,140.00', '60', '0', '1200', '0', 'Apri', '26-04-20', '2020', '2020-04-25 23:45:46', '2020-04-25 23:45:46'),
-(8, '10', 'stripe', 'card_1Gc8fCBAl3FWN3XB8Jn1UBsf', '14060', 'txn_1Gc8fFBAl3FWN3XBb8ZiozTs', '5ea5706d6aac9', '14000', '60', '0', '14060', '0', 'April', '26-04-20', '2020', '2020-04-26 05:28:50', '2020-04-26 05:28:50');
+(7, '10', 'stripe', 'card_1Gc3JGBAl3FWN3XBgmnLnL0m', '120000', 'txn_1Gc3JIBAl3FWN3XB3Yn1Qx3k', '5ea520099cd28', '1,140.00', '60', '0', '1200', '2', 'Apri', '26-04-20', '2020', '2020-04-25 23:45:46', '2020-04-27 05:15:18'),
+(8, '10', 'stripe', 'card_1Gc8fCBAl3FWN3XB8Jn1UBsf', '14060', 'txn_1Gc8fFBAl3FWN3XBb8ZiozTs', '5ea5706d6aac9', '14000', '60', '0', '14060', '3', 'April', '26-04-20', '2020', '2020-04-26 05:28:50', '2020-04-27 05:15:58');
 
 -- --------------------------------------------------------
 

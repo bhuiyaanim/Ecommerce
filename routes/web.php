@@ -79,6 +79,19 @@ Route::post('admin/post/update/{id}', 'Admin\PostController@update')->name('upda
 // order........
 Route::get('admin/pending/order', 'Admin\OrderController@newOrder')->name('new.order');
 Route::get('admin/view/order/{id}', 'Admin\OrderController@viewOrder')->name('view.order');
+Route::get('admin/payment/accept/{id}', 'Admin\OrderController@paymentAccept')->name('payment.accept');
+Route::get('admin/payment/cancel/{id}', 'Admin\OrderController@paymentCancel')->name('payment.cancel');
+Route::get('admin/payed/order', 'Admin\OrderController@payedOrder')->name('payed.order');
+Route::get('admin/delevery/process/{id}', 'Admin\OrderController@deleveryProcess')->name('delevery.process');
+
+Route::get('admin/shipped/order', 'Admin\OrderController@shippedOrder')->name('shipped.order');
+Route::get('admin/delevery/done/{id}', 'Admin\OrderController@deleveryDone')->name('delevery.done');
+
+
+
+Route::get('admin/delivered/order', 'Admin\OrderController@deliveredOrder')->name('delivered.order');
+Route::get('admin/canceled/order', 'Admin\OrderController@canceledOrder')->name('canceled.order');
+
 
 
         // sub-category...

@@ -9,7 +9,17 @@
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
         <a class="breadcrumb-item" href="{{ route('admin.home') }}">Dapple Park</a>
-        <a class="breadcrumb-item" href="{{ route('all.product') }}">All Order</a>
+        @if($order->status == 0)
+            <a class="breadcrumb-item" href="{{ route('new.order') }}">New Order</a>
+        @elseif($order->status == 1)
+            <a class="breadcrumb-item" href="{{ route('payed.order') }}">Payed Order</a>
+        @elseif($order->status == 2) 
+            <a class="breadcrumb-item" href="{{ route('shipped.order') }}">Shipped Order</a>
+        @elseif($order->status == 3)  
+            <a class="breadcrumb-item" href="{{ route('delivered.order') }}">Delivered Order</a>
+        @else
+            <a class="breadcrumb-item" href="{{ route('canceled.order') }}">Canceled Order</a>
+        @endif
         <span class="breadcrumb-item active">Order Details</span>
     </nav>
     <div class="sl-pagebody">
@@ -18,187 +28,142 @@
         </div><!-- sl-page-title -->
 
         <div class="card pd-20 pd-sm-40">
-            <h6 class="card-body-title mb-4">Order Details</h6>
-            <div class="table-wrapper">
-                <div class="form-layout" >
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Product Name:</label>
-                                <input class="form-control" value="{{ $product->product_name }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Product Code:</label>
-                                <input class="form-control" value="{{ $product->product_code }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Quantity:</label>
-                                <input class="form-control" value="{{ $product->product_quantity }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">Category:</label>
-                                <input class="form-control" value="{{ $product->category->category_name }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">Sub-Category:</label>
-                                <input class="form-control" value="{{ $product->sub_category->subcategory_name }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">Brand:</label>
-                                <input class="form-control" value="{{ $product->brand->brand_name }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-
-                        <div class="col-lg-4 mt-2">
-                            <div class="form-group">
-                                <label class="form-control-label">Product Size:</label><br>
-                                <input class="form-control" value="{{ $product->product_size }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4 mt-2">
-                            <div class="form-group">
-                                <label class="form-control-label">Product Color:</label><br>
-                                <input class="form-control" value="{{ $product->product_color }}" readonly>
-
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4 mt-2">
-                            <div class="form-group">
-                                <label class="form-control-label">Selling Price:</label>
-                                <input class="form-control" value="{{ $product->selling_price }}" readonly>
-                            </div>
-                        </div><!-- col-4 -->
-
-                        <div class="col-lg-12 mt-1">
-                            <div class="form-group" style="text-align:justify; color:#3f454a; border:1px solid grey; padding:10px;">
-                                <label class="form-control-label">Product Details:</label>
-                                <p>{!! $product->product_details !!}</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 mt-1">
-                            <div class="form-group" style="text-align:justify; color:#3f454a; border:1px solid grey; padding:10px;">
-                                <label class="form-control-label">Product Short Description:</label>
-                                <p>{!! $product->product_details_sm !!}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label class="form-control-label">Video Link</label>
-                                <input class="form-control" value="{{ $product->video_link }}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <label for="exampleInputEmail1">Image One (Main Thumbnail) : </label>
-                            <img class="ml-2" src="{{ URL::to($product->image_one) }}" style="hight:80px; width:80px;">
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="exampleInputEmail1">Image Two : </label>
-                            <img class="ml-2" src="{{ URL::to($product->image_two) }}" style="hight:80px; width:80px;">
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="exampleInputEmail1">Image Three : </label>
-                            <img class="ml-2" src="{{ URL::to($product->image_three) }}" style="hight:80px; width:80px;">
-                            </label>
-                        </div>
-                    </div><!-- row -->
-                    <hr>
-                    <div class="row mt-4">
-                        <div class="col-lg-4">
-                            <label class="ckbox">
-                                @if($product->main_slider == 1)
-                                    <input type="checkbox" name="main_slider" checked onclick="return false;">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-body-title mb-2">Order Details</div>
+                    <table class="table">
+                            <tr>
+                                <th>Name: </th>
+                                <th>{{ $order->user->name }}</th>
+                            </tr>
+                            <tr>
+                                <th>Phone: </th>
+                                <th>{{ $order->user->phone }}</th>
+                            </tr>
+                            <tr>
+                                <th>Payment: </th>
+                                <th>{{ $order->payment_type }}</th>
+                            </tr>
+                            <tr>
+                                <th>Payment ID: </th>
+                                <th>{{ $order->payment_id }}</th>
+                            </tr>
+                            <tr>
+                                <th>Total :</th>
+                                <th>{{ $order->total }} Tk</th>
+                            </tr>
+                            <tr>
+                                <th>Month : </th>
+                                <th>
+                                    {{ $order->month }}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Date: </th>
+                                <th>{{ $order->date }}</th>
+                            </tr>
+                    </table>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-body-title mb-2">Shipping Details</div>
+                    <table class="table">
+                        <tr>
+                            <th>Name: </th>
+                            <th>{{ $shipping->ship_name }}</th>
+                        </tr>
+                        <tr>
+                            <th>Phone: </th>
+                            <th>{{ $shipping->ship_phone }}</th>
+                        </tr>
+                        <tr>
+                            <th>Email: </th>
+                            <th>{{ $shipping->ship_email }}</th>
+                        </tr>
+                        <tr>
+                            <th>Address: </th>
+                            <th>{{ $shipping->ship_address }}</th>
+                        </tr>
+                        <tr>
+                            <th>City :</th>
+                            <th>{{ $shipping->ship_city }}</th>
+                        </tr>
+                         <tr>
+                            <th>Status : </th>
+                            <th>
+                                @if($order->status == 0)
+                                    <span class="badge badge-warning">Pending</span>
+                                @elseif($order->status == 1)
+                                    <span class="badge badge-secondary">Payment Accept</span>
+                                @elseif($order->status == 2) 
+                                    <span class="badge badge-primary">Progress</span>
+                                @elseif($order->status == 3)  
+                                    <span class="badge badge-success">Delevered</span>
                                 @else
-                                    <input type="checkbox" name="main_slider" onclick="return false;">
+                                    <span class="badge badge-danger">Canceled</span>
                                 @endif
-                                <span>Main Slider</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="ckbox">
-                                @if($product->hot_deal == 1)
-                                    <input type="checkbox" name="hot_deal" checked onclick="return false;">
-                                @else
-                                    <input type="checkbox" name="hot_deal" onclick="return false;">
-                                @endif
-                                <span>Hot Deal</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="ckbox">
-                                @if($product->best_rated == 1)
-                                    <input type="checkbox" name="best_rated" checked onclick="return false;">
-                                @else
-                                    <input type="checkbox" name="best_rated" onclick="return false;">
-                                @endif
-                                <span>Best Rated</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="ckbox">
-                                @if($product->trend == 1)
-                                    <input type="checkbox" name="trend" checked onclick="return false;">
-                                @else
-                                    <input type="checkbox" name="trend" onclick="return false;">
-                                @endif
-                                <span>Trend Product</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="ckbox">
-                                @if($product->mid_slider == 1)
-                                    <input type="checkbox" name="mid_slider" checked onclick="return false;">
-                                @else
-                                    <input type="checkbox" name="mid_slider" onclick="return false;">
-                                @endif
-                                <span>Mid Slider</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="ckbox">
-                                @if($product->hot_new == 1)
-                                    <input type="checkbox" name="hot_new" checked onclick="return false;">
-                                @else
-                                    <input type="checkbox" name="hot_new"  onclick="return false;">
-                                @endif
-                                <span>Hot New</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="ckbox">
-                                @if($product->buy_one_get_one == 1)
-                                    <input type="checkbox" name="buyone_getone" checked onclick="return false;">
-                                @else
-                                    <input type="checkbox" name="buyone_getone"  onclick="return false;">
-                                @endif
-                                <span>Buy One Get One</span>
-                            </label>
-                        </div>
-                    </div>
-
-
-                    {{-- <div class="col-lg-4">
-                        <label class="ckbox">
-                            <input type="checkbox" name="buyone_getone" value="1">
-                            <span>Buy One Get One</span>
-                        </label>
-                    </div> --}}
-
-                </div><!-- card -->
+                            </th>
+                        </tr>
+                    </table> 
+                </div>
             </div>
+
+            <div class="row mt-4 mb-5">
+                <div class="col-lg-12">
+                    <div class="card-body-title mb-2 mt-2">Product Details</div>
+                    <div class="table-wrapper">
+                        <table  class="table display responsive nowrap">
+                        <thead>
+                            <tr>
+                            <th class="wd-5p">SL.</th>
+                            <th class="wd-10p">Product ID</th>
+                            <th class="wd-15p">Product Name</th>
+                            <th class="wd-10p">Image</th>
+                            <th class="wd-10p">Color </th>
+                            <th class="wd-10p">Size</th>
+                            <th class="wd-10p">Quantity</th>
+                            <th class="wd-15p">Unit Price</th>
+                            <th class="wd-15p">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($details as $key => $row)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $row->product->product_code }}</td>
+                                <td>{{ $row->product_name }}</td>
+                                <td><img src="{{ URL::to($row->product->image_one) }}" height="50px;" width="50px;"></td>
+                                <td>{{ $row->color }}</td>
+                                <td>{{ $row->size }}</td>
+                                <td>{{ $row->quantity }}</td>
+                                <td>
+                                    {{ $row->unitPrice }} Tk  
+                                </td>
+                                <td>
+                                    {{ $row->totalPrice }} Tk
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        </table>
+                    </div><!-- table-wrapper -->
+                </div>
+            </div>
+
+            @if($order->status == 0)
+              <a href="{{ route('payment.accept', $order->id) }}" class="btn btn-info mb-1" style="font-size:17px;">Payment Accept</a>
+              <a href="{{ route('payment.cancel', $order->id) }}" class="btn btn-danger" id="delete" style="font-size:17px;">Cancel Order</a>
+            @elseif($order->status == 1)
+              <a href="{{ route('delevery.process', $order->id) }}" class="btn btn-primary mb-1" style="font-size:17px;">Delever Order</a>
+              <strong> Payment Checked, press here for shipping request</strong>
+            @elseif($order->status == 2)
+               <a href="{{ route('delevery.done', $order->id) }}" class="btn btn-success" style="font-size:17px; ">Delevery Done</a>
+               <strong> Payment done and {{ $quantity}} has been handover successfully</strong>
+            @elseif($order->status == 3)
+                <strong class="text-success">This order has been succesfully delevered</strong>
+            @else
+                <strong class="text-danger">This order is not valid, it's canceled</strong>
+            @endif
+
         </div>
     </div><!-- sl-pagebody -->
     

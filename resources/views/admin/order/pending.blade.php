@@ -6,13 +6,13 @@
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
         <a class="breadcrumb-item" href="{{ route('admin.home') }}">Dapple Park</a>
-        <span class="breadcrumb-item active">Order</span>
+        <span class="breadcrumb-item active">Orders</span>
         <span class="breadcrumb-item active">Order List</span>
     </nav>
 
     <div class="sl-pagebody">
         <div class="sl-page-title">
-            <h5>Pending Order</h5>
+            <h5>{{$title}} Order</h5>
         </div><!-- sl-page-title -->
 
         <div class="card pd-20 pd-sm-40">
@@ -43,7 +43,19 @@
                             <td>{{ $row->shipping }} Tk</td>
                             <td>{{ $row->total }} Tk</td>
                             <td>{{ $row->date }}</td>
-                            <td><samp class="badge badge-warning">Pending</samp></td>
+                            <td>
+                                @if($row->status == 0)
+                                    <span class="badge badge-warning">Pending</span>
+                                @elseif($row->status == 1)
+                                    <span class="badge badge-secondary">Payment Accept</span>
+                                @elseif($row->status == 2) 
+                                    <span class="badge badge-primary">Progress</span>
+                                @elseif($row->status == 3)  
+                                    <span class="badge badge-success">Delevered</span>
+                                @else
+                                    <span class="badge badge-danger">Canceled</span>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('view.order', $row->id) }}" class="btn btn-sm btn-info">View</a>
                             </td>
