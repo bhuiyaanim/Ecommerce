@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ecommerce_DP</title>
+    <meta name="csrf" value="{{ csrf_token() }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="OneTech shop project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/bootstrap4/bootstrap.min.css') }}">
+    <link href="{{ asset('public/frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') }}" rel="stylesheet"
+        type="text/css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/slick-1.8.0/slick.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/main_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/contact_responsive.css') }}">
+
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+    <!-- Product Details -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_responsive.css') }}">
+    
+    <!-- Show Cart -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/cart_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/cart_responsive.css') }}">
+    
+    <!-- Blog -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_responsive.css') }}">
+
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/d8afe38de3.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="super_container">
+
+        <!-- Header -->
+
+        <header class="header">
+
+            <!-- Top Bar -->
+
+            <div class="top_bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col d-flex flex-row">
+                            <div class="top_bar_contact_item">
+                                <div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png') }}"
+                                        alt=""></div>{{ $setting->phone_one }}
+                            </div>
+                            <div class="top_bar_contact_item">
+                                <div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png') }}"
+                                        alt=""></div><a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a>
+                            </div>
+                            <div class="top_bar_content ml-auto">
+                                <div class="top_bar_menu">
+                                    <ul class="standard_dropdown">
+                                        {{-- @guest --}}
+                                        {{-- @else --}}
+                                            <li>
+                                                @if (session()->get('lang') == 'bangla')
+                                                    <a href="#" data-toggle="modal" data-target="#exampleModal">নিজের অর্ডার ট্র্যাক করুন<i class="fas fa-chevron-down"></i></a>
+                                                @else
+                                                    <a href="#" data-toggle="modal" data-target="#exampleModal">Track My Order<i class="fas fa-chevron-down"></i></a>
+                                                @endif
+                                            </li>
+                                        {{-- @endguest --}}
+                                    </ul>
+                                </div>
+                                <div class="top_bar_user">
+                                    <ul class="standard_dropdown">
+                                        <li>
+                                            @if (session()->get('lang') == 'bangla')
+                                                <a href="{{ route('language.english') }}">English<i class="fas fa-chevron-down"></i></a>
+                                            @else
+                                                <a href="{{ route('language.bangla') }}">Bangla<i class="fas fa-chevron-down"></i></a>                                                
+                                            @endif
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="top_bar_user">
+                                    <div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}"></div>
+                                        
+                                        @guest
+                                            @if(request()->is('register'))
+                                                @if(session()->get('lang') == 'bangla')
+                                                    <a href="{{ route ('login') }}">সিগণ ইন</a>
+                                                @else
+                                                    <a href="{{ route ('login') }}">Sign in</a>
+                                                @endif
+                                            @elseif(request()->is('login'))
+                                                @if(session()->get('lang') == 'bangla')
+                                                    <a href="{{ route ('register') }}">রেজিস্টার</a>
+                                                @else
+                                                    <a href="{{ route ('register') }}">Register</a>
+                                                @endif
+                                            @else
+                                                @if(session()->get('lang') == 'bangla')
+                                                    <div><a href="{{ route ('register') }}">রেজিস্টার</a></div>
+                                                    <div><a href="{{ route ('login') }}">সিগণ ইন</a></div>
+                                                @else
+                                                    <div><a href="{{ route ('register') }}">Register</a></div>
+                                                    <div><a href="{{ route ('login') }}">Sign in</a></div>
+                                                @endif
+                                            @endif
+                                        @else
+                                            <ul class="standard_dropdown top_bar_dropdown top_bar_menu"> 
+                                                <li>
+                                                    @if(session()->get('lang') == 'bangla')
+                                                        <a href="{{ route ('register') }}">প্রোফাইল</a>
+                                                    @else
+                                                        <a href="#">Profile</a>
+                                                    @endif
+                                                    <ul>
+                                                        @if(session()->get('lang') == 'bangla')
+                                                            <li><a href="{{ route('checkout') }}">চেকআউট</a></li>
+                                                            <li><a href="{{ route('password.change') }}">পাসওয়ার্ড পরিবর্তন করুন</a></li>
+                                                            <li><a href="{{ route('user.logout') }}">লগউত</a></li>
+                                                        @else
+                                                            <li><a href="{{ route('checkout') }}">Checkout</a></li>
+                                                            <li><a href="{{ route('password.change') }}">Change Password</a></li>
+                                                            <li><a href="{{ route('user.logout') }}">Logout</a></li>
+                                                        @endif
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        @endguest
+
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Main -->
+            <div class="header_main">
+                <div class="container">
+                    <!-- Error messge section start's -->
+                    
+                    
+                    
+                    {{-- @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif --}}
+
+
+
+                    <!-- Error messge section end's -->
+                    <div class="row">
+                        <!-- Logo -->
+                        <div class="col-lg-2 col-sm-3 col-3 order-1">
+                            <div class="logo_container">
+                            @if(session()->get('lang') == 'bangla')
+                                <div class="logo"><a href="{{ url('/') }}">ড্যাপল পার্ক</a></div>
+                            @else
+                                <div class="logo"><a href="{{ url('/') }}">Dapple Park</a></div>
+                            @endif
+                            </div>
+                        </div>
+
+                        <!-- Search -->
+                        <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                            <div class="header_search">
+                                <div class="header_search_content">
+                                    <div class="header_search_form_container">
+                                        <form action="{{ route('product.search') }}" class="header_search_form clearfix" method="post">
+                                            @csrf
+                                            <input type="search" required="required" class="header_search_input"
+                                                name="search" placeholder="Search for products...">
+                                            <div class="custom_dropdown">
+                                                <div class="custom_dropdown_list">
+                                                    <span class="custom_dropdown_placeholder clc">All Categories</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                    <ul class="custom_list clc">
+                                                        <li><a class="clc" href="#">All Categories</a></li>
+                                                        @foreach ($category as $row)
+                                                            <li><a class="clc" href="#">{{ $row->category_name }}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="header_search_button trans_300"
+                                                value="Submit"><img
+                                                    src="{{ asset('public/frontend/images/search.png') }}"
+                                                    alt=""></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist -->
+                        <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
+                            <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+                                @guest
+                                @else
+                                    <div class="wishlist d-flex flex-row align-items-center justify-content-end">
+                                        <div class="wishlist_icon"><img
+                                                src="{{ asset('public/frontend/images/heart.png') }}" alt=""></div>
+                                        <div class="wishlist_content">
+                                            @if(session()->get('lang') == 'bangla')
+                                                <div class="wishlist_text"><a href="{{ route('wishlist') }}">ইচ্ছেতালিকা</a></div>
+                                            @else
+                                                <div class="wishlist_text"><a href="{{ route('wishlist') }}">Wishlist</a></div>
+                                            @endif
+                                            <div class="wishlist_count test">{{ count($wishlist) }}</div>
+                                        </div>
+                                    </div>
+                                
+                                @endguest
+
+                                <!-- Cart -->
+                                <div class="cart">
+                                    <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+                                        <div class="cart_icon">
+                                            <img src="{{ asset('public/frontend/images/cart.png') }}" alt="">
+                                            <div class="cart_count"><span>{{Cart::count()}}</span></div>
+                                        </div>
+                                        <div class="cart_content">
+                                            @if(session()->get('lang') == 'bangla')
+                                                <div class="cart_text"><a href="{{ route('show.cart') }}">কোর্ট</a></div>
+                                            @else
+                                                <div class="cart_text"><a href="{{ route('show.cart') }}">Cart</a></div>
+                                            @endif
+                                            <div class="cart_price">Tk {{Cart::subtotal()}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+            @yield('content')
+
+            <!-- Footer -->
+
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-3 footer_col">
+                            <div class="footer_column footer_contact">
+                                <div class="logo_container">
+                                    <div class="logo"><a href="{{ url('/') }}">{{ $setting->company_name }}</a></div>
+                                </div>
+                                <div class="footer_title">Got Question? Call Us 24/7</div>
+                                <div class="footer_phone">{{ $setting->phone_two }}</div>
+                                <div class="footer_contact_text">
+                                    <p>{{ $setting->company_address }}</p>
+                                </div>
+                                <div class="footer_social">
+                                    <ul>
+                                        <li><a href="{{ $setting->facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="{{ $setting->twitter }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="{{ $setting->youtube }}" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                                        <li><a href="{{ $setting->instagram }}" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                        {{-- <li><a href="#"target="_blank"><i class="fab fa-vimeo-v"></i></a></li> --}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 offset-lg-2">
+                            <div class="footer_column">
+                                <div class="footer_title">Find it Fast</div>
+                                <ul class="footer_list">
+                                    <li><a href="#">Computers & Laptops</a></li>
+                                    <li><a href="#">Cameras & Photos</a></li>
+                                    <li><a href="#">Hardware</a></li>
+                                    <li><a href="#">Smartphones & Tablets</a></li>
+                                    <li><a href="#">TV & Audio</a></li>
+                                </ul>
+                                <div class="footer_subtitle">Gadgets</div>
+                                <ul class="footer_list">
+                                    <li><a href="#">Car Electronics</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="footer_column">
+                                <ul class="footer_list footer_list_2">
+                                    <li><a href="#">Video Games & Consoles</a></li>
+                                    <li><a href="#">Accessories</a></li>
+                                    <li><a href="#">Cameras & Photos</a></li>
+                                    <li><a href="#">Hardware</a></li>
+                                    <li><a href="#">Computers & Laptops</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="footer_column">
+                                <div class="footer_title">Customer Care</div>
+                                <ul class="footer_list">
+                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="#">Order Tracking</a></li>
+                                    <li><a href="#">Wish List</a></li>
+                                    <li><a href="#">Customer Services</a></li>
+                                    <li><a href="#">Returns / Exchange</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                    <li><a href="#">Product Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Copyright -->
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+
+                            <div
+                                class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
+                                <div class="copyright_content">
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;<script>
+                                        document.write(new Date().getFullYear());
+
+                                    </script> All rights reserved | This project is made with <i class="fa fa-heart"
+                                        aria-hidden="true"></i> by <a href="https://www.facebook.com/anim.bhuiya"
+                                        target="_blank">Anim Bhuiya</a>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </div>
+                                <div class="logos ml-sm-auto">
+                                    <ul class="logos_list">
+                                        <li><a href="#"><img src="{{ asset('public/frontend/images/logos_1.png') }}"
+                                                    alt=""></a></li>
+                                        <li><a href="#"><img src="{{ asset('public/frontend/images/logos_2.png') }}"
+                                                    alt=""></a></li>
+                                        <li><a href="#"><img src="{{ asset('public/frontend/images/logos_3.png') }}"
+                                                    alt=""></a></li>
+                                        <li><a href="#"><img src="{{ asset('public/frontend/images/logos_4.png') }}"
+                                                    alt=""></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+<!-- Order tracing Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Track Your Order</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form method="post" action="{{ route('order.track') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-row">
+                        <label>Status Code</label>
+                        <input type="text" name="code" class="form-control" placeholder="Your order status code.." required>
+                    </div>
+                    {{-- <button class="btn btn-danger" type="submit">Track Now</button> --}}
+                </div>
+                <div class="modal-footer">
+                {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                <button class="btn btn-danger" type="submit">Track Now</button>
+                {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script src="{{ asset('public/frontend/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('public/frontend/styles/bootstrap4/popper.js') }}"></script>
+    <script src="{{ asset('public/frontend/styles/bootstrap4/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/greensock/TweenMax.min.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/greensock/TimelineMax.min.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/scrollmagic/ScrollMagic.min.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/greensock/animation.gsap.min.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/greensock/ScrollToPlugin.min.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/slick-1.8.0/slick.js') }}"></script>
+    <script src="{{ asset('public/frontend/plugins/easing/easing.js') }}"></script>
+    <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+    
+    <!-- Show All Product -->
+    <script src="{{ asset('public/frontend/js/product_custom.js') }}"></script>
+    <script src="{{ asset('public/frontend/js/cart_custom.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
+
+    <script>
+        @if(Session::has('messege'))
+            var type="{{Session::get('alert-type','info')}}"
+            switch(type){
+                case 'info':
+                    toastr.info("{{ Session::get('messege') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('messege') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('messege') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('messege') }}");
+                    break;
+            }
+        @endif
+    </script> 
+
+    <script>  
+        $(document).on("click", "#cancel", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+            swal({
+                title: "Are you sure to cancle?",
+                text: "Once Canceled, This order will not be Delevered!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = link;
+                } else {
+                    swal("Safe Data!");
+                }
+            });
+        });
+    </script>
+    
+    <script>  
+        $(document).on("click", "#return", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+            swal({
+                title: "Are you sure to return?",
+                text: "Once returned, You will get your money back!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = link;
+                } else {
+                    swal("Safe Data!");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
